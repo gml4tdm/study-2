@@ -1,5 +1,8 @@
 # Custom added
+.idea 
 replication/data
+replication/compute-features/Cargo.lock
+replication/compute-features/target
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

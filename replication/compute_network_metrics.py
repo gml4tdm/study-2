@@ -30,15 +30,23 @@ def main():
 
 
 def generate_metrics(filename):
-    df = polars.read_csv(_find_text_features(filename))
+    df = polars.read_csv(_find_text_features(filename), separator=';')
+    semantic_map = {}
+    for row in df.rows(named=True):
+        key = (row.pop('class1'), row.pop('class2'))
+        semantic_map[key] = row
     graph = Graph.from_xml(filename)
+    print(len(graph.nodes))
+    return {}
     data = {
         'nodes': list(graph.nodes),
         'edges': [
             {'from': key[0], 'to': key[1]}
             for key in graph.edges
         ],
-        'network-features': []
+        'link-features': [],
+        'links-without-semantics': [],
+        'links-without-topology': []
     }
     n = len(graph.nodes)
     total = n**2 - n
@@ -51,10 +59,13 @@ def generate_metrics(filename):
                 #    continue
                 if x == y:
                     continue
+                if (x, y) not in semantic_map:
+                    data['links-without-semantics'].append({'from': x, 'to': y})
+                    continue
                 entry = {
                     'from': x,
                     'to': y,
-                    'features': {
+                    'topological-features': {
                         'common_neighbours': graph.common_neighbours(x, y),
                         'salton': graph.salton(x, y),
                         'sorensen': graph.sorensen(x, y),
@@ -63,10 +74,12 @@ def generate_metrics(filename):
                         'sim_rank': graph.sim_rank(x, y),
                         'russel_rao': graph.russel_rao(x, y),
                         'resource_allocation': graph.resource_allocation(x, y),
-                    }
+                    },
+                    'semantic-features':  semantic_map.pop((x, y))
                 }
-                data['network-features'].append(entry)
+                data['link-features'].append(entry)
                 progress()
+    data['links-without-topology'] = list(semantic_map)
     return data
 
 
@@ -122,6 +135,7 @@ class Graph:
                     assert target is not None
                     assert edge_type is not None
                     nodes.setdefault((source, source_type), []).append((target, edge_type))
+        print('>', len(nodes))
         return cls(cls._lift_to_packages(nodes))
 
     @staticmethod
@@ -203,10 +217,10 @@ class Graph:
 
 
 def _find_text_features(path):
-    prefix = re.match(r'[a-zA-Z_\-0-9]+-\d+(\.\d+)*', path).group()
-    directory, _ = os.path.split(path)
+    directory, original_filename = os.path.split(path)
+    prefix = re.match(r'[a-zA-Z_\-0-9]+-\d+(\.\d+)*', original_filename).group()
     for filename in os.listdir(directory):
-        if filename.startswith(prefix):
+        if filename.startswith(prefix) and filename.endswith('.txt'):
             return os.path.join(directory, filename)
     raise ValueError(f'Could not find semantic features for file {path}')
 
