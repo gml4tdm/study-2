@@ -1,3 +1,5 @@
 networkx
 numpy
 alive_progress
+sklearn
+matplotlib

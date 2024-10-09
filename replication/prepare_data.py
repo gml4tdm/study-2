@@ -45,10 +45,28 @@ def unpack():
     print('Done!')
 
 
+def cleanup():
+    for archive in ALL_ARCHIVES:
+        path = os.path.join(DATA_DIRECTORY, archive.removesuffix('.zip'))
+        for filename in os.listdir(path):
+            if filename.endswith('.txt'):
+                full_path = os.path.join(path, filename)
+                print('Examining', full_path)
+                with open(full_path, 'r') as f:
+                    data = [x.strip() for x in f]
+                old = data.copy()
+                new = [x.removesuffix(';') for x in data]
+                if new != old:
+                    with open(full_path, 'w') as f:
+                        print('Changing', full_path)
+                        f.write('\n'.join(new))
+    print('Done!')
+
 def main():
     if not download():
         return
     unpack()
+    cleanup()
 
 
 if __name__ == '__main__':

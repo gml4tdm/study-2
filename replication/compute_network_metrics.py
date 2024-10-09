@@ -24,6 +24,7 @@ def main():
             full_path = os.path.join(path, file)
             if not file.endswith('.odem'):
                 continue
+            print('Processing {}'.format(file))
             metrics = generate_metrics(full_path)
             with open(full_path.replace('.odem', '.json'), 'w') as f:
                 json.dump(metrics, f, indent=2)
@@ -36,8 +37,6 @@ def generate_metrics(filename):
         key = (row.pop('class1'), row.pop('class2'))
         semantic_map[key] = row
     graph = Graph.from_xml(filename)
-    print(len(graph.nodes))
-    return {}
     data = {
         'nodes': list(graph.nodes),
         'edges': [
@@ -50,6 +49,9 @@ def generate_metrics(filename):
     }
     n = len(graph.nodes)
     total = n**2 - n
+
+    def _is_ignored(z):
+        return z.startswith(('java.', 'javax.', 'sun.'))
     with alive_progress.alive_bar(total) as progress:
         for x in graph.nodes:
             #if graph.nodes[x] is None:
@@ -60,7 +62,9 @@ def generate_metrics(filename):
                 if x == y:
                     continue
                 if (x, y) not in semantic_map:
-                    data['links-without-semantics'].append({'from': x, 'to': y})
+                    if not _is_ignored(x) and not _is_ignored(y):
+                        data['links-without-semantics'].append({'from': x, 'to': y})
+                    progress()
                     continue
                 entry = {
                     'from': x,
@@ -79,7 +83,9 @@ def generate_metrics(filename):
                 }
                 data['link-features'].append(entry)
                 progress()
-    data['links-without-topology'] = list(semantic_map)
+    data['links-without-topology'] = [
+        (x, y) for x, y in semantic_map if not _is_ignored(x) and not _is_ignored(y)
+    ]
     return data
 
 
@@ -110,6 +116,7 @@ class Graph:
         self.graph.add_nodes_from(self.nodes)
         self.graph.add_edges_from(self.edges)
         self._katz = None
+        self._sim = None
 
 
     @classmethod
@@ -135,7 +142,6 @@ class Graph:
                     assert target is not None
                     assert edge_type is not None
                     nodes.setdefault((source, source_type), []).append((target, edge_type))
-        print('>', len(nodes))
         return cls(cls._lift_to_packages(nodes))
 
     @staticmethod
@@ -202,7 +208,10 @@ class Graph:
         return self._katz[i, j]
 
     def sim_rank(self, node_a, node_b):
-        return networkx.simrank_similarity(self.graph, source=node_a, target=node_b)
+        #return networkx.simrank_similarity(self.graph, source=node_a, target=node_b)
+        if self._sim is None:
+            self._sim = networkx.simrank_similarity(self.graph)
+        return self._sim[node_a][node_b]
 
     def russel_rao(self, node_a, node_b):
         # based on decompiled version of the code of Tomassel et al.
@@ -220,7 +229,7 @@ def _find_text_features(path):
     directory, original_filename = os.path.split(path)
     prefix = re.match(r'[a-zA-Z_\-0-9]+-\d+(\.\d+)*', original_filename).group()
     for filename in os.listdir(directory):
-        if filename.startswith(prefix) and filename.endswith('.txt'):
+        if filename.startswith(prefix) and filename.endswith('.txt') and not filename.removeprefix(prefix)[0].isdigit():
             return os.path.join(directory, filename)
     raise ValueError(f'Could not find semantic features for file {path}')
 
