@@ -1,0 +1,1030 @@
+[
+  {
+    "name": "Apache Ant",
+    "versions": [
+      {
+        "version": {
+          "major": 1,
+          "minor": 1,
+          "micro": null,
+          "modifiers": null
+        },
+        "location": {
+          "type": "github-repo-tag",
+          "options": {
+            "clone-url-http": "https://github.com/apache/ant.git",
+            "tag": "rel/1.1"
+          }
+        }
+      },
+      {
+        "version": {
+          "major": 1,
+          "minor": 2,
+          "micro": null,
+          "modifiers": null
+        },
+        "location": {
+          "type": "github-repo-tag",
+          "options": {
+            "clone-url-http": "https://github.com/apache/ant.git",
+            "tag": "rel/1.2"
+          }
+        }
+      },
+      {
+        "version": {
+          "major": 1,
+          "minor": 3,
+          "micro": null,
+          "modifiers": null
+        },
+        "location": {
+          "type": "github-repo-tag",
+          "options": {
+            "clone-url-http": "https://github.com/apache/ant.git",
+            "tag": "rel/1.3"
+          }
+        }
+      },
+      {
+        "version": {
+          "major": 1,
+          "minor": 4,
+          "micro": null,
+          "modifiers": null
+        },
+        "location": {
+          "type": "github-repo-tag",
+          "options": {
+            "clone-url-http": "https://github.com/apache/ant.git",
+            "tag": "rel/1.4"
+          }
+        }
+      },
+      {
+        "version": {
+          "major": 1,
+          "minor": 5,
+          "micro": null,
+          "modifiers": null
+        },
+        "location": {
+          "type": "github-repo-tag",
+          "options": {
+            "clone-url-http": "https://github.com/apache/ant.git",
+            "tag": "rel/1.5"
+          }
+        }
+      },
+      {
+        "version": {
+          "major": 1,
+          "minor": 5,
+          "micro": 2,
+          "modifiers": null
+        },
+        "location": {
+          "type": "github-repo-tag",
+          "options": {
+            "clone-url-http": "https://github.com/apache/ant.git",
+            "tag": "rel/1.5.2"
+          }
+        }
+      },
+      {
+        "version": {
+          "major": 1,
+          "minor": 6,
+          "micro": 0,
+          "modifiers": null
+        },
+        "location": {
+          "type": "github-repo-tag",
+          "options": {
+            "clone-url-http": "https://github.com/apache/ant.git",
+            "tag": "rel/1.6.0"
+          }
+        }
+      },
+      {
+        "version": {
+          "major": 1,
+          "minor": 7,
+          "micro": 0,
+          "modifiers": null
+        },
+        "location": {
+          "type": "github-repo-tag",
+          "options": {
+            "clone-url-http": "https://github.com/apache/ant.git",
+            "tag": "rel/1.7.0"
+          }
+        }
+      },
+      {
+        "version": {
+          "major": 1,
+          "minor": 8,
+          "micro": 0,
+          "modifiers": null
+        },
+        "location": {
+          "type": "github-repo-tag",
+          "options": {
+            "clone-url-http": "https://github.com/apache/ant.git",
+            "tag": "rel/1.8.0"
+          }
+        }
+      },
+      {
+        "version": {
+          "major": 1,
+          "minor": 9,
+          "micro": 0,
+          "modifiers": null
+        },
+        "location": {
+          "type": "github-repo-tag",
+          "options": {
+            "clone-url-http": "https://github.com/apache/ant.git",
+            "tag": "rel/1.9.0"
+          }
+        }
+      },
+      {
+        "version": {
+          "major": 1,
+          "minor": 10,
+          "micro": 0,
+          "modifiers": null
+        },
+        "location": {
+          "type": "github-repo-tag",
+          "options": {
+            "clone-url-http": "https://github.com/apache/ant.git",
+            "tag": "rel/1.10.0"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "name": "Hibernate",
+    "versions": [
+      {
+        "version": {
+          "major": 5,
+          "minor": 0,
+          "micro": 0,
+          "modifiers": "Final"
+        },
+        "location": {
+          "type": "jar-archive-link",
+          "options": {
+            "url": "https://repo1.maven.org/maven2/org/hibernate/hibernate-core/5.0.0.Final/hibernate-core-5.0.0.Final-sources.jar",
+            "verification": [
+              {
+                "type": "md5-hash-from-url",
+                "url": "https://repo1.maven.org/maven2/org/hibernate/hibernate-core/5.0.0.Final/hibernate-core-5.0.0.Final-sources.jar.md5"
+              },
+              {
+                "type": "sha1-hash-from-url",
+                "url": "https://repo1.maven.org/maven2/org/hibernate/hibernate-core/5.0.0.Final/hibernate-core-5.0.0.Final-sources.jar.sha1"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "version": {
+          "major": 5,
+          "minor": 1,
+          "micro": 0,
+          "modifiers": "Final"
+        },
+        "location": {
+          "type": "jar-archive-link",
+          "options": {
+            "url": "https://repo1.maven.org/maven2/org/hibernate/hibernate-core/5.1.0.Final/hibernate-core-5.1.0.Final-sources.jar",
+            "verification": [
+              {
+                "type": "md5-hash-from-url",
+                "url": "https://repo1.maven.org/maven2/org/hibernate/hibernate-core/5.1.0.Final/hibernate-core-5.1.0.Final-sources.jar.md5"
+              },
+              {
+                "type": "sha1-hash-from-url",
+                "url": "https://repo1.maven.org/maven2/org/hibernate/hibernate-core/5.1.0.Final/hibernate-core-5.1.0.Final-sources.jar.sha1"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "version": {
+          "major": 5,
+          "minor": 2,
+          "micro": 0,
+          "modifiers": "Final"
+        },
+        "location": {
+          "type": "jar-archive-link",
+          "options": {
+            "url": "https://repo1.maven.org/maven2/org/hibernate/hibernate-core/5.2.0.Final/hibernate-core-5.2.0.Final-sources.jar",
+            "verification": [
+              {
+                "type": "md5-hash-from-url",
+                "url": "https://repo1.maven.org/maven2/org/hibernate/hibernate-core/5.2.0.Final/hibernate-core-5.2.0.Final-sources.jar.md5"
+              },
+              {
+                "type": "sha1-hash-from-url",
+                "url": "https://repo1.maven.org/maven2/org/hibernate/hibernate-core/5.2.0.Final/hibernate-core-5.2.0.Final-sources.jar.sha1"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "version": {
+          "major": 5,
+          "minor": 3,
+          "micro": 0,
+          "modifiers": "Final"
+        },
+        "location": {
+          "type": "jar-archive-link",
+          "options": {
+            "url": "https://repo1.maven.org/maven2/org/hibernate/hibernate-core/5.3.0.Final/hibernate-core-5.3.0.Final-sources.jar",
+            "verification": [
+              {
+                "type": "md5-hash-from-url",
+                "url": "https://repo1.maven.org/maven2/org/hibernate/hibernate-core/5.3.0.Final/hibernate-core-5.3.0.Final-sources.jar.md5"
+              },
+              {
+                "type": "sha1-hash-from-url",
+                "url": "https://repo1.maven.org/maven2/org/hibernate/hibernate-core/5.3.0.Final/hibernate-core-5.3.0.Final-sources.jar.sha1"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "version": {
+          "major": 5,
+          "minor": 4,
+          "micro": 0,
+          "modifiers": "Final"
+        },
+        "location": {
+          "type": "jar-archive-link",
+          "options": {
+            "url": "https://repo1.maven.org/maven2/org/hibernate/hibernate-core/5.4.0.Final/hibernate-core-5.4.0.Final-sources.jar",
+            "verification": [
+              {
+                "type": "md5-hash-from-url",
+                "url": "https://repo1.maven.org/maven2/org/hibernate/hibernate-core/5.4.0.Final/hibernate-core-5.4.0.Final-sources.jar.md5"
+              },
+              {
+                "type": "sha1-hash-from-url",
+                "url": "https://repo1.maven.org/maven2/org/hibernate/hibernate-core/5.4.0.Final/hibernate-core-5.4.0.Final-sources.jar.sha1"
+              }
+            ]
+          }
+        }
+      }
+    ]
+  },
+  {
+    "name": "Apache Derby",
+    "versions": [
+      {
+        "version": {
+          "major": 10,
+          "minor": 1,
+          "micro": 1,
+          "modifiers": "0"
+        },
+        "location": {
+          "type": "tar-gz-archive-link",
+          "options": {
+            "url": "http://archive.apache.org/dist/db/derby/db-derby-10.1.1.0/db-derby-10.1.1.0-src.tar.gz",
+            "verification": [
+              {
+                "type": "md5-hash-from-url",
+                "url": "http://archive.apache.org/dist/db/derby/db-derby-10.1.1.0/db-derby-10.1.1.0-src.tar.gz.md5"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "version": {
+          "major": 10,
+          "minor": 2,
+          "micro": 1,
+          "modifiers": "6"
+        },
+        "location": {
+          "type": "tar-gz-archive-link",
+          "options": {
+            "url": "http://archive.apache.org/dist/db/derby/db-derby-10.2.1.6/db-derby-10.2.1.6-src.tar.gz",
+            "verification": [
+              {
+                "type": "md5-hash-from-url",
+                "url": "http://archive.apache.org/dist/db/derby/db-derby-10.2.1.6/db-derby-10.2.1.6-src.tar.gz.md5"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "version": {
+          "major": 10,
+          "minor": 3,
+          "micro": 1,
+          "modifiers": "4"
+        },
+        "location": {
+          "type": "not-available",
+          "options": {}
+        }
+      },
+      {
+        "version": {
+          "major": 10,
+          "minor": 4,
+          "micro": 1,
+          "modifiers": "0"
+        },
+        "location": {
+          "type": "not-available",
+          "options": {}
+        }
+      },
+      {
+        "version": {
+          "major": 10,
+          "minor": 5,
+          "micro": 1,
+          "modifiers": "1"
+        },
+        "location": {
+          "type": "tar-gz-archive-link",
+          "options": {
+            "url": "http://archive.apache.org/dist/db/derby/db-derby-10.5.1.1/db-derby-10.5.1.1-src.tar.gz",
+            "verification": [
+              {
+                "type": "md5-hash-from-url",
+                "url": "http://archive.apache.org/dist/db/derby/db-derby-10.5.1.1/db-derby-10.5.1.1-src.tar.gz.md5"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "version": {
+          "major": 10,
+          "minor": 6,
+          "micro": 1,
+          "modifiers": "0"
+        },
+        "location": {
+          "type": "tar-gz-archive-link",
+          "options": {
+            "url": "http://archive.apache.org/dist/db/derby/db-derby-10.6.1.0/db-derby-10.6.1.0-src.tar.gz",
+            "verification": [
+              {
+                "type": "md5-hash-from-url",
+                "url": "http://archive.apache.org/dist/db/derby/db-derby-10.6.1.0/db-derby-10.6.1.0-src.tar.gz.md5"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "version": {
+          "major": 10,
+          "minor": 7,
+          "micro": 1,
+          "modifiers": "1"
+        },
+        "location": {
+          "type": "tar-gz-archive-link",
+          "options": {
+            "url": "http://archive.apache.org/dist/db/derby/db-derby-10.7.1.1/db-derby-10.7.1.1-src.tar.gz",
+            "verification": [
+              {
+                "type": "md5-hash-from-url",
+                "url": "http://archive.apache.org/dist/db/derby/db-derby-10.7.1.1/db-derby-10.7.1.1-src.tar.gz.md5"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "version": {
+          "major": 10,
+          "minor": 8,
+          "micro": 1,
+          "modifiers": "2"
+        },
+        "location": {
+          "type": "tar-gz-archive-link",
+          "options": {
+            "url": "http://archive.apache.org/dist/db/derby/db-derby-10.8.1.2/db-derby-10.8.1.2-src.tar.gz",
+            "verification": [
+              {
+                "type": "md5-hash-from-url",
+                "url": "http://archive.apache.org/dist/db/derby/db-derby-10.8.1.2/db-derby-10.8.1.2-src.tar.gz.md5"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "version": {
+          "major": 10,
+          "minor": 9,
+          "micro": 1,
+          "modifiers": "0"
+        },
+        "location": {
+          "type": "tar-gz-archive-link",
+          "options": {
+            "url": "http://archive.apache.org/dist/db/derby/db-derby-10.9.1.0/db-derby-10.9.1.0-src.tar.gz",
+            "verification": [
+              {
+                "type": "md5-hash-from-url",
+                "url": "http://archive.apache.org/dist/db/derby/db-derby-10.9.1.0/db-derby-10.9.1.0-src.tar.gz.md5"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "version": {
+          "major": 10,
+          "minor": 10,
+          "micro": 1,
+          "modifiers": "1"
+        },
+        "location": {
+          "type": "tar-gz-archive-link",
+          "options": {
+            "url": "http://archive.apache.org/dist/db/derby/db-derby-10.10.1.1/db-derby-10.10.1.1-src.tar.gz",
+            "verification": [
+              {
+                "type": "md5-hash-from-url",
+                "url": "http://archive.apache.org/dist/db/derby/db-derby-10.10.1.1/db-derby-10.10.1.1-src.tar.gz.md5"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "version": {
+          "major": 10,
+          "minor": 11,
+          "micro": 1,
+          "modifiers": "1"
+        },
+        "location": {
+          "type": "tar-gz-archive-link",
+          "options": {
+            "url": "http://archive.apache.org/dist/db/derby/db-derby-10.11.1.1/db-derby-10.11.1.1-src.tar.gz",
+            "verification": [
+              {
+                "type": "md5-hash-from-url",
+                "url": "http://archive.apache.org/dist/db/derby/db-derby-10.11.1.1/db-derby-10.11.1.1-src.tar.gz.md5"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "version": {
+          "major": 10,
+          "minor": 12,
+          "micro": 1,
+          "modifiers": "1"
+        },
+        "location": {
+          "type": "tar-gz-archive-link",
+          "options": {
+            "url": "http://archive.apache.org/dist/db/derby/db-derby-10.12.1.1/db-derby-10.12.1.1-src.tar.gz",
+            "verification": [
+              {
+                "type": "md5-hash-from-url",
+                "url": "http://archive.apache.org/dist/db/derby/db-derby-10.12.1.1/db-derby-10.12.1.1-src.tar.gz.md5"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "version": {
+          "major": 10,
+          "minor": 13,
+          "micro": 1,
+          "modifiers": "1"
+        },
+        "location": {
+          "type": "tar-gz-archive-link",
+          "options": {
+            "url": "http://archive.apache.org/dist/db/derby/db-derby-10.13.1.1/db-derby-10.13.1.1-src.tar.gz",
+            "verification": [
+              {
+                "type": "md5-hash-from-url",
+                "url": "http://archive.apache.org/dist/db/derby/db-derby-10.13.1.1/db-derby-10.13.1.1-src.tar.gz.md5"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "version": {
+          "major": 10,
+          "minor": 14,
+          "micro": 1,
+          "modifiers": "0"
+        },
+        "location": {
+          "type": "not-available",
+          "options": {}
+        }
+      }
+    ]
+  },
+  {
+    "name": "Apache Cxf",
+    "versions": [
+      {
+        "version": {
+          "major": 2,
+          "minor": 0,
+          "micro": 6,
+          "modifiers": null
+        },
+        "location": {
+          "type": "tar-gz-archive-link",
+          "options": {
+            "url": "https://archive.apache.org/dist/cxf/2.0.6/apache-cxf-2.0.6-src.tar.gz",
+            "verification": [
+              {
+                "type": "md5-hash-from-url",
+                "url": "https://archive.apache.org/dist/cxf/2.0.6/apache-cxf-2.0.6-src.tar.gz.md5"
+              },
+              {
+                "type": "sha1-hash-from-url",
+                "url": "https://archive.apache.org/dist/cxf/2.0.6/apache-cxf-2.0.6-src.tar.gz.sha1"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "version": {
+          "major": 2,
+          "minor": 1,
+          "micro": 0,
+          "modifiers": null
+        },
+        "location": {
+          "type": "tar-gz-archive-link",
+          "options": {
+            "url": "https://archive.apache.org/dist/cxf/2.1/apache-cxf-2.1-src.tar.gz",
+            "verification": [
+              {
+                "type": "md5-hash-from-url",
+                "url": "https://archive.apache.org/dist/cxf/2.1/apache-cxf-2.1-src.tar.gz.md5"
+              },
+              {
+                "type": "sha1-hash-from-url",
+                "url": "https://archive.apache.org/dist/cxf/2.1/apache-cxf-2.1-src.tar.gz.sha1"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "version": {
+          "major": 2,
+          "minor": 2,
+          "micro": 0,
+          "modifiers": null
+        },
+        "location": {
+          "type": "tar-gz-archive-link",
+          "options": {
+            "url": "https://archive.apache.org/dist/cxf/2.2/apache-cxf-2.2-src.tar.gz",
+            "verification": [
+              {
+                "type": "md5-hash-from-url",
+                "url": "https://archive.apache.org/dist/cxf/2.2/apache-cxf-2.2-src.tar.gz.md5"
+              },
+              {
+                "type": "sha1-hash-from-url",
+                "url": "https://archive.apache.org/dist/cxf/2.2/apache-cxf-2.2-src.tar.gz.sha1"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "version": {
+          "major": 2,
+          "minor": 3,
+          "micro": 0,
+          "modifiers": null
+        },
+        "location": {
+          "type": "tar-gz-archive-link",
+          "options": {
+            "url": "https://archive.apache.org/dist/cxf/2.3.0/apache-cxf-2.3.0-src.tar.gz",
+            "verification": [
+              {
+                "type": "md5-hash-from-url",
+                "url": "https://archive.apache.org/dist/cxf/2.3.0/apache-cxf-2.3.0-src.tar.gz.md5"
+              },
+              {
+                "type": "sha1-hash-from-url",
+                "url": "https://archive.apache.org/dist/cxf/2.3.0/apache-cxf-2.3.0-src.tar.gz.sha1"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "version": {
+          "major": 2,
+          "minor": 4,
+          "micro": 0,
+          "modifiers": null
+        },
+        "location": {
+          "type": "tar-gz-archive-link",
+          "options": {
+            "url": "https://archive.apache.org/dist/cxf/2.4.0/apache-cxf-2.4.0-src.tar.gz",
+            "verification": [
+              {
+                "type": "md5-hash-from-url",
+                "url": "https://archive.apache.org/dist/cxf/2.4.0/apache-cxf-2.4.0-src.tar.gz.md5"
+              },
+              {
+                "type": "sha1-hash-from-url",
+                "url": "https://archive.apache.org/dist/cxf/2.4.0/apache-cxf-2.4.0-src.tar.gz.sha1"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "version": {
+          "major": 2,
+          "minor": 5,
+          "micro": 0,
+          "modifiers": null
+        },
+        "location": {
+          "type": "tar-gz-archive-link",
+          "options": {
+            "url": "https://archive.apache.org/dist/cxf/2.5.0/apache-cxf-2.5.0-src.tar.gz",
+            "verification": [
+              {
+                "type": "md5-hash-from-url",
+                "url": "https://archive.apache.org/dist/cxf/2.5.0/apache-cxf-2.5.0-src.tar.gz.md5"
+              },
+              {
+                "type": "sha1-hash-from-url",
+                "url": "https://archive.apache.org/dist/cxf/2.5.0/apache-cxf-2.5.0-src.tar.gz.sha1"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "version": {
+          "major": 2,
+          "minor": 6,
+          "micro": 0,
+          "modifiers": null
+        },
+        "location": {
+          "type": "tar-gz-archive-link",
+          "options": {
+            "url": "https://archive.apache.org/dist/cxf/2.6.0/apache-cxf-2.6.0-src.tar.gz",
+            "verification": [
+              {
+                "type": "md5-hash-from-url",
+                "url": "https://archive.apache.org/dist/cxf/2.6.0/apache-cxf-2.6.0-src.tar.gz.md5"
+              },
+              {
+                "type": "sha1-hash-from-url",
+                "url": "https://archive.apache.org/dist/cxf/2.6.0/apache-cxf-2.6.0-src.tar.gz.sha1"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "version": {
+          "major": 2,
+          "minor": 7,
+          "micro": 0,
+          "modifiers": null
+        },
+        "location": {
+          "type": "tar-gz-archive-link",
+          "options": {
+            "url": "https://archive.apache.org/dist/cxf/2.7.0/apache-cxf-2.7.0-src.tar.gz",
+            "verification": [
+              {
+                "type": "md5-hash-from-url",
+                "url": "https://archive.apache.org/dist/cxf/2.7.0/apache-cxf-2.7.0-src.tar.gz.md5"
+              },
+              {
+                "type": "sha1-hash-from-url",
+                "url": "https://archive.apache.org/dist/cxf/2.7.0/apache-cxf-2.7.0-src.tar.gz.sha1"
+              }
+            ]
+          }
+        }
+      }
+    ]
+  },
+  {
+    "name": "Apache Camel",
+    "versions": [
+      {
+        "version": {
+          "major": 2,
+          "minor": 0,
+          "micro": 0,
+          "modifiers": null
+        },
+        "location": {
+          "type": "github-repo-tag",
+          "options": {
+            "clone-url-http": "https://github.com/apache/camel.git",
+            "tag": "camel-2.0.0"
+          }
+        }
+      },
+      {
+        "version": {
+          "major": 2,
+          "minor": 1,
+          "micro": 0,
+          "modifiers": null
+        },
+        "location": {
+          "type": "github-repo-tag",
+          "options": {
+            "clone-url-http": "https://github.com/apache/camel.git",
+            "tag": "camel-2.1.0"
+          }
+        }
+      },
+      {
+        "version": {
+          "major": 2,
+          "minor": 2,
+          "micro": 0,
+          "modifiers": null
+        },
+        "location": {
+          "type": "github-repo-tag",
+          "options": {
+            "clone-url-http": "https://github.com/apache/camel.git",
+            "tag": "camel-2.2.0"
+          }
+        }
+      },
+      {
+        "version": {
+          "major": 2,
+          "minor": 3,
+          "micro": 0,
+          "modifiers": null
+        },
+        "location": {
+          "type": "github-repo-tag",
+          "options": {
+            "clone-url-http": "https://github.com/apache/camel.git",
+            "tag": "camel-2.3.0"
+          }
+        }
+      },
+      {
+        "version": {
+          "major": 2,
+          "minor": 4,
+          "micro": 0,
+          "modifiers": null
+        },
+        "location": {
+          "type": "github-repo-tag",
+          "options": {
+            "clone-url-http": "https://github.com/apache/camel.git",
+            "tag": "camel-2.4.0"
+          }
+        }
+      },
+      {
+        "version": {
+          "major": 2,
+          "minor": 5,
+          "micro": 0,
+          "modifiers": null
+        },
+        "location": {
+          "type": "github-repo-tag",
+          "options": {
+            "clone-url-http": "https://github.com/apache/camel.git",
+            "tag": "camel-2.5.0"
+          }
+        }
+      },
+      {
+        "version": {
+          "major": 2,
+          "minor": 6,
+          "micro": 0,
+          "modifiers": null
+        },
+        "location": {
+          "type": "github-repo-tag",
+          "options": {
+            "clone-url-http": "https://github.com/apache/camel.git",
+            "tag": "camel-2.6.0"
+          }
+        }
+      },
+      {
+        "version": {
+          "major": 2,
+          "minor": 7,
+          "micro": 0,
+          "modifiers": null
+        },
+        "location": {
+          "type": "github-repo-tag",
+          "options": {
+            "clone-url-http": "https://github.com/apache/camel.git",
+            "tag": "camel-2.7.0"
+          }
+        }
+      },
+      {
+        "version": {
+          "major": 2,
+          "minor": 8,
+          "micro": 0,
+          "modifiers": null
+        },
+        "location": {
+          "type": "github-repo-tag",
+          "options": {
+            "clone-url-http": "https://github.com/apache/camel.git",
+            "tag": "camel-2.8.0"
+          }
+        }
+      },
+      {
+        "version": {
+          "major": 2,
+          "minor": 9,
+          "micro": 0,
+          "modifiers": null
+        },
+        "location": {
+          "type": "github-repo-tag",
+          "options": {
+            "clone-url-http": "https://github.com/apache/camel.git",
+            "tag": "camel-2.9.0"
+          }
+        }
+      },
+      {
+        "version": {
+          "major": 2,
+          "minor": 10,
+          "micro": 0,
+          "modifiers": null
+        },
+        "location": {
+          "type": "github-repo-tag",
+          "options": {
+            "clone-url-http": "https://github.com/apache/camel.git",
+            "tag": "camel-2.10.0"
+          }
+        }
+      },
+      {
+        "version": {
+          "major": 2,
+          "minor": 11,
+          "micro": 0,
+          "modifiers": null
+        },
+        "location": {
+          "type": "github-repo-tag",
+          "options": {
+            "clone-url-http": "https://github.com/apache/camel.git",
+            "tag": "camel-2.11.0"
+          }
+        }
+      },
+      {
+        "version": {
+          "major": 2,
+          "minor": 12,
+          "micro": 0,
+          "modifiers": null
+        },
+        "location": {
+          "type": "github-repo-tag",
+          "options": {
+            "clone-url-http": "https://github.com/apache/camel.git",
+            "tag": "camel-2.12.0"
+          }
+        }
+      },
+      {
+        "version": {
+          "major": 2,
+          "minor": 13,
+          "micro": 0,
+          "modifiers": null
+        },
+        "location": {
+          "type": "github-repo-tag",
+          "options": {
+            "clone-url-http": "https://github.com/apache/camel.git",
+            "tag": "camel-2.13.0"
+          }
+        }
+      },
+      {
+        "version": {
+          "major": 2,
+          "minor": 14,
+          "micro": 0,
+          "modifiers": null
+        },
+        "location": {
+          "type": "github-repo-tag",
+          "options": {
+            "clone-url-http": "https://github.com/apache/camel.git",
+            "tag": "camel-2.14.0"
+          }
+        }
+      },
+      {
+        "version": {
+          "major": 2,
+          "minor": 15,
+          "micro": 0,
+          "modifiers": null
+        },
+        "location": {
+          "type": "github-repo-tag",
+          "options": {
+            "clone-url-http": "https://github.com/apache/camel.git",
+            "tag": "camel-2.15.0"
+          }
+        }
+      },
+      {
+        "version": {
+          "major": 2,
+          "minor": 16,
+          "micro": 0,
+          "modifiers": null
+        },
+        "location": {
+          "type": "github-repo-tag",
+          "options": {
+            "clone-url-http": "https://github.com/apache/camel.git",
+            "tag": "camel-2.16.0"
+          }
+        }
+      },
+      {
+        "version": {
+          "major": 2,
+          "minor": 17,
+          "micro": 0,
+          "modifiers": null
+        },
+        "location": {
+          "type": "github-repo-tag",
+          "options": {
+            "clone-url-http": "https://github.com/apache/camel.git",
+            "tag": "camel-2.17.0"
+          }
+        }
+      }
+    ]
+  }
+]

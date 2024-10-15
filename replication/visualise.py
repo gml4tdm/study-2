@@ -67,10 +67,10 @@ def make_bar_plots(project, accuracy, precision, recall, f1_score, keys):
 
 
 def main():
-    for directory in os.listdir('./results'):
+    for directory in os.listdir('./replication/results'):
         make_bar_plots(
             directory,
-            *get_metrics_for_project(os.path.join('./results', directory))
+            *get_metrics_for_project(os.path.join('./replication/results', directory))
         )
 
 
