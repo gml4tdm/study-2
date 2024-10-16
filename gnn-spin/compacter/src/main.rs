@@ -15,8 +15,28 @@ fn convert_project_name(name: &str) -> &str {
 }
 
 fn main() -> anyhow::Result<()> {
-    simple_logger::SimpleLogger::new().init()?;
-    log::set_max_level(log::LevelFilter::Debug);
+    let writer = logforth::append::rolling_file::RollingFileWriter::builder()
+        .max_log_files(1)
+        .rotation(logforth::append::rolling_file::Rotation::Never)
+        .build("logs")?;
+    let (nonblocking, _guard) = logforth::append::rolling_file::NonBlockingBuilder::default()
+        .finish(writer);
+    let file = logforth::append::rolling_file::RollingFile::new(nonblocking);
+    logforth::Logger::new()
+        .dispatch(
+            logforth::Dispatch::new()
+                .filter(log::LevelFilter::Debug)
+                .layout(logforth::layout::TextLayout::default())
+                .append(logforth::append::Stdout)
+        )
+        .dispatch(
+            logforth::Dispatch::new()
+                .filter(log::LevelFilter::Trace)
+                .layout(logforth::layout::TextLayout::default().no_color())
+                .append(file)
+        )
+        .apply()?;
+    //log::set_max_level(log::LevelFilter::Debug);
 
     let source_code_dir = std::path::PathBuf::from(
         std::env::args().nth(1).expect("no source code directory provided")

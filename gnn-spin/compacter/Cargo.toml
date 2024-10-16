@@ -6,6 +6,6 @@ edition = "2021"
 [dependencies]
 anyhow = "1.0.89"
 log = {version = "0.4.22"}
-simple_logger = { version = "5.0.0" }
+logforth = {  version = "0.13.0", features = ["rolling_file"] }
 serde = { version = "1.0.210", features = ["derive"]}
 quick-xml = {  version = "0.36.2", features = ["serde", "serialize"] }
