@@ -60,7 +60,8 @@ pub enum ArchiveVerificationMethod {
 impl Project {
     pub fn download_all_versions(&self, base_directory: impl AsRef<Path>) -> anyhow::Result<()> {
         log::info!("Downloading versions for project {}", self.name);
-        let project_directory = base_directory.as_ref().join(&self.name);
+        let normalised_name = self.name.to_lowercase().replace(' ', "-");
+        let project_directory = base_directory.as_ref().join(&normalised_name);
         std::fs::create_dir_all(&project_directory)?;
         for version in &self.versions {
             if !version.acquisition.is_available() {
@@ -107,7 +108,7 @@ impl DownloadableVersion {
     }
 }
 
-static mut repository_cache: OnceLock<HashMap<String, PathBuf>> = OnceLock::new();
+static mut REPOSITORY_CACHE: OnceLock<HashMap<String, PathBuf>> = OnceLock::new();
 
 
 impl AcquisitionMethod {
@@ -141,8 +142,8 @@ impl AcquisitionMethod {
         
         // Safe as long the program is single-threaded.
         let cache = unsafe {
-            let _ = repository_cache.get_or_init(|| HashMap::new());
-            let cache = repository_cache.get_mut().unwrap();
+            let _ = REPOSITORY_CACHE.get_or_init(|| HashMap::new());
+            let cache = REPOSITORY_CACHE.get_mut().unwrap();
             cache 
         };
         let repo_path = match cache.entry(clone_url.to_string()) {
