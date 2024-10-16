@@ -62,15 +62,15 @@ def make_bar_plots(project, accuracy, precision, recall, f1_score, keys):
     ax4.set_xlim([0, 1])
 
     fig.tight_layout()
-    os.makedirs('./figures', exist_ok=True)
-    fig.savefig(f'./figures/{project}.png')
+    os.makedirs('../data/replication-figures', exist_ok=True)
+    fig.savefig(f'../data/replication-figures/{project}.png')
 
 
 def main():
-    for directory in os.listdir('./replication/results'):
+    for directory in os.listdir('..data/replication-results'):
         make_bar_plots(
             directory,
-            *get_metrics_for_project(os.path.join('./replication/results', directory))
+            *get_metrics_for_project(os.path.join('../data/replication-results', directory))
         )
 
 

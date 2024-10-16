@@ -1,0 +1,11 @@
+[package]
+name = "compacter"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+anyhow = "1.0.89"
+log = {version = "0.4.22"}
+simple_logger = { version = "5.0.0" }
+serde = { version = "1.0.210", features = ["derive"]}
+quick-xml = "0.36.2"

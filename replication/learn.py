@@ -13,8 +13,8 @@ import sys
 from sklearn.metrics import accuracy_score, precision_recall_fscore_support
 from sklearn.svm import SVC
 
-DATA_DIRECTORY = './data'
-RESULT_DIRECTORY = './results'
+DATA_DIRECTORY = '../data/graphs'
+RESULT_DIRECTORY = '../data/replication-results'
 
 ################################################################################
 ################################################################################

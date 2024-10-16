@@ -1,9 +1,7 @@
 # Custom added
 .idea 
-replication/data
-replication/results
-replication/figures
-replication/logs.txt
+data
+logs.txt
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

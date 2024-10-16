@@ -10,7 +10,7 @@ import numpy
 import polars
 from alive_progress import alive_bar
 
-DATA_DIRECTORY = 'data'
+DATA_DIRECTORY = '../data/graphs'
 
 
 def main():

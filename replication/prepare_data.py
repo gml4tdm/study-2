@@ -7,7 +7,7 @@ ARCHIVES = (
     'apache-ant.zip',
     'apache-derby.zip'
 )
-DATA_DIRECTORY = 'data'
+DATA_DIRECTORY = '../data/graphs'
 MANUAL = {
     'apache-camel.zip': 'https://drive.google.com/file/d/1qyCflQ9DFoSpUcc6TotW-8L8uNV7djr2/view?usp=sharing',
     'apache-cxf.zip': 'https://drive.google.com/file/d/1sJ1F_RuAVSa-iQbWQLHEQkxtNYpoZKJF/view?usp=sharing',
