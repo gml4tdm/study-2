@@ -3,6 +3,7 @@
 data
 logs.txt
 logs
+cda
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
