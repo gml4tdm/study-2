@@ -137,15 +137,18 @@ def batch_work_items(items: list[WorkItem],
 def load_text_data(items: list[WorkItem]) -> list[str]:
     result = []
     for item in items:
-        with open(item.source, 'r') as file:
+        with open(item.source, 'r', errors='ignore') as file:
             result.append(file.read())
     return result
 
 
 def store_embedding_data(items: list[WorkItem], embeddings):
     moved = embeddings.to(CPU)
+    print(f'Number of work items: {len(items)}')
+    print(f'Tensor shape: {moved.shape}')
     for item, embedding in zip(items, torch.unbind(moved), strict=True):
-        torch.save(embedding, item.target)
+        print(f'Storing tensor of shape {embedding.shape} ({item.target})')
+        torch.save(embedding.clone(), item.target)
 
 
 def update_status_file(path: pathlib.Path, items: list[WorkItem]):
