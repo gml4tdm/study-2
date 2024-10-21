@@ -57,7 +57,7 @@ class HierarchicalGNN(abc.ABC, torch.nn.Module):
         self._module_gnn = config.get_module_gnn()
         self._final_node_transform = config.get_final_node_transform()
 
-    def forward(self, x, edge_type, hierarchy):
+    def forward(self, x, edge_type, hierarchy, module_graph):
         if self._initial_node_transform is not None:
             x = self._initial_node_transform(x)
         # TODO: How to handle homogeneous and heterogeneous GNN in a uniform manner?

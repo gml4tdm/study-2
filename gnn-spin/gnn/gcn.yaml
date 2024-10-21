@@ -2,9 +2,7 @@ models:
   gcn:
     version: 0.0.1
     architecture:
-      builder:
-        module-name: HierarchicalGNN
-        config-name: HierarchicalGNNConfig
+      builder: HierarchicalGNN
       settings:
         initial-node-transform:
           - name: linear

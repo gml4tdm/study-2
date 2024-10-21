@@ -4,6 +4,7 @@
 ################################################################################
 
 import logging
+import os
 import pathlib
 import sys
 
@@ -19,6 +20,29 @@ import torch
 class Config(tap.Tap):
     output_directory: pathlib.Path
     model_config: pathlib.Path
+    data_directory: pathlib.Path
+
+
+################################################################################
+################################################################################
+# Data Preparation
+################################################################################
+
+
+def get_version_triples(path: pathlib.Path):
+    versions = []
+    for directory in os.listdir(path):
+        version = tuple(
+            int(x) if x.isdigit() else x
+            for x in directory.split('.')
+        )
+        versions.append(version)
+    versions.sort()
+    result = []
+    for i in range(len(versions) - 3 + 1):
+        triple = versions[i:i + 3]
+        result.append(triple)
+    return result
 
 
 ################################################################################
