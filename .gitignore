@@ -1,9 +1,10 @@
 # Custom added
-.idea 
+.idea
 data
 logs.txt
 logs
 cda
+legacy-java
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
