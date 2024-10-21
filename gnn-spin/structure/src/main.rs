@@ -1,11 +1,20 @@
+mod resolvers;
+
 use std::path::{Path, PathBuf};
+use crate::resolvers::{JavaLogicalFileNameResolver, LogicalFileNameResolver};
 
 #[derive(Debug, serde::Serialize)]
 struct Folder {
     name: String,
     #[serde(rename = "relative-path")] relative_path: String,
-    files: Vec<String>,
+    files: Vec<SourceFile>,
     #[serde(rename = "sub-folders")] sub_folders: Vec<Folder>
+}
+
+#[derive(Debug, serde::Serialize)]
+struct SourceFile {
+    #[serde(rename = "physical-name")] physical_name: String,
+    #[serde(rename = "logical-name")] logical_name: String,
 }
 
 
@@ -14,10 +23,12 @@ fn collect_file_structure(root: impl AsRef<Path>) -> anyhow::Result<Folder> {
     if !path.is_dir() {
         return Err(anyhow::anyhow!("Path is not a directory"));
     }
-    collect_file_structure_impl(path, PathBuf::from(".").as_path())
+    collect_file_structure_impl(path, PathBuf::from(".").as_path(), path)
 }
 
-fn collect_file_structure_impl(path: &Path, relative_path: &Path) -> anyhow::Result<Folder> {
+fn collect_file_structure_impl(path: &Path,
+                               relative_path: &Path, 
+                               root: &Path) -> anyhow::Result<Folder> {
     let name = get_filename(path)?;
     let mut sub_folders = Vec::new();
     let mut files = Vec::new();
@@ -25,12 +36,20 @@ fn collect_file_structure_impl(path: &Path, relative_path: &Path) -> anyhow::Res
         let entry = entry?;
         let path = entry.path();
         if path.is_file() {
-            files.push(get_filename(path.as_path())?);
+            files.push(SourceFile{
+                physical_name: get_filename(path.as_path())?,
+                logical_name: JavaLogicalFileNameResolver.resolve(
+                    path.as_path(),
+                    path.parent().expect("No parent"),
+                    root
+                )?
+            });
         } else if path.is_dir() {
             sub_folders.push(
                 collect_file_structure_impl(
                     path.as_path(), 
-                    relative_path.join(get_filename(path.as_path())?).as_path()
+                    relative_path.join(get_filename(path.as_path())?).as_path(),
+                    root
                 )?
             )
         } else {
@@ -38,7 +57,7 @@ fn collect_file_structure_impl(path: &Path, relative_path: &Path) -> anyhow::Res
         }
     }
     let f = Folder { 
-        name, 
+        name,
         sub_folders, 
         files, 
         relative_path: relative_path
@@ -60,6 +79,7 @@ fn get_filename(path: &Path) -> anyhow::Result<String> {
 
 
 fn main() -> anyhow::Result<()> {
+    println!("WARNING: This code should be updated for non-Java projects");
     let input_directory = std::env::args().nth(1)
         .ok_or_else(|| anyhow::anyhow!("No input directory provided"))?;
     let output_directory = PathBuf::from(

@@ -1,0 +1,19 @@
+1) ICSE 2024 paper on predicting program dependencies using neural pre-trianing
+    --> Program level
+
+2) Have a chat with Darius (industry validation, expanded dataset)
+
+3) Check out Arxiv paper Cezar --> He will have a look
+
+4) Forcasting architectural decay based on version history
+    - Is predicting architectural smells --> Might be relevant related work at some point
+
+5) First starting with randomly initialised features
+
+6) Why not classes
+
+7) Random walk based features? --> Simple baseline
+
+8) Data leakage between successive versions
+
+9) Is this really architecture? (since we are looking at the code)
