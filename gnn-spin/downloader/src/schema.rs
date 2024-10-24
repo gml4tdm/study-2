@@ -5,6 +5,7 @@ use std::fs;
 use std::io::BufRead;
 use std::path::{Path, PathBuf};
 use std::sync::OnceLock;
+use std::time::Duration;
 
 #[derive(Debug, Clone, serde::Deserialize)]
 pub struct Project {
@@ -238,7 +239,12 @@ impl AcquisitionMethod {
     fn download_archive(&self, url: &str) -> anyhow::Result<String> {
         let filename = url.rsplit_once('/')
             .ok_or_else(|| anyhow::anyhow!("Could not extract filename from URL: {}", url))?.1;
-        let response = reqwest::blocking::get(url)?;
+        // let response = reqwest::blocking::get(url)?;
+        let response = reqwest::blocking::ClientBuilder::new()
+            .timeout(Some(Duration::from_secs(2 * 60)))
+            .build()?
+            .get(url)
+            .send()?;
         let data = response.bytes()?;
         let mut file = std::fs::File::create(filename)?;
         std::io::copy(&mut data.as_ref(), &mut file)?;
