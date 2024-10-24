@@ -14,7 +14,15 @@ struct Folder {
 #[derive(Debug, serde::Serialize)]
 struct SourceFile {
     #[serde(rename = "physical-name")] physical_name: String,
-    #[serde(rename = "logical-name")] logical_name: String,
+    #[serde(rename = "logical-units")] logical_units: Vec<LogicalNameInfo>,
+}
+
+#[derive(Debug, serde::Serialize)]
+struct LogicalNameInfo {
+    #[serde(rename = "name")] name: String,
+    #[serde(rename = "type")] r#type: String,
+    #[serde(rename = "byte-start")] byte_start: Option<usize>,
+    #[serde(rename = "byte-stop")] byte_stop: Option<usize>
 }
 
 
@@ -36,13 +44,21 @@ fn collect_file_structure_impl(path: &Path,
         let entry = entry?;
         let path = entry.path();
         if path.is_file() {
+            let resolved = JavaLogicalFileNameResolver.resolve(
+                path.as_path(),
+                path.parent().expect("No parent"),
+                root
+            )?;
             files.push(SourceFile{
                 physical_name: get_filename(path.as_path())?,
-                logical_name: JavaLogicalFileNameResolver.resolve(
-                    path.as_path(),
-                    path.parent().expect("No parent"),
-                    root
-                )?
+                logical_units: resolved.into_iter().map(
+                    |(name, kind, span)| LogicalNameInfo {
+                        name,
+                        r#type: kind,
+                        byte_start: span.map(|(start, _)| start),
+                        byte_stop: span.map(|(_, stop)| stop)
+                    }
+                ).collect()
             });
         } else if path.is_dir() {
             sub_folders.push(
@@ -79,7 +95,30 @@ fn get_filename(path: &Path) -> anyhow::Result<String> {
 
 
 fn main() -> anyhow::Result<()> {
-    println!("WARNING: This code should be updated for non-Java projects");
+    let writer = logforth::append::rolling_file::RollingFileWriter::builder()
+        .max_log_files(1)
+        .rotation(logforth::append::rolling_file::Rotation::Never)
+        .build("logs")?;
+    let (nonblocking, _guard) = logforth::append::rolling_file::NonBlockingBuilder::default()
+        .finish(writer);
+    let file = logforth::append::rolling_file::RollingFile::new(nonblocking);
+    logforth::Logger::new()
+        .dispatch(
+            logforth::Dispatch::new()
+                .filter(log::LevelFilter::Warn)
+                .layout(logforth::layout::TextLayout::default())
+                .append(logforth::append::Stdout)
+        )
+        .dispatch(
+            logforth::Dispatch::new()
+                .filter(log::LevelFilter::Debug)
+                .layout(logforth::layout::TextLayout::default().no_color())
+                .append(file)
+        )
+        .apply()?;
+
+    log::warn!("WARNING: This code should be updated for non-Java projects");
+    
     let input_directory = std::env::args().nth(1)
         .ok_or_else(|| anyhow::anyhow!("No input directory provided"))?;
     let output_directory = PathBuf::from(
