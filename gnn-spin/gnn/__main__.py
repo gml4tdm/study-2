@@ -119,23 +119,6 @@ Dependencies.model_rebuild()
 DependsOn.model_rebuild()
 
 
-################################################################################
-################################################################################
-# Structure Schema
-################################################################################
-
-
-class Folder(pydantic.BaseModel):
-    name: str
-    relative_path: pathlib.Path = pydantic.Field(alias='relative-path')
-    files: list[SourceFile]
-    sub_folders: list[Folder] = pydantic.Field(alias='sub-folders')
-
-
-class SourceFile(pydantic.BaseModel):
-    logical_name: str = pydantic.Field(alias='logical-name')
-    physical_name: str = pydantic.Field(alias='physical-name')
-
 
 ################################################################################
 ################################################################################
@@ -166,105 +149,59 @@ def find_files_for_version(project: str, version: str, *,
                            embeddings_directory: pathlib.Path,
                            legacy_mapping: dict[str, str]):
     structure_file = structure_directory / project / f'{version}.json'
-    embedding_director = embeddings_directory / project / version
+    embedding_directory = embeddings_directory / project / version
     inner_project = legacy_mapping.get(project, project)
     graph_file = graph_directory / project / f'{inner_project}-{version}.odem'
-    return structure_file, embedding_director, graph_file
+    return structure_file, embedding_directory, graph_file
 
 
-class VersionData:
-
-    _structure_cache: dict[pathlib.Path, Folder] = {}
-    _graph_cache = {}
-
-    def __init__(self,
-                 project: str,
-                 version: str,
-                 *,
-                 structure_file: pathlib.Path,
-                 embedding_directory: pathlib.Path,
-                 graph_file: pathlib.Path,
-                 logger: logging.Logger):
-        self.project = project
-        self.project_language = 'java'
-        self.version = version
-        self.structure_file = structure_file
-        self.embedding_directory = embedding_directory
-        self.graph_file = graph_file
-        self.logger = logger
-        self.logger.info('Loading data for %s - %s',
-                         self.project, self.version)
-        # Load graph data
-        if self.graph_file not in self._graph_cache:
-            with open(self.graph_file) as file:
-                self._graph_cache[self.graph_file] = ODEM.from_xml(file.read())
-        self.dependencies = self._graph_cache[self.graph_file]
-        # Load structure data
-        if self.structure_file not in self._structure_cache:
-            with open(self.structure_file) as file:
-                data = json.load(file)
-                self._structure_cache[self.structure_file] = Folder(**data)
-        self.structure = self._structure_cache[self.structure_file]
-        self._classes_to_paths = self._map_packages_to_paths()
-
-    def _map_packages_to_paths(self):
-        # Create a mapping between packages and file system paths.
-        # The mapping is not trivial because packages generally
-        # do not have the full path as their prefix.
-        package_to_path = {}
-        for context in self.dependencies.contexts:
-            for container in context.containers:
-                for namespace in container.namespaces:
-                    for tp in namespace.types:
-                        package_to_path[tp.name] = self._find_file_in_structure(
-                            namespace.name, tp.name.split('.')[-1]
-                        )
-        return package_to_path
-
-    def _find_file_in_structure(self,
-                                target_package: str,
-                                target: str) -> pathlib.Path:
-        #packages = self._find_package_in_structure(target_package)
-        if self.project_language == 'java':
-            if '$' in target:
-                parent = target.rsplit('$')[0]
-                self.logger.warning(
-                    'Path and source code for inner type %s '
-                    'will be resolved to that of its containing type %s',
-                    target,
-                    parent)
-                target = parent
-            if target.endswith('_'):
-                target = target[:-1]
-                self.logger.warning(
-                    'Path and source code for type %s_ will be '
-                    'resolved using the name %s',
-                    target, target
-                )
-
-        results = list(self._search_structure(f'{target_package}.{target}'))
-        if not results:
-            message = f'Cannot find path for {target_package}.{target}'
-            self.logger.critical(message)
-            raise ValueError(message)
-        if len(results) > 1:
-            message = f'Multiple paths for {target_package}.{target}: {results}'
-            self.logger.critical(message)
-            raise ValueError(message)
-        self.logger.debug('Found path for %s.%s: %s',
-                          target_package, target, results[0])
-        return results[0]
-
-    def _search_structure(self, target: str):
-        yield from self._search_structure_recursive(self.structure, target)
+################################################################################
+################################################################################
+# JIT Feature Utilities
+################################################################################
 
 
-    def _search_structure_recursive(self, folder: Folder, target: str):
-        for file in folder.files:
-            if file.logical_name == target:
-                yield folder.relative_path / file.physical_name
-        for sub_folder in folder.sub_folders:
-            yield from self._search_structure_recursive(sub_folder, target)
+def build_module_features(structure_file: pathlib.Path,
+                          embedding_directory: pathlib.Path):
+    with open(structure_file) as file:
+        structure = json.load(file)
+    raw = _build_module_features_recursively(structure, embedding_directory)
+    flattened = _flatten_features(raw)
+    root = flattened.pop('')
+    flattened['@project'] = root
+    return flattened
+
+
+def _build_module_features_recursively(structure,
+                                       embedding_directory: pathlib.Path):
+    kind = structure.pop('type')
+    if kind == 'Entity':
+        return torch.load(embedding_directory / structure['path'])
+    else:
+        result = {}
+        assert kind == 'Root' or kind == 'Package'
+        for name, sub_structure in structure.items():
+            result[name] = _build_module_features_recursively(
+                sub_structure, embedding_directory
+            )
+            result['@value'] = torch.mean(torch.stack([
+                x['@value'] for x in result.values()
+            ]))
+        return result
+
+
+def _flatten_features(raw):
+    self = raw.pop('@value')
+    if not raw:
+        return {}   # Make sure classes are excluded
+    result = {'': self}
+    for key, value in raw.items():
+        flattened = _flatten_features(value)
+        result |= {
+            (f'{key}.{k}' if k else key): v
+            for k, v in flattened.items()
+        }
+    return result
 
 
 ################################################################################
@@ -291,7 +228,7 @@ def pipeline(args: Config, logger: logging.Logger):
             for t in triple:
                 logger.debug('Loading data for %s', t)
                 version = '.'.join(map(str, t))
-                structure_file, embedding_director, graph_file = find_files_for_version(
+                structure_file, embedding_directory, graph_file = find_files_for_version(
                     project,
                     version,
                     graph_directory=args.graph_directory,
@@ -299,14 +236,19 @@ def pipeline(args: Config, logger: logging.Logger):
                     embeddings_directory=args.embedding_directory,
                     legacy_mapping=mapping
                 )
-                data = VersionData(
-                    project=project,
-                    version=version,
-                    structure_file=structure_file,
-                    embedding_directory=embedding_director,
-                    graph_file=graph_file,
-                    logger=logger
+                feature_mapping = build_module_features(
+                    structure_file, embedding_directory
                 )
+                # What now?
+                # 1) Load the dependency graphs
+                # 2) Derive the training and test labels from the dependency
+                #    graphs, as specified by Tommasel et al.
+                # 3) Derive the training and test edges from the dependency
+                #    graphs
+                # 4) Train the GNN model
+                # 5) Evaluate the GNN model
+                # 7) Store run metrics
+
 
 
 ################################################################################
