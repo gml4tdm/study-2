@@ -7,7 +7,6 @@ from __future__ import annotations
 
 import abc
 import datetime
-import itertools
 import json
 import logging
 import os
@@ -16,12 +15,12 @@ import sys
 import traceback
 import typing
 
+import numpy
 import pydantic_xml
 import tap
 import torch
 import torch_geometric
 import torchmetrics
-from torch_geometric.transforms import ToUndirected
 from sklearn.svm import SVC
 
 
@@ -287,7 +286,8 @@ def compute_training_data(old, current, *, only_shared_packages=True):
         vertices_train = vertices_old
         all_edges_train = {(x, y)
                            for x in vertices_train
-                           for y in vertices_train}
+                           for y in vertices_train
+                           if x != y}
         edges_train = edges_old & all_edges_train
         features_train = {x: features_old[x] for x in vertices_train}
         joint_vertices = vertices_old & vertices_cur
@@ -311,7 +311,8 @@ def compute_testing_data(current, new):
     vertices_test = vertices_cur
     all_edges_test = {(x, y)
                       for x in vertices_test
-                      for y in vertices_test}
+                      for y in vertices_test
+                      if x != y}
     edges_test = edges_cur & all_edges_test
     features_test = {x: features_cur[x] for x in vertices_test}
     testing_data = (vertices_test, edges_test, features_test, vertices_test)
@@ -351,21 +352,29 @@ def _as_homogeneous_graph(features, labels):
             [vertex_mapping[x[1]] for x in edges],
         ]
     )
-    prediction_edges = list(
-        itertools.combinations(
-            [vertex_mapping[x] for x in joint_vertices],
-            r=2
-        )
-    )
+
+    prediction_edges_unmapped = [
+        (x, y)
+        for x in joint_vertices
+        for y in joint_vertices
+        if x != y
+    ]
+    prediction_edges = [
+        (vertex_mapping[x], vertex_mapping[y])
+        for x, y in prediction_edges_unmapped
+    ]
+
     label_edges = torch.tensor(prediction_edges)
-    labels = torch.tensor([x in labels for x in prediction_edges])
+    labels = torch.tensor([x in labels for x in prediction_edges_unmapped])
     data = torch_geometric.data.Data(
         x=node_features,
         edge_index=edges,
         edge_attr=None,
         y=labels,
     )
-    data = ToUndirected().forward(data)
+
+    #data = ToUndirected().forward(data)
+
     return data, label_edges
 
 
@@ -390,6 +399,7 @@ class AbstractModel(abc.ABC):
         if not self._trained:
             raise ValueError('Model has not been trained yet.')
 
+    @torch.no_grad()
     def evaluate(self, data, eval_connections):
         if not self._trained:
             raise ValueError('Model has not been trained yet.')
@@ -417,10 +427,28 @@ class SvmWrapper(AbstractModel):
         self._svm = SVC(kernel='rbf', cache_size=1000, random_state=42)
 
     def train(self, features, connections):
-        pass
+        super().train(features, connections)
+        with torch.no_grad():
+            data = []
+            labels = []
+            for i, (x, y) in enumerate(connections):
+                a = features.x[x, :]
+                b = features.x[y, :]
+                f = torch.mul(a, b).numpy()
+                data.append(f)
+                labels.append(features.y[i].item())
+            self._svm.fit(numpy.array(data), numpy.array(labels))
 
     def predict(self, features, connections):
-        pass
+        with torch.no_grad():
+            data = []
+            for i, (x, y) in enumerate(connections):
+                a = features.x[x, :]
+                b = features.x[y, :]
+                f = torch.mul(a, b).numpy()
+                data.append(f)
+            pred = self._svm.predict(numpy.array(data))
+            return torch.from_numpy(pred).float()
 
 
 class DummyModel(AbstractModel):
@@ -441,13 +469,17 @@ class DummyModel(AbstractModel):
 
     def _predict(self, features, connections):
         current = self._current_connections(features)
+        # print(current)
+        # print(list(connections[0]))
+        # raise
         return torch.tensor(
-            [x in current for x in list(connections)],
+            [(x[0].item(), x[1].item()) in current for x in list(connections)],
             dtype=torch.float
         )
 
-    def _current_connections(self, data: torch_geometric.data.Data):
-        return set(data.edge_index.T)
+    @staticmethod
+    def _current_connections(data: torch_geometric.data.Data):
+        return set((x.item(), y.item()) for x, y in data.edge_index.T)
 
 
     ################################################################################
@@ -471,9 +503,13 @@ class SimpleGnn(torch.nn.Module):
 ################################################################################
 
 
+class WeightedAveragePrecision(torchmetrics.Metric):
+    pass
+
+
 def evaluate(predictions, targets):
     shared_args = {
-        'threshold': 0.5,
+        #'threshold': 0.5,
         'task': 'binary'
     }
     metrics = {
@@ -485,6 +521,7 @@ def evaluate(predictions, targets):
         'kappa': torchmetrics.CohenKappa(**shared_args),
         'matthews-correlation': torchmetrics.MatthewsCorrCoef(**shared_args),
         'specificity': torchmetrics.Specificity(**shared_args, zero_division=0),
+        'area-under-precision-recall-curve': torchmetrics.AveragePrecision(**shared_args)
     }
     result = {
         k: v(predictions, targets).item()
@@ -506,6 +543,14 @@ def evaluate(predictions, targets):
         'precision': precision.tolist(),
         'recall': recall.tolist(),
         'thresholds': thresholds
+    }
+    conf = torchmetrics.ConfusionMatrix(task='binary')
+    mat = conf(predictions, targets)
+    result['confusion-matrix'] = {
+        'tn': mat[0, 0].item(),
+        'fp': mat[0, 1].item(),
+        'fn': mat[1, 0].item(),
+        'tp': mat[1, 1].item(),
     }
     return result
 
@@ -557,8 +602,10 @@ def pipeline(args: Config, logger: logging.Logger):
                     raise ValueError(f'Unknown model {x}')
             training_metrics = model.train(*train)
             testing_metrics = model.evaluate(*test)
-            filename = (f'{filename_base}__{project}__'
-                        f'{triple[0][0]}__{triple[1][0]}__{triple[2][0]}.json')
+            v1 = '.'.join(map(str, triple[0]))
+            v2 = '.'.join(map(str, triple[1]))
+            v3 = '.'.join(map(str, triple[2]))
+            filename = f'{filename_base}__{project}__{v1}__{v2}__{v3}.json'
             with open(args.output_directory / filename, 'w') as file:
                 json.dump(
                     {
