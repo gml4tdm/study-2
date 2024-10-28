@@ -3,7 +3,7 @@ use crate::resolver::EntityInfo;
 use crate::select::FileInfo;
 
 #[derive(Debug, serde::Serialize)]
-#[serde(tag = "type")]
+#[serde(tag = "#type")]
 pub enum Hierarchy {
     Root(HashMap<String, Hierarchy>),
     Package(HashMap<String, Hierarchy>),

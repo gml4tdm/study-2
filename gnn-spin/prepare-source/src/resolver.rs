@@ -28,6 +28,8 @@ pub struct EntityInfo {
 static PATTERN: OnceLock<regex::Regex> = OnceLock::new();
 static PATTERN2: OnceLock<regex::Regex> = OnceLock::new();
 
+static PACKAGE_PATTERN: OnceLock<regex::Regex> = OnceLock::new();
+
 impl JavaLogicalFileNameResolver {
     fn normalize_line(mut line: String) -> String {
         while let Some(start) = line.find("/*") {
@@ -44,64 +46,6 @@ impl JavaLogicalFileNameResolver {
         line.trim().to_string()
     }
 
-    fn extract_package_from_line(line: String, file_path: &Path) -> anyhow::Result<(String, String)> {
-        let stripped = line.strip_prefix("package ")
-            .unwrap()
-            .to_string();
-        match stripped.find(';') {
-            None => {
-                Err(anyhow::anyhow!(
-                            "{}: Failed to parse package line remainder: {}",
-                            file_path.display(),
-                            stripped
-                ))
-            }
-            Some(index) => {
-                let package = stripped[..index].to_string();
-                let cls = file_path.file_stem()
-                    .ok_or_else(|| anyhow::anyhow!(
-                                "{}: Could not get file stem", file_path.display()
-                            ))?
-                    .to_str()
-                    .ok_or_else(|| anyhow::anyhow!(
-                                "{}: Could not convert file stem to string", file_path.display()
-                            ))?
-                    .to_string();
-                Ok((package, cls))
-            }
-        }
-    }
-
-    fn extract_entity_name(line: String,
-                           entity_type: &str,
-                           file_path: &Path) -> anyhow::Result<String> {
-        let stripped = if line.starts_with("public ") {
-            line.strip_prefix("public")
-                .unwrap()
-                .to_string()
-        } else if line.starts_with("protected") {
-            line.strip_prefix("protected")
-                .unwrap()
-                .to_string()
-        } else if line.starts_with("private") {
-            line.strip_prefix("private")
-                .unwrap()
-                .to_string()
-        } else {
-            line
-        };
-        let stripped = stripped.chars()
-            .skip_while(|c| c.is_whitespace())
-            .collect::<String>();
-        let stripped = stripped.strip_prefix(entity_type)
-            .ok_or_else(|| anyhow::anyhow!("{}: Entity type removal error", file_path.display()))?
-            .chars()
-            .skip_while(|c| c.is_whitespace());
-        let name = stripped.take_while(|c| c.is_ascii_alphanumeric())
-            .collect::<String>();
-        Ok(name)
-    }
-
     pub fn resolve(&mut self, file_path: &Path, root_dir: &Path) -> anyhow::Result<Option<(String, Vec<EntityInfo>)>> {
         let file = std::fs::File::open(file_path)?;
         let mut reader = std::io::BufReader::new(file);
@@ -115,15 +59,28 @@ impl JavaLogicalFileNameResolver {
         for line in content.lines() {
             let line = line.trim().to_string();
             let line = Self::normalize_line(line);
-            if line.starts_with("package ") {
+            let p_pattern = PACKAGE_PATTERN.get_or_init(||
+                regex::Regex::new(
+                    r"^package\s+(?<package>[a-zA-Z0-9_.]+);"
+                ).unwrap()
+            );
+            if let Some(cap) = p_pattern.captures(line.as_str()) {
                 if package.is_some() {
                     continue;
-                } else {
-                    let (x, y) = Self::extract_package_from_line(line, file_path)?;
-                    let _ = package.insert(x);
-                    let _ = expected_class.insert(y);
                 }
-                continue;
+                let package_name = cap.name("package")
+                    .expect("No package capture group").as_str().to_string();
+                let _ = package.insert(package_name);
+                let cls = file_path.file_stem()
+                    .ok_or_else(|| anyhow::anyhow!(
+                                "{}: Could not get file stem", file_path.display()
+                            ))?
+                    .to_str()
+                    .ok_or_else(|| anyhow::anyhow!(
+                                "{}: Could not convert file stem to string", file_path.display()
+                            ))?
+                    .to_string();
+                let _ = expected_class.insert(cls);
             }
             let pat = PATTERN
                 .get_or_init(||
