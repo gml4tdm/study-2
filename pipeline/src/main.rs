@@ -4,6 +4,8 @@ use clap::Parser;
 pub mod graphs;
 pub mod utils;
 mod commands;
+mod file_structure;
+mod languages;
 
 #[derive(clap::Parser)]
 struct Cli {
