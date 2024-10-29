@@ -10,6 +10,7 @@ import os
 import re
 import sys
 
+import numpy
 from sklearn.metrics import accuracy_score, precision_recall_fscore_support
 from sklearn.svm import SVC
 
@@ -157,29 +158,35 @@ def load_datasets(triple):
 
 
 def build_training_data(graph_old: ProjectGraph, graph_cur: ProjectGraph):
+    names = []
     features = []
     labels = []
     for edge in graph_old.existing_edges():
         features.append(graph_old.feature_for_edge(edge))
         labels.append(True)
+        names.append(edge)
     for edge in graph_cur.existing_edges():
         features.append(graph_cur.feature_for_edge(edge))
         labels.append(True)
+        names.append(edge)
     negative = set(graph_old.all_possible_edges()) - set(graph_old.existing_edges())
     negative -= set(graph_cur.existing_edges())
     for edge in negative:
         features.append(graph_old.feature_for_edge(edge))
         labels.append(False)
-    return features, labels
+        names.append(edge)
+    return features, labels, names
 
 
 def build_testing_data(graph_cur: ProjectGraph, graph_new: ProjectGraph):
     features = []
     labels = []
+    names = []
     for edge, feat in graph_cur.edges_with_features():
         features.append(feat)
         labels.append(graph_new.has_edge(edge))
-    return features, labels
+        names.append(edge)
+    return features, labels, names
 
 
 ################################################################################
@@ -188,7 +195,24 @@ def build_testing_data(graph_cur: ProjectGraph, graph_new: ProjectGraph):
 ################################################################################
 
 
-def train_model(features, labels, logger) -> SVC:
+class DummyClassifier:
+
+    def __init__(self):
+        self._labels = {}
+
+    def fit(self, _features, labels, names):
+        for k, v in zip(names, labels, strict=True):
+            self._labels[k] = v
+        return self
+
+    def predict(self, _features, names):
+        result = []
+        for pair in names:
+            result.append(self._labels.get(pair, 0))
+        return numpy.array(result)
+
+
+def train_model(features, labels, _names, logger) -> SVC:
     logger.debug('Training model with %s samples', len(features))
     model = SVC(kernel='rbf', cache_size=1000, random_state=42)
     result = model.fit(features, labels)
@@ -196,8 +220,11 @@ def train_model(features, labels, logger) -> SVC:
     return result
 
 
-def evaluate_model(model, features, labels):
-    predictions = model.predict(features)
+def evaluate_model(model, features, labels, names):
+    if isinstance(model, DummyClassifier):
+        predictions = model.predict(features, names)
+    else:
+        predictions = model.predict(features)
 
     precision, recall, f1_score, support = precision_recall_fscore_support(
         labels, predictions, average='binary', zero_division=0
@@ -218,7 +245,11 @@ def evaluate_model(model, features, labels):
 ################################################################################
 
 
-def main():
+def main(dummy: bool = False):
+    global RESULT_DIRECTORY
+    if dummy:
+        RESULT_DIRECTORY = '../data/replication-results-dummy'
+
     logger = logging.getLogger(__name__)
     logger.setLevel(logging.DEBUG)
 
@@ -238,9 +269,15 @@ def main():
 
     for project, triples in get_version_triples():
         logger.info('Processing versions from project %s', project)
+        if project != 'apache-camel':
+            continue
         for triple in triples:
             logger.info('Found a version triple: %s, %s, %s',
                          triple[0][0], triple[1][0], triple[2][0])
+            if triple[0][0] != (2, 0, 0):
+                continue
+            assert triple[1][0] == (2, 1, 0), triple[1]
+            assert triple[2][0] == (2, 2, 0), triple[2]
             for version, filename in triple:
                 logger.debug('File: %s --> %s', version, filename)
             logger.info('Loading features and labels...')
@@ -249,8 +286,23 @@ def main():
                 logger.warning('Skipping triple since the dataset contains only one label.')
                 continue
             logger.info('Training model...')
-            model = train_model(*train, logger=logger)
+            if dummy:
+                model = DummyClassifier()
+                model = model.fit(*train)
+            else:
+                model = train_model(*train, logger=logger)
             logger.info('Evaluating model...')
+            features, labels, names = test
+            predictions = model.predict(features)
+            with open('predictions.json', 'w') as f:
+                json.dump(
+                    {
+                        'names': names,
+                        'predictions': predictions.tolist()
+                    },
+                    f,
+                    indent=2
+                )
             metrics = evaluate_model(model, *test)
             logger.info('Accuracy: %s', metrics['accuracy'])
             logger.info('Precision: %s', metrics['precision'])
@@ -268,4 +320,4 @@ def main():
 
 
 if __name__ == '__main__':
-    main()
+    main('dummy' in sys.argv[1:])

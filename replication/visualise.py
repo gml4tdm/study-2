@@ -32,7 +32,7 @@ def get_versions_from_filename(filename):
     ]
 
 
-def make_bar_plots(project, accuracy, precision, recall, f1_score, keys):
+def make_bar_plots(project, accuracy, precision, recall, f1_score, keys, base_dir):
     fig, axes = plt.subplots(nrows=2, ncols=2)
     fig.set_size_inches(19.20, 10.80)
     (ax1, ax2), (ax3, ax4) = axes
@@ -62,15 +62,22 @@ def make_bar_plots(project, accuracy, precision, recall, f1_score, keys):
     ax4.set_xlim([0, 1])
 
     fig.tight_layout()
-    os.makedirs('../data/replication-figures', exist_ok=True)
-    fig.savefig(f'../data/replication-figures/{project}.png')
+    os.makedirs(base_dir, exist_ok=True)
+    fig.savefig(os.path.join(base_dir, f'{project}.png'))
 
 
 def main():
-    for directory in os.listdir('..data/replication-results'):
+    for directory in os.listdir('../data/replication-results'):
         make_bar_plots(
             directory,
-            *get_metrics_for_project(os.path.join('../data/replication-results', directory))
+            *get_metrics_for_project(os.path.join('../data/replication-results', directory)),
+            base_dir='../data/replication-figures'
+        )
+    for directory in os.listdir('../data/replication-results-dummy'):
+        make_bar_plots(
+            directory,
+            *get_metrics_for_project(os.path.join('../data/replication-results-dummy', directory)),
+            base_dir='../data/replication-figures-dummy'
         )
 
 
