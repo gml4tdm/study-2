@@ -1,9 +1,0 @@
-[package]
-name = "differ"
-version = "0.1.0"
-edition = "2021"
-
-[dependencies]
-anyhow = "1.0.89"
-serde = { version = "1.0.210", features = ["derive"]}
-quick-xml = {  version = "0.36.2", features = ["serde", "serialize"] }
