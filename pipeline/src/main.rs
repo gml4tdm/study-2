@@ -7,6 +7,7 @@ mod commands;
 mod file_structure;
 mod languages;
 mod replication;
+mod datasets;
 
 #[derive(clap::Parser)]
 struct Cli {
@@ -32,7 +33,7 @@ struct DiffCommand {
 #[derive(clap::Args)]
 struct ConvertASPredictorOutputCommand {
     #[clap(short, long)]
-    input: PathBuf,
+    inputs: Vec<PathBuf>,
     
     #[clap(short, long)]
     output: PathBuf,
@@ -73,7 +74,7 @@ fn main() -> anyhow::Result<()> {
             commands::diff::diff_graph_commnd(diff.old, diff.new)?;
         }
         Command::ConvertASPredictorOutput(convert) => {
-            commands::convert_as_predictor_output::convert_as_predictor_output(convert.input, 
+            commands::convert_as_predictor_output::convert_as_predictor_output(convert.inputs, 
                                                                                convert.output)?;
         }
         Command::CompareTriplePredictions(compare) => {

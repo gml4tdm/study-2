@@ -35,7 +35,13 @@ def generate_metrics(filename):
     semantic_map = {}
     for row in df.rows(named=True):
         key = (row.pop('class1'), row.pop('class2'))
+        if key in semantic_map:
+            raise ValueError(f'Duplicate key: {key}')
         semantic_map[key] = row
+        ### NEW ###
+        key2 = (key[1], key[0])
+        semantic_map[key2] = row
+        ### END NEW ###
     graph = Graph.from_xml(filename)
     data = {
         'nodes': list(graph.nodes),
@@ -82,6 +88,11 @@ def generate_metrics(filename):
                     'semantic-features':  semantic_map.pop((x, y))
                 }
                 data['link-features'].append(entry)
+                ### NEW ###
+                entry2 = entry.copy()
+                entry2['from'], entry2['to'] = entry['to'], entry['from']
+                data['link-features'].append(entry2)
+                ### END NEW ###
                 progress()
     data['links-without-topology'] = [
         (x, y) for x, y in semantic_map if not _is_ignored(x) and not _is_ignored(y)

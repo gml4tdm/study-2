@@ -12,6 +12,7 @@ import sys
 
 import numpy
 from sklearn.metrics import accuracy_score, precision_recall_fscore_support
+from sklearn.metrics import confusion_matrix
 from sklearn.svm import SVC
 
 DATA_DIRECTORY = '../data/graphs'
@@ -126,6 +127,7 @@ class ProjectGraph:
 
     def feature_for_edge(self, e):
         x, y = e
+        ### NEW ###
         try:
             return self._features[(x, y)]
         except KeyError:
@@ -133,13 +135,21 @@ class ProjectGraph:
                 return self._features[(y, x)]
             except KeyError:
                 raise ValueError(f'No edge between {x} and {y}')
+        #return self._features[(x, y)]
+        ### END NEW ###
 
     def edges_with_features(self):
         yield from self._features.items()
 
     def has_edge(self, e):
+        ### NEW ###
         x, y = e
         return (x, y) in self._edges or (y, x) in self._edges
+        #return e in self._edges
+        ### END NEW ###
+
+    def has_node(self, node):
+        return node in self._nodes
 
 
 ################################################################################
@@ -183,6 +193,11 @@ def build_testing_data(graph_cur: ProjectGraph, graph_new: ProjectGraph):
     labels = []
     names = []
     for edge, feat in graph_cur.edges_with_features():
+        ### NEW ###
+        x, y = edge
+        if not (graph_new.has_node(x) and graph_new.has_node(y)):
+            continue
+        ### END NEW ###
         features.append(feat)
         labels.append(graph_new.has_edge(edge))
         names.append(edge)
@@ -236,7 +251,19 @@ def evaluate_model(model, features, labels, names):
         'f1_score': f1_score,
         'support': support
     }
-    return result
+    tn, fp, fn, tp = confusion_matrix(labels, predictions).ravel()
+    confusion = {
+        'predicted_dependencies': [
+            x
+            for x, y in zip(names, predictions)
+            if y > 0.5
+        ],
+        'true_negatives': tn.item(),
+        'false_positives': fp.item(),
+        'false_negatives': fn.item(),
+        'true_positives': tp.item()
+    }
+    return result, confusion
 
 
 ################################################################################
@@ -267,17 +294,19 @@ def main(dummy: bool = False):
     handler.setLevel(logging.DEBUG)
     logger.addHandler(handler)
 
+    running_result = []
+
     for project, triples in get_version_triples():
         logger.info('Processing versions from project %s', project)
-        if project != 'apache-camel':
-            continue
+        # if project != 'apache-camel':
+        #     continue
         for triple in triples:
             logger.info('Found a version triple: %s, %s, %s',
                          triple[0][0], triple[1][0], triple[2][0])
-            if triple[0][0] != (2, 0, 0):
-                continue
-            assert triple[1][0] == (2, 1, 0), triple[1]
-            assert triple[2][0] == (2, 2, 0), triple[2]
+            # if triple[0][0] != (2, 0, 0):
+            #     continue
+            # assert triple[1][0] == (2, 1, 0), triple[1]
+            # assert triple[2][0] == (2, 2, 0), triple[2]
             for version, filename in triple:
                 logger.debug('File: %s --> %s', version, filename)
             logger.info('Loading features and labels...')
@@ -292,18 +321,27 @@ def main(dummy: bool = False):
             else:
                 model = train_model(*train, logger=logger)
             logger.info('Evaluating model...')
-            features, labels, names = test
-            predictions = model.predict(features)
-            with open('predictions.json', 'w') as f:
-                json.dump(
-                    {
-                        'names': names,
-                        'predictions': predictions.tolist()
-                    },
-                    f,
-                    indent=2
-                )
-            metrics = evaluate_model(model, *test)
+            # features, labels, names = test
+            # predictions = model.predict(features)
+            # with open('predictions.json', 'w') as f:
+            #     json.dump(
+            #         {
+            #             'names': names,
+            #             'predictions': predictions.tolist()
+            #         },
+            #         f,
+            #         indent=2
+            #     )
+            metrics, confusion = evaluate_model(model, *test)
+            running_result.append(
+                {
+                    'project': project,
+                    'version_1': '.'.join(map(str, triple[0][0])),
+                    'version_2': '.'.join(map(str, triple[1][0])),
+                    'version_3': '.'.join(map(str, triple[2][0])),
+                    'output': confusion
+                }
+            )
             logger.info('Accuracy: %s', metrics['accuracy'])
             logger.info('Precision: %s', metrics['precision'])
             logger.info('Recall: %s', metrics['recall'])
@@ -317,6 +355,9 @@ def main(dummy: bool = False):
             )
             with open(filename, 'w') as file:
                 json.dump(metrics, file, indent=2)
+
+    with open('running_result.json', 'w') as file:
+        json.dump(running_result, file, indent=2)
 
 
 if __name__ == '__main__':
