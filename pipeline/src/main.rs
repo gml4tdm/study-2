@@ -6,6 +6,7 @@ pub mod utils;
 mod commands;
 mod file_structure;
 mod languages;
+mod replication;
 
 #[derive(clap::Parser)]
 struct Cli {
@@ -16,6 +17,8 @@ struct Cli {
 #[derive(clap::Subcommand)]
 enum Command {
     Diff(DiffCommand),
+    
+    ConvertASPredictorOutput(ConvertASPredictorOutputCommand),
 }
 
 #[derive(clap::Args)]
@@ -24,6 +27,15 @@ struct DiffCommand {
     old: PathBuf,
     #[clap(short, long)]
     new: PathBuf,
+}
+
+#[derive(clap::Args)]
+struct ConvertASPredictorOutputCommand {
+    #[clap(short, long)]
+    input: PathBuf,
+    
+    #[clap(short, long)]
+    output: PathBuf,
 }
 
 
@@ -53,6 +65,10 @@ fn main() -> anyhow::Result<()> {
     match cli.command {
         Command::Diff(diff) => {
             commands::diff::diff_graph_commnd(diff.old, diff.new)?;
+        }
+        Command::ConvertASPredictorOutput(convert) => {
+            commands::convert_as_predictor_output::convert_as_predictor_output(convert.input, 
+                                                                               convert.output)?;
         }
     }
     
