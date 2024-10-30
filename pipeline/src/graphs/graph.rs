@@ -1,6 +1,6 @@
 use std::collections::{HashMap, HashSet};
 
-#[derive(Debug, Clone)]
+#[derive(Debug, Clone, serde::Serialize, serde::Deserialize)]
 pub struct DependencyGraph {
     nodes: HashSet<String>,
     edges: HashMap<(String, String), DependencySpec>,
@@ -22,17 +22,9 @@ impl DependencyGraph {
     }
 }
 
-#[derive(Debug, Clone)]
+#[derive(Debug, Clone, Default, serde::Serialize, serde::Deserialize)]
 pub struct DependencySpec {
     counts: HashMap<DependencyType, usize>,
-}
-
-impl Default for DependencySpec {
-    fn default() -> Self {
-        Self {
-            counts: HashMap::new(),
-        }
-    }
 }
 
 impl DependencySpec {
@@ -46,6 +38,7 @@ impl DependencySpec {
 }
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
+#[derive(serde::Serialize, serde::Deserialize)]
 pub enum DependencyType {
     Uses,
     Extends,
