@@ -7,21 +7,21 @@ use itertools::Itertools;
 #[derive(Debug, Clone)]
 #[derive(serde::Serialize, serde::Deserialize)]
 pub struct ASPredictorRun {
-    project: String,
-    version_1: String,
-    version_2: String,
-    version_3: String,
-    output: Option<ASPredictorOutput>,
+    pub project: String,
+    pub version_1: String,
+    pub version_2: String,
+    pub version_3: String,
+    pub output: Option<ASPredictorOutput>,
 }
 
 
 #[derive(Debug, Clone, serde::Serialize, serde::Deserialize)]
 pub struct ASPredictorOutput {
-    predicted_dependencies: Vec<(String, String)>,
-    true_positives: u64,
-    false_positives: u64,
-    false_negatives: u64,
-    true_negatives: u64,
+    pub predicted_dependencies: Vec<(String, String)>,
+    pub true_positives: u64,
+    pub false_positives: u64,
+    pub false_negatives: u64,
+    pub true_negatives: u64,
 }
 
 

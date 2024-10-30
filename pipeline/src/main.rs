@@ -17,8 +17,8 @@ struct Cli {
 #[derive(clap::Subcommand)]
 enum Command {
     Diff(DiffCommand),
-    
     ConvertASPredictorOutput(ConvertASPredictorOutputCommand),
+    CompareTriplePredictions(CompareTriplePredictionsCommand),
 }
 
 #[derive(clap::Args)]
@@ -36,6 +36,12 @@ struct ConvertASPredictorOutputCommand {
     
     #[clap(short, long)]
     output: PathBuf,
+}
+
+#[derive(clap::Args)]
+struct CompareTriplePredictionsCommand {
+    #[clap(short, long)]
+    files: Vec<PathBuf>,
 }
 
 
@@ -69,6 +75,9 @@ fn main() -> anyhow::Result<()> {
         Command::ConvertASPredictorOutput(convert) => {
             commands::convert_as_predictor_output::convert_as_predictor_output(convert.input, 
                                                                                convert.output)?;
+        }
+        Command::CompareTriplePredictions(compare) => {
+            commands::compare_triple_predictions::compare_triple_predictions(compare.files)?;
         }
     }
     
