@@ -1,4 +1,3 @@
-use std::cell::OnceCell;
 use std::collections::hash_map::Entry;
 use std::collections::HashMap;
 use std::fs;
@@ -33,7 +32,7 @@ pub enum AcquisitionMethod {
     #[serde(rename = "github-repo-tag")]
     GitHubTag {
         #[serde(rename = "clone-url-http")] clone_url: String,
-        tag: String 
+        tag: String
     },
     #[serde(rename = "jar-archive-link")]
     JarArchiveLink {
@@ -124,32 +123,32 @@ impl AcquisitionMethod {
             AcquisitionMethod::TagGzArchiveLink { url, verification } => {
                 self.acquire_tar_archive_link(url, verification, to)
             }
-            AcquisitionMethod::NotAvailable{} => { 
+            AcquisitionMethod::NotAvailable{} => {
                 Err(anyhow::anyhow!("This version is not available"))
             }
         }
     }
-    
+
     pub fn is_available(&self) -> bool {
         !matches!(self, AcquisitionMethod::NotAvailable{})
     }
-    
+
     fn acquire_github_tag(&self,
-                          clone_url: &str, 
-                          tag: &str, 
+                          clone_url: &str,
+                          tag: &str,
                           to: impl AsRef<Path>) -> anyhow::Result<()> {
         // log::info!("Cloning repository {} to {}", clone_url, to.as_ref().display());
         // let repo = git2::Repository::clone(clone_url, to.as_ref())?;
-        
+
         // Safe as long the program is single-threaded.
         let cache = unsafe {
             let _ = REPOSITORY_CACHE.get_or_init(|| HashMap::new());
             let cache = REPOSITORY_CACHE.get_mut().unwrap();
-            cache 
+            cache
         };
         let repo_path = match cache.entry(clone_url.to_string()) {
             Entry::Occupied(e) => e.get().clone(),
-            Entry::Vacant(mut e) => {
+            Entry::Vacant(e) => {
                 let path = PathBuf::from("./github-cache");
                 if !path.exists() {
                     std::fs::create_dir_all(&path)?;
@@ -161,10 +160,10 @@ impl AcquisitionMethod {
             }
         };
         let repo = git2::Repository::open(repo_path.clone())?;
-        
+
         // Based on https://stackoverflow.com/a/67240436/5153960
         log::info!("Checking out tag {}", tag);
-        
+
         let (object, reference) = repo.revparse_ext(tag)?;
         repo.checkout_tree(&object, None)?;
         match reference {
@@ -173,13 +172,13 @@ impl AcquisitionMethod {
             // this is a commit, not a reference
             None => repo.set_head_detached(object.id()),
         }?;
-        
+
         log::info!("Copying checked-out version to {}...", to.as_ref().display());
         Self::copy_tree(repo_path, to.as_ref())?;
-        
+
         Ok(())
     }
-    
+
     fn copy_tree(source: impl AsRef<Path>, destination: impl AsRef<Path>) -> anyhow::Result<()> {
         fs::create_dir_all(destination.as_ref())?;
         for entry in fs::read_dir(source)? {
@@ -194,11 +193,11 @@ impl AcquisitionMethod {
         }
         Ok(())
     }
-    
+
     fn acquire_zip_archive_link(&self,
-                                   url: &str,
-                                   verification: &[ArchiveVerificationMethod], 
-                                   to: impl AsRef<Path>) -> anyhow::Result<()> {
+                                url: &str,
+                                verification: &[ArchiveVerificationMethod],
+                                to: impl AsRef<Path>) -> anyhow::Result<()> {
         log::info!("Downloading archive from {}", url);
         let archive = self.download_archive(url)?;
         for method in verification {
@@ -213,9 +212,9 @@ impl AcquisitionMethod {
     }
 
     fn acquire_tar_archive_link(&self,
-                                   url: &str,
-                                   verification: &[ArchiveVerificationMethod],
-                                   to: impl AsRef<Path>) -> anyhow::Result<()> {
+                                url: &str,
+                                verification: &[ArchiveVerificationMethod],
+                                to: impl AsRef<Path>) -> anyhow::Result<()> {
         log::info!("Downloading archive from {}", url);
         let archive_path = self.download_archive(url)?;
         for method in verification {
@@ -235,7 +234,7 @@ impl AcquisitionMethod {
             .output()?;
         Ok(())
     }
-    
+
     fn download_archive(&self, url: &str) -> anyhow::Result<String> {
         let filename = url.rsplit_once('/')
             .ok_or_else(|| anyhow::anyhow!("Could not extract filename from URL: {}", url))?.1;
@@ -268,7 +267,7 @@ impl ArchiveVerificationMethod {
             }
         }
     }
-    
+
     pub fn verify(&self, file_location: impl AsRef<Path>) -> anyhow::Result<bool> {
         let expected = self.get_expected_hash()?;
         let actual = self.get_actual_hash(file_location)?;
@@ -276,7 +275,7 @@ impl ArchiveVerificationMethod {
         log::debug!("Actual hash: {}", actual);
         Ok(expected == actual)
     }
-    
+
     fn get_expected_hash(&self) -> anyhow::Result<String> {
         let url = match self {
             ArchiveVerificationMethod::Md5Hash { url} => url,
@@ -292,7 +291,7 @@ impl ArchiveVerificationMethod {
         }
         Ok(expected_hash)
     }
-    
+
     fn get_actual_hash(&self, location: impl AsRef<Path>) -> anyhow::Result<String> {
         match self {
             ArchiveVerificationMethod::Md5Hash { .. } => {
@@ -303,7 +302,7 @@ impl ArchiveVerificationMethod {
             }
         }
     }
-    
+
     fn get_md5_hash(&self, location: impl AsRef<Path>) -> anyhow::Result<String> {
         let mut hasher = md5::Context::new();
         let file = std::fs::File::open(location)?;

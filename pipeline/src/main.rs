@@ -8,6 +8,7 @@ mod file_structure;
 mod languages;
 mod replication;
 mod datasets;
+mod source_downloader;
 
 #[derive(clap::Parser)]
 struct Cli {
@@ -21,6 +22,7 @@ enum Command {
     ConvertASPredictorOutput(ConvertASPredictorOutputCommand),
     CompareTriplePredictions(CompareTriplePredictionsCommand),
     GenerateTrainTestTriples(GenerateTrainTestTriplesCommand),
+    DownloadSources(DownloadSourcesCommand),
 }
 
 #[derive(clap::Args)]
@@ -56,6 +58,15 @@ struct GenerateTrainTestTriplesCommand {
     
     #[clap(short, long)]
     only_common_nodes_for_training: bool,
+}
+
+#[derive(clap::Args)]
+struct DownloadSourcesCommand {
+    #[clap(short, long)]
+    input_file: PathBuf,
+    
+    #[clap(short, long)]
+    output_directory: PathBuf,
 }
 
 
@@ -98,6 +109,10 @@ fn main() -> anyhow::Result<()> {
                 generate.input_files, generate.output_directory, generate.only_common_nodes_for_training
             )?;
         }
+        Command::DownloadSources(download) => {
+            commands::download_sources::download_sources(download.input_file, download.output_directory)?;
+        }
+        
     }
     
     Ok(())
