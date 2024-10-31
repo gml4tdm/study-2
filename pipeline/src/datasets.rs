@@ -1,1 +1,1 @@
-mod triples;
+pub(crate) mod triples;

@@ -20,6 +20,7 @@ enum Command {
     Diff(DiffCommand),
     ConvertASPredictorOutput(ConvertASPredictorOutputCommand),
     CompareTriplePredictions(CompareTriplePredictionsCommand),
+    GenerateTrainTestTriples(GenerateTrainTestTriplesCommand),
 }
 
 #[derive(clap::Args)]
@@ -32,7 +33,7 @@ struct DiffCommand {
 
 #[derive(clap::Args)]
 struct ConvertASPredictorOutputCommand {
-    #[clap(short, long)]
+    #[clap(short, long, num_args = 1..)]
     inputs: Vec<PathBuf>,
     
     #[clap(short, long)]
@@ -41,8 +42,20 @@ struct ConvertASPredictorOutputCommand {
 
 #[derive(clap::Args)]
 struct CompareTriplePredictionsCommand {
-    #[clap(short, long)]
+    #[clap(short, long, num_args = 1..)]
     files: Vec<PathBuf>,
+}
+
+#[derive(clap::Args)]
+struct GenerateTrainTestTriplesCommand {
+    #[clap(short, long, num_args = 3..)]
+    input_files: Vec<PathBuf>,
+    
+    #[clap(short, long)]
+    output_directory: PathBuf,
+    
+    #[clap(short, long)]
+    only_common_nodes_for_training: bool,
 }
 
 
@@ -53,7 +66,7 @@ fn setup_logging() -> anyhow::Result<()> {
             flexi_logger::FileSpec::default()
                 .directory("logs")
                 .basename("pipeline")
-                .use_timestamp(true),
+                .use_timestamp(false),
         )
         .duplicate_to_stdout(flexi_logger::Duplicate::Info)
         .format_for_files(flexi_logger::detailed_format)
@@ -79,6 +92,11 @@ fn main() -> anyhow::Result<()> {
         }
         Command::CompareTriplePredictions(compare) => {
             commands::compare_triple_predictions::compare_triple_predictions(compare.files)?;
+        }
+        Command::GenerateTrainTestTriples(generate) => {
+            commands::generate_train_test_triples::generate_train_test_triples(
+                generate.input_files, generate.output_directory, generate.only_common_nodes_for_training
+            )?;
         }
     }
     

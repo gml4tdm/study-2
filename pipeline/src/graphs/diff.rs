@@ -1,5 +1,5 @@
 use std::collections::{HashMap, HashSet};
-use crate::graphs::{DependencyGraph, DependencySpec, DependencyType};
+use crate::graphs::{DependencyGraph, DependencyGraphKind, DependencySpec, DependencyType};
 
 pub struct GraphDiff {
     added_vertices: Vec<VertexWithEdges>,
@@ -93,7 +93,10 @@ impl Vertex {
 
 
 #[allow(unused)]
-pub fn diff_graphs(old: &DependencyGraph, new: &DependencyGraph) -> GraphDiff {
+pub fn diff_graphs<K>(old: &DependencyGraph<K>, new: &DependencyGraph<K>) -> GraphDiff
+where
+    K: DependencyGraphKind
+{
     let removed_vertices = diff_vertices(old, new);
     let added_vertices = diff_vertices(new, old);
     let mut removed_edges= diff_edges(old, new);
@@ -113,15 +116,20 @@ pub fn diff_graphs(old: &DependencyGraph, new: &DependencyGraph) -> GraphDiff {
 }
 
 
-fn diff_vertices(lhs: &DependencyGraph, rhs: &DependencyGraph) -> HashSet<String> {
+fn diff_vertices<K>(lhs: &DependencyGraph<K>, rhs: &DependencyGraph<K>) -> HashSet<String> 
+where
+    K: DependencyGraphKind
+{
     lhs.vertices().iter()
         .filter(|v| !rhs.vertices().contains(*v))
         .cloned()
         .collect()
 }
 
-fn diff_edges(lhs: &DependencyGraph, 
-              rhs: &DependencyGraph) -> HashMap<(String, String), DependencySpec>
+fn diff_edges<K>(lhs: &DependencyGraph<K>,
+                 rhs: &DependencyGraph<K>) -> HashMap<(String, String), DependencySpec>
+where
+    K: DependencyGraphKind
 {
     lhs.edges().iter()
         .filter(|(k, _v)| !rhs.edges().contains_key(k))

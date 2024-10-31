@@ -1,7 +1,7 @@
 use std::collections::{HashMap, HashSet};
 use std::path::Path;
 use std::str::FromStr;
-use crate::graphs::{DependencyGraph, DependencySpec, DependencyType};
+use crate::graphs::{ClassGraph, DependencyGraph, DependencySpec, DependencyType};
 use crate::utils::rsf::read_rsf_file;
 
 #[allow(unused)]
@@ -73,7 +73,7 @@ impl From<(Header, DependencyEdge, f32)> for Dependency {
     }
 }
 
-impl FromRsfFile for DependencyGraph {
+impl FromRsfFile for DependencyGraph<ClassGraph> {
     fn load_from_rsf_file(path: impl AsRef<Path>) -> anyhow::Result<Self> {
         let raw_edges = read_rsf_file::<Dependency, _, _, _, _, _, _>(path)?;
         let mut vertices = HashSet::new();

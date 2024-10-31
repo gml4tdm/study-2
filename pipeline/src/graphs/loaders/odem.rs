@@ -1,7 +1,7 @@
 use std::collections::{HashMap, HashSet};
 use std::path::Path;
 
-use crate::graphs::{DependencyGraph, DependencySpec, DependencyType};
+use crate::graphs::{ClassGraph, DependencyGraph, DependencySpec, DependencyType};
 
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
@@ -160,25 +160,32 @@ pub enum DependsOnClassification {
 ////////////////////////////////////////////////////////////////////////////////
 
 
-impl From<OdemGraphRoot> for DependencyGraph {
+impl From<OdemGraphRoot> for DependencyGraph<ClassGraph> {
     fn from(root: OdemGraphRoot) -> Self {
         let mut nodes = HashSet::new();
         let mut edges = HashMap::new();
-
+        
+        for container in root.context.containers.iter() {
+            for namespace in container.namespaces.iter() {
+                for r#type in namespace.types.iter() {
+                    nodes.insert(r#type.name.clone());
+                }
+            }
+        }
         for container in root.context.containers {
             for namespace in container.namespaces {
                 for r#type in namespace.types {
-                    nodes.insert(r#type.name.clone());
                     for depends_on in r#type.dependencies.depends_on {
-                        let key = (r#type.name.clone(), depends_on.name.clone());
+                        if !nodes.contains(&depends_on.name) {
+                            continue;
+                        }
+                        let key = (r#type.name.clone(), depends_on.name);
                         let value = match depends_on.classification {
                             DependsOnClassification::Uses => DependencyType::Uses,
                             DependsOnClassification::Extends => DependencyType::Extends,
-                            DependsOnClassification::Implements => DependencyType::Implements,
+                            DependsOnClassification::Implements => DependencyType::Implements, 
                         };
-                        edges.entry(key)
-                            .or_insert(DependencySpec::default())
-                            .increment(value);
+                        edges.entry(key).or_insert(DependencySpec::default()).increment(value);
                     }
                 }
             }
