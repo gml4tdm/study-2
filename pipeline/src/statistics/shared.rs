@@ -297,7 +297,7 @@ impl GraphConnectivityAnalyser {
         for i in 0..n {
             distances[i * n + i] = 0;
         }
-        for ((from, to), _) in g.edges() {
+        for (from, to) in g.edges().keys() {
             let i = *node_map.get(from).unwrap();
             let j = *node_map.get(to).unwrap();
             if i != j {
@@ -328,7 +328,9 @@ impl GraphConnectivityAnalyser {
     
     pub fn hops(&self) -> Vec<u64> {
         self.distances.iter()
-            .map(|d| *d as u64)
+            .copied()
+            .filter(|d| *d != -1)
+            .map(|d| d as u64)
             .collect()
     }
 }
