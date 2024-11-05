@@ -1,0 +1,7 @@
+pydantic
+typed-argument-parser
+networkx
+pydantic-xml
+scikit-learn
+torchmetrics
+torch-geometric

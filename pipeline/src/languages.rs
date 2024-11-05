@@ -1,4 +1,4 @@
 mod language;
-mod structure;
+mod mappers;
 
 pub use language::Language;

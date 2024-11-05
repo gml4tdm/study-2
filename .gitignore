@@ -5,6 +5,7 @@ logs.txt
 logs
 cda
 legacy-java
+ASPredictor
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

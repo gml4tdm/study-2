@@ -1,0 +1,351 @@
+[apache-ant-1.1, apache-ant-1.2, apache-ant-1.3, apache-ant-1.4, apache-ant-1.5, apache-ant-1.5.2, apache-ant-1.6.0, apache-ant-1.7.0, apache-ant-1.8.0, apache-ant-1.9.0, apache-ant-1.10.0]
+apache-ant-1.1 ## apache-ant-1.2 ## apache-ant-1.3
+outputScores
+apache-ant-1.2 ## apache-ant-1.3 ## apache-ant-1.4
+outputScores
+apache-ant-1.3 ## apache-ant-1.4 ## apache-ant-1.5
+outputScores
+[fields-methods-calls#Cosine, variables#Cosine, fields-variables-methods#Cosine, fields#Cosine, fields-variables-methods-calls#Cosine, methods#Cosine, imports-fields-methods-variables#Cosine, imports#Cosine, comments#Cosine, imports-fields-methods-variables-comments#Cosine, fields-methods#Cosine, imports-fields-methods-variables-comments-calls#Cosine, imports-fields-methods-variables-calls#Cosine, fields-variables#Cosine, calls#Cosine, methods-calls#Cosine]
+comments#Cosine
+PAQUETES -- 8
+[fields-methods-calls#Cosine, variables#Cosine, fields-variables-methods#Cosine, fields#Cosine, fields-variables-methods-calls#Cosine, methods#Cosine, imports-fields-methods-variables#Cosine, imports#Cosine, comments#Cosine, imports-fields-methods-variables-comments#Cosine, fields-methods#Cosine, imports-fields-methods-variables-comments-calls#Cosine, imports-fields-methods-variables-calls#Cosine, fields-variables#Cosine, calls#Cosine, methods-calls#Cosine]
+comments#Cosine
+[fields-methods-calls#Cosine, variables#Cosine, fields-variables-methods#Cosine, fields#Cosine, fields-variables-methods-calls#Cosine, methods#Cosine, imports-fields-methods-variables#Cosine, imports#Cosine, comments#Cosine, imports-fields-methods-variables-comments#Cosine, fields-methods#Cosine, imports-fields-methods-variables-comments-calls#Cosine, imports-fields-methods-variables-calls#Cosine, fields-variables#Cosine, calls#Cosine, methods-calls#Cosine]
+comments#Cosine
+=== Confusion Matrix ===
+
+  a  b   <-- classified as
+  2  5 |  a = true
+ 26 72 |  b = false
+
+28 --- [org.apache.tools.ant.util-org.apache.tools.ant.listener, org.apache.tools.zip-org.apache.tools.ant, org.apache.tools.ant.taskdefs.compilers-org.apache.tools.ant.taskdefs.rmic, org.apache.tools.tar-org.apache.tools.mail, org.apache.tools.ant.taskdefs.rmic-org.apache.tools.ant.taskdefs.compilers, org.apache.tools.ant.util-org.apache.tools.ant.taskdefs, org.apache.tools.ant.types-org.apache.tools.ant.taskdefs, org.apache.tools.ant.util-org.apache.tools.mail, org.apache.tools.ant.listener-org.apache.tools.mail, org.apache.tools.ant.listener-org.apache.tools.ant.types, org.apache.tools.mail-org.apache.tools.ant.taskdefs, org.apache.tools.ant-org.apache.tools.ant.taskdefs.rmic, org.apache.tools.ant.listener-org.apache.tools.zip, org.apache.tools.ant.taskdefs-org.apache.tools.ant.listener, org.apache.tools.mail-org.apache.tools.ant.listener, org.apache.tools.ant-org.apache.tools.ant.listener, org.apache.tools.zip-org.apache.tools.ant.taskdefs, org.apache.tools.ant.listener-org.apache.tools.ant.taskdefs, org.apache.tools.ant.listener-org.apache.tools.ant.util, org.apache.tools.ant.types-org.apache.tools.ant.taskdefs.rmic, org.apache.tools.mail-org.apache.tools.ant.util, org.apache.tools.mail-org.apache.tools.ant, org.apache.tools.ant.types-org.apache.tools.ant.listener, org.apache.tools.zip-org.apache.tools.ant.listener, org.apache.tools.mail-org.apache.tools.tar, org.apache.tools.ant-org.apache.tools.ant.taskdefs, org.apache.tools.ant-org.apache.tools.mail, org.apache.tools.ant-org.apache.tools.zip]
+Classification Time;315
+ ---- Falsely closes cycle? org.apache.tools.ant.listener-org.apache.tools.ant.types
+ ---- Falsely closes cycle? org.apache.tools.ant.taskdefs.rmic-org.apache.tools.ant.taskdefs.compilers
+ ---- Falsely closes cycle? org.apache.tools.ant.taskdefs.compilers-org.apache.tools.ant.taskdefs.rmic
+ ---- Falsely closes cycle? org.apache.tools.ant.listener-org.apache.tools.ant.util
+predicted: 105
+ground: 105
+Filtering Time;2
+105 105
+ROW=truth and COL=predicted
+class  0 |      96 |       4 |
+class  1 |       5 |       0 |
+Precision;Recall;smile.validation.FMeasure@2353b3e6;Specificity;Sensitivity;TP;FN;FP;TN;
+ yes;0.0;0.0;0;0.96;0.0;0;5;4;96;
+ no;0.9504950495049505;0.96;0.9552238805970149;0.0;0.96;96;4;5;0;
+ avg;0.4752475247524752;0.48;0;0.48;0.48;
+apache-ant-1.4 ## apache-ant-1.5 ## apache-ant-1.5.2
+outputScores
+PAQUETES -- 13
+[fields-methods-calls#Cosine, variables#Cosine, fields-variables-methods#Cosine, fields#Cosine, fields-variables-methods-calls#Cosine, methods#Cosine, imports-fields-methods-variables#Cosine, imports#Cosine, comments#Cosine, imports-fields-methods-variables-comments#Cosine, fields-methods#Cosine, imports-fields-methods-variables-comments-calls#Cosine, imports-fields-methods-variables-calls#Cosine, fields-variables#Cosine, calls#Cosine, methods-calls#Cosine]
+comments#Cosine
+=== Confusion Matrix ===
+
+   a   b   <-- classified as
+   1   0 |   a = true
+  77 272 |   b = false
+
+78 --- [org.apache.tools.ant.taskdefs.email-org.apache.tools.ant.taskdefs, org.apache.tools.ant.util.facade-org.apache.tools.ant.taskdefs.condition, org.apache.tools.ant.listener-org.apache.tools.ant.filters, org.apache.tools.ant.types-org.apache.tools.ant.filters.util, org.apache.tools.ant.util.regexp-org.apache.tools.ant.util, org.apache.tools.ant-org.apache.tools.ant.taskdefs.email, org.apache.tools.ant.taskdefs-org.apache.tools.mail, org.apache.tools.ant.types-org.apache.tools.ant.taskdefs, org.apache.tools.ant.util-org.apache.tools.ant.input, org.apache.tools.ant.taskdefs.condition-org.apache.tools.ant.types.selectors, org.apache.tools.mail-org.apache.tools.ant.taskdefs, org.apache.tools.ant.types-org.apache.tools.ant.taskdefs.compilers, org.apache.tools.ant-org.apache.tools.ant.taskdefs.rmic, org.apache.tools.ant.listener-org.apache.tools.zip, org.apache.tools.mail-org.apache.tools.ant.listener, org.apache.tools.ant.taskdefs-org.apache.tools.ant.taskdefs.cvslib, org.apache.tools.ant.util.facade-org.apache.tools.ant, org.apache.tools.ant.input-org.apache.tools.ant.util.regexp, org.apache.tools.ant-org.apache.tools.ant.listener, org.apache.tools.zip-org.apache.tools.ant.taskdefs, org.apache.tools.ant.input-org.apache.tools.ant.taskdefs, org.apache.tools.ant.util-org.apache.tools.ant.taskdefs.email, org.apache.tools.ant.listener-org.apache.tools.ant.taskdefs, org.apache.tools.ant.filters-org.apache.tools.ant.taskdefs.condition, org.apache.tools.ant.taskdefs-org.apache.tools.ant.helper, org.apache.tools.ant.util.facade-org.apache.tools.ant.taskdefs, org.apache.tools.ant.filters.util-org.apache.tools.ant.taskdefs, org.apache.tools.ant-org.apache.tools.ant.util.regexp, org.apache.tools.ant.filters-org.apache.tools.ant.util.facade, org.apache.tools.ant.util-org.apache.tools.ant.filters, org.apache.tools.ant.util.regexp-org.apache.tools.ant.filters, org.apache.tools.ant.types-org.apache.tools.ant.taskdefs.email, org.apache.tools.mail-org.apache.tools.ant, org.apache.tools.ant.types-org.apache.tools.ant.input, org.apache.tools.ant.taskdefs.email-org.apache.tools.ant.types.selectors, org.apache.tools.mail-org.apache.tools.ant.util.facade, org.apache.tools.ant.filters-org.apache.tools.ant.taskdefs, org.apache.tools.ant.taskdefs.condition-org.apache.tools.ant.types, org.apache.tools.ant.util-org.apache.tools.ant.listener, org.apache.tools.ant.util.regexp-org.apache.tools.ant.types, org.apache.tools.ant.taskdefs.email-org.apache.tools.ant.util, org.apache.tools.ant.types.selectors-org.apache.tools.ant.filters.util, org.apache.tools.ant.filters-org.apache.tools.ant.listener, org.apache.tools.ant.types-org.apache.tools.ant.helper, org.apache.tools.ant.types-org.apache.tools.ant.util.facade, org.apache.tools.bzip2-org.apache.tools.ant.taskdefs, org.apache.tools.ant.util-org.apache.tools.ant.taskdefs, org.apache.tools.ant.util.facade-org.apache.tools.mail, org.apache.tools.ant-org.apache.tools.ant.taskdefs.compilers, org.apache.tools.ant.util-org.apache.tools.ant.types.selectors, org.apache.tools.ant.util.regexp-org.apache.tools.ant.input, org.apache.tools.ant.util-org.apache.tools.ant.taskdefs.compilers, org.apache.tools.ant.filters-org.apache.tools.ant.types.selectors, org.apache.tools.ant.taskdefs-org.apache.tools.ant.listener, org.apache.tools.ant-org.apache.tools.ant.filters, org.apache.tools.ant.filters-org.apache.tools.ant.helper, org.apache.tools.ant.filters-org.apache.tools.mail, org.apache.tools.ant.input-org.apache.tools.ant.types, org.apache.tools.ant.types.selectors-org.apache.tools.ant.taskdefs, org.apache.tools.ant.util.facade-org.apache.tools.ant.listener, org.apache.tools.ant.util.facade-org.apache.tools.ant.filters, org.apache.tools.ant.helper-org.apache.tools.ant.types, org.apache.tools.mail-org.apache.tools.ant.taskdefs.email, org.apache.tools.ant.helper-org.apache.tools.ant.taskdefs, org.apache.tools.ant.util-org.apache.tools.ant.taskdefs.rmic, org.apache.tools.ant.types-org.apache.tools.ant.taskdefs.condition, org.apache.tools.ant.util-org.apache.tools.ant.taskdefs.cvslib, org.apache.tools.ant-org.apache.tools.ant.taskdefs.cvslib, org.apache.tools.ant.types-org.apache.tools.ant.taskdefs.cvslib, org.apache.tools.ant-org.apache.tools.ant.filters.util, org.apache.tools.ant.types-org.apache.tools.ant.taskdefs.rmic, org.apache.tools.ant.util-org.apache.tools.ant.helper, org.apache.tools.ant.filters-org.apache.tools.ant.taskdefs.cvslib, org.apache.tools.zip-org.apache.tools.ant.listener, org.apache.tools.ant-org.apache.tools.ant.taskdefs, org.apache.tools.ant-org.apache.tools.mail, org.apache.tools.ant.filters-org.apache.tools.ant.taskdefs.email, org.apache.tools.tar-org.apache.tools.ant.taskdefs]
+Classification Time;109
+ ---- Falsely closes cycle? org.apache.tools.ant.types-org.apache.tools.ant.filters.util
+ ---- Falsely closes cycle? org.apache.tools.ant.util-org.apache.tools.ant.input
+ ---- Falsely closes cycle? org.apache.tools.ant.types-org.apache.tools.ant.taskdefs.compilers
+ ---- Falsely closes cycle? org.apache.tools.ant.input-org.apache.tools.ant.util.regexp
+ ---- Falsely closes cycle? org.apache.tools.ant.util-org.apache.tools.ant.filters
+ ---- Falsely closes cycle? org.apache.tools.ant.types-org.apache.tools.ant.input
+ ---- Falsely closes cycle? org.apache.tools.ant.taskdefs.email-org.apache.tools.ant.types.selectors
+ ---- Falsely closes cycle? org.apache.tools.ant.util.facade-org.apache.tools.mail
+ ---- Falsely closes cycle? org.apache.tools.ant-org.apache.tools.ant.filters
+ ---- Falsely closes cycle? org.apache.tools.ant.input-org.apache.tools.ant.types
+ ---- Falsely closes cycle? org.apache.tools.ant.types.selectors-org.apache.tools.ant.taskdefs
+ ---- Falsely closes cycle? org.apache.tools.ant.util-org.apache.tools.ant.helper
+ ---- Falsely closes cycle? org.apache.tools.ant.util.regexp-org.apache.tools.ant.util
+ ---- Falsely closes cycle? org.apache.tools.ant.taskdefs-org.apache.tools.ant.helper
+ ---- Falsely closes cycle? org.apache.tools.ant.filters-org.apache.tools.ant.util.facade
+ ---- Falsely closes cycle? org.apache.tools.ant.util.regexp-org.apache.tools.ant.types
+ ---- Falsely closes cycle? org.apache.tools.ant.util-org.apache.tools.ant.taskdefs
+ ---- Falsely closes cycle? org.apache.tools.ant.util-org.apache.tools.ant.taskdefs.compilers
+ ---- Falsely closes cycle? org.apache.tools.ant.filters-org.apache.tools.ant.helper
+ ---- Falsely closes cycle? org.apache.tools.ant.util.facade-org.apache.tools.ant.taskdefs.condition
+ ---- Falsely closes cycle? org.apache.tools.ant.taskdefs-org.apache.tools.mail
+ ---- Falsely closes cycle? org.apache.tools.ant.types-org.apache.tools.ant.taskdefs
+ ---- Falsely closes cycle? org.apache.tools.ant.listener-org.apache.tools.ant.taskdefs
+ ---- Falsely closes cycle? org.apache.tools.ant.util.facade-org.apache.tools.ant.taskdefs
+ ---- Falsely closes cycle? org.apache.tools.ant.filters.util-org.apache.tools.ant.taskdefs
+ ---- Falsely closes cycle? org.apache.tools.ant-org.apache.tools.ant.util.regexp
+ ---- Falsely closes cycle? org.apache.tools.ant.util.regexp-org.apache.tools.ant.filters
+ ---- Falsely closes cycle? org.apache.tools.ant.types-org.apache.tools.ant.taskdefs.email
+ ---- Falsely closes cycle? org.apache.tools.ant.types-org.apache.tools.ant.helper
+ ---- Falsely closes cycle? org.apache.tools.ant.types-org.apache.tools.ant.util.facade
+ ---- Falsely closes cycle? org.apache.tools.ant-org.apache.tools.ant.taskdefs.compilers
+ ---- Falsely closes cycle? org.apache.tools.ant.util.regexp-org.apache.tools.ant.input
+ ---- Falsely closes cycle? org.apache.tools.ant.filters-org.apache.tools.ant.types.selectors
+ ---- Falsely closes cycle? org.apache.tools.ant.filters-org.apache.tools.mail
+ ---- Falsely closes cycle? org.apache.tools.ant.util.facade-org.apache.tools.ant.filters
+ ---- Falsely closes cycle? org.apache.tools.ant.types-org.apache.tools.ant.taskdefs.condition
+ ---- Falsely closes cycle? org.apache.tools.ant-org.apache.tools.ant.filters.util
+ ---- Falsely closes cycle? org.apache.tools.ant.types-org.apache.tools.ant.taskdefs.rmic
+ ---- Falsely closes cycle? org.apache.tools.ant-org.apache.tools.mail
+ ---- Falsely closes cycle? org.apache.tools.ant.taskdefs.email-org.apache.tools.ant.taskdefs
+ ---- Falsely closes cycle? org.apache.tools.ant.listener-org.apache.tools.ant.filters
+ ---- Falsely closes cycle? org.apache.tools.ant-org.apache.tools.ant.taskdefs.email
+ ---- Falsely closes cycle? org.apache.tools.ant.taskdefs.condition-org.apache.tools.ant.types.selectors
+ ---- Falsely closes cycle? org.apache.tools.ant-org.apache.tools.ant.taskdefs.rmic
+ ---- Falsely closes cycle? org.apache.tools.ant.listener-org.apache.tools.zip
+ ---- Falsely closes cycle? org.apache.tools.ant.util.facade-org.apache.tools.ant
+ ---- Falsely closes cycle? org.apache.tools.ant.input-org.apache.tools.ant.taskdefs
+ ---- Falsely closes cycle? org.apache.tools.ant.util-org.apache.tools.ant.taskdefs.email
+ ---- Falsely closes cycle? org.apache.tools.ant.filters-org.apache.tools.ant.taskdefs.condition
+ ---- Falsely closes cycle? org.apache.tools.ant.filters-org.apache.tools.ant.taskdefs
+ ---- Falsely closes cycle? org.apache.tools.ant.taskdefs.condition-org.apache.tools.ant.types
+ ---- Falsely closes cycle? org.apache.tools.ant.types.selectors-org.apache.tools.ant.filters.util
+ ---- Falsely closes cycle? org.apache.tools.ant.util-org.apache.tools.ant.types.selectors
+ ---- Falsely closes cycle? org.apache.tools.ant.helper-org.apache.tools.ant.types
+ ---- Falsely closes cycle? org.apache.tools.ant.helper-org.apache.tools.ant.taskdefs
+ ---- Falsely closes cycle? org.apache.tools.ant.util-org.apache.tools.ant.taskdefs.rmic
+ ---- Falsely closes cycle? org.apache.tools.ant-org.apache.tools.ant.taskdefs
+ ---- Falsely closes cycle? org.apache.tools.ant.filters-org.apache.tools.ant.taskdefs.email
+predicted: 350
+ground: 350
+Filtering Time;3
+350 350
+ROW=truth and COL=predicted
+class  0 |     291 |      58 |
+class  1 |       0 |       1 |
+Precision;Recall;smile.validation.FMeasure@7ce6a65d;Specificity;Sensitivity;TP;FN;FP;TN;
+ yes;0.01694915254237288;1.0;0.03333333333333333;0.833810888252149;1.0;1;0;58;291;
+ no;1.0;0.833810888252149;0.909375;1.0;0.833810888252149;291;58;0;1;
+ avg;0.5084745762711864;0.9169054441260744;0.4713541666666667;0.9169054441260744;0.9169054441260744;
+apache-ant-1.5 ## apache-ant-1.5.2 ## apache-ant-1.6.0
+outputScores
+PAQUETES -- 21
+[fields-methods-calls#Cosine, variables#Cosine, fields-variables-methods#Cosine, fields#Cosine, fields-variables-methods-calls#Cosine, methods#Cosine, imports-fields-methods-variables#Cosine, imports#Cosine, comments#Cosine, imports-fields-methods-variables-comments#Cosine, fields-methods#Cosine, imports-fields-methods-variables-comments-calls#Cosine, imports-fields-methods-variables-calls#Cosine, fields-variables#Cosine, calls#Cosine, methods-calls#Cosine]
+comments#Cosine
+=== Confusion Matrix ===
+
+   a   b   <-- classified as
+   7   1 |   a = true
+  13 328 |   b = false
+
+20 --- [org.apache.tools.ant.types.selectors-org.apache.tools.ant.taskdefs, org.apache.tools.ant.taskdefs.condition-org.apache.tools.ant.types, org.apache.tools.ant.taskdefs-org.apache.tools.ant.util.regexp, org.apache.tools.ant.taskdefs.email-org.apache.tools.ant.taskdefs, org.apache.tools.zip-org.apache.tools.ant.taskdefs, org.apache.tools.ant.helper-org.apache.tools.ant.types, org.apache.tools.mail-org.apache.tools.ant.taskdefs.email, org.apache.tools.ant.types-org.apache.tools.ant.helper, org.apache.tools.ant.input-org.apache.tools.ant.util, org.apache.tools.ant.taskdefs-org.apache.tools.ant.helper, org.apache.tools.ant.types-org.apache.tools.ant.taskdefs.condition, org.apache.tools.ant.filters.util-org.apache.tools.ant.taskdefs, org.apache.tools.ant-org.apache.tools.ant.util.regexp, org.apache.tools.ant.types-org.apache.tools.zip, org.apache.tools.ant.types.selectors-org.apache.tools.ant.util.regexp, org.apache.tools.ant.taskdefs.condition-org.apache.tools.ant.types.selectors, org.apache.tools.ant-org.apache.tools.ant.filters.util, org.apache.tools.mail-org.apache.tools.ant.listener, org.apache.tools.ant-org.apache.tools.ant.filters, org.apache.tools.ant-org.apache.tools.ant.taskdefs]
+Classification Time;126
+ ---- Falsely closes cycle? org.apache.tools.ant.taskdefs-org.apache.tools.ant.util.regexp
+ ---- Falsely closes cycle? org.apache.tools.ant.types.selectors-org.apache.tools.ant.util.regexp
+ ---- Falsely closes cycle? org.apache.tools.ant-org.apache.tools.ant.filters
+ ---- Falsely closes cycle? org.apache.tools.ant.types.selectors-org.apache.tools.ant.taskdefs
+ ---- Falsely closes cycle? org.apache.tools.ant.types-org.apache.tools.zip
+ ---- Falsely closes cycle? org.apache.tools.ant.filters.util-org.apache.tools.ant.taskdefs
+ ---- Falsely closes cycle? org.apache.tools.ant-org.apache.tools.ant.util.regexp
+ ---- Falsely closes cycle? org.apache.tools.ant.types-org.apache.tools.ant.taskdefs.condition
+ ---- Falsely closes cycle? org.apache.tools.ant-org.apache.tools.ant.filters.util
+ ---- Falsely closes cycle? org.apache.tools.ant.taskdefs.email-org.apache.tools.ant.taskdefs
+ ---- Falsely closes cycle? org.apache.tools.ant.taskdefs.condition-org.apache.tools.ant.types.selectors
+ ---- Falsely closes cycle? org.apache.tools.ant.taskdefs.condition-org.apache.tools.ant.types
+ ---- Falsely closes cycle? org.apache.tools.ant.helper-org.apache.tools.ant.types
+predicted: 349
+ground: 349
+Filtering Time;3
+349 349
+ROW=truth and COL=predicted
+class  0 |     332 |      13 |
+class  1 |       0 |       4 |
+Precision;Recall;smile.validation.FMeasure@5ed828d;Specificity;Sensitivity;TP;FN;FP;TN;
+ yes;0.23529411764705882;1.0;0.38095238095238093;0.9623188405797102;1.0;4;0;13;332;
+ no;1.0;0.9623188405797102;0.980797636632201;1.0;0.9623188405797102;332;13;0;4;
+ avg;0.6176470588235294;0.981159420289855;0.680875008792291;0.981159420289855;0.981159420289855;
+apache-ant-1.5.2 ## apache-ant-1.6.0 ## apache-ant-1.7.0
+outputScores
+PAQUETES -- 21
+[fields-methods-calls#Cosine, variables#Cosine, fields-variables-methods#Cosine, fields#Cosine, fields-variables-methods-calls#Cosine, methods#Cosine, imports-fields-methods-variables#Cosine, imports#Cosine, comments#Cosine, imports-fields-methods-variables-comments#Cosine, fields-methods#Cosine, imports-fields-methods-variables-comments-calls#Cosine, imports-fields-methods-variables-calls#Cosine, fields-variables#Cosine, calls#Cosine, methods-calls#Cosine]
+comments#Cosine
+=== Confusion Matrix ===
+
+   a   b   <-- classified as
+  13   0 |   a = true
+  25 380 |   b = false
+
+38 --- [org.apache.tools.ant.taskdefs-org.apache.tools.ant.util.regexp, org.apache.tools.ant.taskdefs.email-org.apache.tools.ant.taskdefs, org.apache.tools.ant.taskdefs.condition-org.apache.tools.zip, org.apache.tools.ant.types-org.apache.tools.ant.filters.util, org.apache.tools.ant.util.regexp-org.apache.tools.ant.util, org.apache.tools.ant.types-org.apache.tools.ant.taskdefs, org.apache.tools.ant.util-org.apache.tools.ant.types.selectors, org.apache.tools.ant.types.selectors.modifiedselector-org.apache.tools.ant.taskdefs, org.apache.tools.zip-org.apache.tools.ant.taskdefs.condition, org.apache.tools.ant.taskdefs-org.apache.tools.ant.filters, org.apache.tools.ant.util-org.apache.tools.ant.input, org.apache.tools.ant.taskdefs.condition-org.apache.tools.ant.types.selectors, org.apache.tools.ant.types-org.apache.tools.tar, org.apache.tools.ant.types-org.apache.tools.ant.taskdefs.compilers, org.apache.tools.ant-org.apache.tools.ant.taskdefs.rmic, org.apache.tools.mail-org.apache.tools.ant.listener, org.apache.tools.ant-org.apache.tools.ant.filters, org.apache.tools.ant.taskdefs-org.apache.tools.ant.taskdefs.cvslib, org.apache.tools.ant.types.selectors-org.apache.tools.ant.taskdefs, org.apache.tools.ant.input-org.apache.tools.ant.taskdefs, org.apache.tools.zip-org.apache.tools.ant.taskdefs, org.apache.tools.ant.helper-org.apache.tools.ant.types, org.apache.tools.ant.filters-org.apache.tools.ant.taskdefs.condition, org.apache.tools.mail-org.apache.tools.ant.taskdefs.email, org.apache.tools.ant.taskdefs.compilers-org.apache.tools.ant.taskdefs.condition, org.apache.tools.ant.types-org.apache.tools.ant.taskdefs.condition, org.apache.tools.ant-org.apache.tools.ant.util.regexp, org.apache.tools.ant-org.apache.tools.ant.taskdefs.cvslib, org.apache.tools.ant.types-org.apache.tools.ant.taskdefs.email, org.apache.tools.ant.taskdefs.condition-org.apache.tools.ant.util.regexp, org.apache.tools.ant.types-org.apache.tools.ant.taskdefs.cvslib, org.apache.tools.ant-org.apache.tools.ant.filters.util, org.apache.tools.ant.types-org.apache.tools.ant.taskdefs.rmic, org.apache.tools.ant.types.selectors.modifiedselector-org.apache.tools.ant.util, org.apache.tools.ant.util-org.apache.tools.ant.helper, org.apache.tools.ant.filters-org.apache.tools.ant.taskdefs, org.apache.tools.ant-org.apache.tools.zip, org.apache.tools.tar-org.apache.tools.ant.taskdefs]
+Classification Time;127
+ ---- Falsely closes cycle? org.apache.tools.ant.taskdefs-org.apache.tools.ant.util.regexp
+ ---- Falsely closes cycle? org.apache.tools.ant.util-org.apache.tools.ant.input
+ ---- Falsely closes cycle? org.apache.tools.ant.types-org.apache.tools.ant.taskdefs.compilers
+ ---- Falsely closes cycle? org.apache.tools.ant.taskdefs.condition-org.apache.tools.zip
+ ---- Falsely closes cycle? org.apache.tools.ant.types.selectors-org.apache.tools.ant.taskdefs
+ ---- Falsely closes cycle? org.apache.tools.ant.taskdefs.condition-org.apache.tools.ant.util.regexp
+ ---- Falsely closes cycle? org.apache.tools.ant.types-org.apache.tools.ant.taskdefs.email
+ ---- Falsely closes cycle? org.apache.tools.ant-org.apache.tools.zip
+ ---- Falsely closes cycle? org.apache.tools.ant-org.apache.tools.ant.filters.util
+ ---- Falsely closes cycle? org.apache.tools.ant.types-org.apache.tools.ant.taskdefs.rmic
+ ---- Falsely closes cycle? org.apache.tools.ant.taskdefs.email-org.apache.tools.ant.taskdefs
+ ---- Falsely closes cycle? org.apache.tools.ant-org.apache.tools.ant.taskdefs.rmic
+ ---- Falsely closes cycle? org.apache.tools.ant.types-org.apache.tools.tar
+ ---- Falsely closes cycle? org.apache.tools.ant.types-org.apache.tools.ant.filters.util
+ ---- Falsely closes cycle? org.apache.tools.ant-org.apache.tools.ant.filters
+ ---- Falsely closes cycle? org.apache.tools.ant.util-org.apache.tools.ant.helper
+ ---- Falsely closes cycle? org.apache.tools.ant.types.selectors.modifiedselector-org.apache.tools.ant.taskdefs
+ ---- Falsely closes cycle? org.apache.tools.ant-org.apache.tools.ant.util.regexp
+ ---- Falsely closes cycle? org.apache.tools.ant.filters-org.apache.tools.ant.taskdefs
+ ---- Falsely closes cycle? org.apache.tools.ant.helper-org.apache.tools.ant.types
+predicted: 418
+ground: 418
+Filtering Time;45
+418 418
+ROW=truth and COL=predicted
+class  0 |     388 |      20 |
+class  1 |       0 |      10 |
+Precision;Recall;smile.validation.FMeasure@462d5aee;Specificity;Sensitivity;TP;FN;FP;TN;
+ yes;0.3333333333333333;1.0;0.5;0.9509803921568627;1.0;10;0;20;388;
+ no;1.0;0.9509803921568627;0.9748743718592965;1.0;0.9509803921568627;388;20;0;10;
+ avg;0.6666666666666666;0.9754901960784313;0.7374371859296482;0.9754901960784313;0.9754901960784313;
+apache-ant-1.6.0 ## apache-ant-1.7.0 ## apache-ant-1.8.0
+outputScores
+PAQUETES -- 24
+[fields-methods-calls#Cosine, variables#Cosine, fields-variables-methods#Cosine, fields#Cosine, fields-variables-methods-calls#Cosine, methods#Cosine, imports-fields-methods-variables#Cosine, imports#Cosine, comments#Cosine, imports-fields-methods-variables-comments#Cosine, fields-methods#Cosine, imports-fields-methods-variables-comments-calls#Cosine, imports-fields-methods-variables-calls#Cosine, fields-variables#Cosine, calls#Cosine, methods-calls#Cosine]
+comments#Cosine
+=== Confusion Matrix ===
+
+   a   b   <-- classified as
+   9   0 |   a = true
+  38 628 |   b = false
+
+47 --- [org.apache.tools.ant.taskdefs-org.apache.tools.ant.util.regexp, org.apache.tools.ant.taskdefs.email-org.apache.tools.ant.taskdefs, org.apache.tools.ant.types.resources.selectors-org.apache.tools.ant.taskdefs, org.apache.tools.ant.types-org.apache.tools.ant.filters.util, org.apache.tools.ant.util-org.apache.tools.ant.taskdefs, org.apache.tools.ant.types.selectors.modifiedselector-org.apache.tools.ant.util.regexp, org.apache.tools.ant.types.selectors.modifiedselector-org.apache.tools.ant.taskdefs, org.apache.tools.ant.util-org.apache.tools.ant.input, org.apache.tools.ant.types-org.apache.tools.ant.types.resources.comparators, org.apache.tools.ant.types-org.apache.tools.ant.taskdefs.compilers, org.apache.tools.zip-org.apache.tools.ant.types.resources, org.apache.tools.ant.types-org.apache.tools.ant.types.resources.selectors, org.apache.tools.ant.types.resources-org.apache.tools.ant.taskdefs, org.apache.tools.mail-org.apache.tools.ant.listener, org.apache.tools.ant-org.apache.tools.ant.filters, org.apache.tools.ant.types.resources.selectors-org.apache.tools.ant.taskdefs.condition, org.apache.tools.ant.util.facade-org.apache.tools.ant, org.apache.tools.ant.types.resources-org.apache.tools.ant.filters.util, org.apache.tools.ant.filters-org.apache.tools.ant.types.resources, org.apache.tools.ant.types.selectors-org.apache.tools.ant.taskdefs, org.apache.tools.zip-org.apache.tools.ant.taskdefs, org.apache.tools.ant.helper-org.apache.tools.ant.types, org.apache.tools.ant.types.resources-org.apache.tools.ant.helper, org.apache.tools.mail-org.apache.tools.ant.taskdefs.email, org.apache.tools.ant.types.selectors.modifiedselector-org.apache.tools.ant.taskdefs.condition, org.apache.tools.ant.filters.util-org.apache.tools.ant.taskdefs, org.apache.tools.ant-org.apache.tools.ant.types.resources.comparators, org.apache.tools.ant-org.apache.tools.ant.util.regexp, org.apache.tools.ant-org.apache.tools.ant.types.resources.selectors, org.apache.tools.ant.helper-org.apache.tools.ant.types.resources, org.apache.tools.ant.util.regexp-org.apache.tools.ant.filters, org.apache.tools.ant.filters.util-org.apache.tools.ant.types.resources, org.apache.tools.ant.util.regexp-org.apache.tools.ant.types.selectors, org.apache.tools.ant.types-org.apache.tools.ant.taskdefs.email, org.apache.tools.ant.util.regexp-org.apache.tools.ant.taskdefs.condition, org.apache.tools.ant.helper-org.apache.tools.zip, org.apache.tools.ant.types.resources-org.apache.tools.ant.filters, org.apache.tools.ant-org.apache.tools.ant.filters.util, org.apache.tools.ant.types-org.apache.tools.ant.taskdefs.rmic, org.apache.tools.ant.types.resources-org.apache.tools.ant.taskdefs.condition, org.apache.tools.ant.taskdefs.compilers-org.apache.tools.ant.types.selectors, org.apache.tools.ant.taskdefs.compilers-org.apache.tools.ant.types.resources, org.apache.tools.ant.types.resources.selectors-org.apache.tools.ant.util.regexp, org.apache.tools.tar-org.apache.tools.ant.types.resources, org.apache.tools.ant.filters-org.apache.tools.ant.taskdefs, org.apache.tools.ant-org.apache.tools.zip, org.apache.tools.zip-org.apache.tools.ant.helper]
+Classification Time;226
+ ---- Falsely closes cycle? org.apache.tools.ant.taskdefs-org.apache.tools.ant.util.regexp
+ ---- Falsely closes cycle? org.apache.tools.ant.util-org.apache.tools.ant.input
+ ---- Falsely closes cycle? org.apache.tools.ant.types-org.apache.tools.ant.taskdefs.compilers
+ ---- Falsely closes cycle? org.apache.tools.ant.helper-org.apache.tools.ant.types.resources
+ ---- Falsely closes cycle? org.apache.tools.ant.types.resources-org.apache.tools.ant.taskdefs.condition
+ ---- Falsely closes cycle? org.apache.tools.ant.types.selectors-org.apache.tools.ant.taskdefs
+ ---- Falsely closes cycle? org.apache.tools.ant.types.selectors.modifiedselector-org.apache.tools.ant.taskdefs.condition
+ ---- Falsely closes cycle? org.apache.tools.ant.types-org.apache.tools.ant.types.resources.comparators
+ ---- Falsely closes cycle? org.apache.tools.ant-org.apache.tools.ant.types.resources.selectors
+ ---- Falsely closes cycle? org.apache.tools.ant.types.selectors.modifiedselector-org.apache.tools.ant.util.regexp
+ ---- Falsely closes cycle? org.apache.tools.ant.filters.util-org.apache.tools.ant.taskdefs
+ ---- Falsely closes cycle? org.apache.tools.ant.util.regexp-org.apache.tools.ant.filters
+ ---- Falsely closes cycle? org.apache.tools.ant.types-org.apache.tools.ant.taskdefs.email
+ ---- Falsely closes cycle? org.apache.tools.ant-org.apache.tools.zip
+ ---- Falsely closes cycle? org.apache.tools.ant.util.regexp-org.apache.tools.ant.taskdefs.condition
+ ---- Falsely closes cycle? org.apache.tools.ant-org.apache.tools.ant.filters.util
+ ---- Falsely closes cycle? org.apache.tools.ant.types-org.apache.tools.ant.taskdefs.rmic
+ ---- Falsely closes cycle? org.apache.tools.ant.taskdefs.email-org.apache.tools.ant.taskdefs
+ ---- Falsely closes cycle? org.apache.tools.ant.types.resources-org.apache.tools.ant.helper
+ ---- Falsely closes cycle? org.apache.tools.ant.types.resources-org.apache.tools.ant.filters
+ ---- Falsely closes cycle? org.apache.tools.ant.types-org.apache.tools.ant.filters.util
+ ---- Falsely closes cycle? org.apache.tools.ant.types-org.apache.tools.ant.types.resources.selectors
+ ---- Falsely closes cycle? org.apache.tools.ant-org.apache.tools.ant.filters
+ ---- Falsely closes cycle? org.apache.tools.ant.util.regexp-org.apache.tools.ant.types.selectors
+ ---- Falsely closes cycle? org.apache.tools.ant.helper-org.apache.tools.zip
+ ---- Falsely closes cycle? org.apache.tools.ant.types.selectors.modifiedselector-org.apache.tools.ant.taskdefs
+ ---- Falsely closes cycle? org.apache.tools.ant.filters.util-org.apache.tools.ant.types.resources
+ ---- Falsely closes cycle? org.apache.tools.ant-org.apache.tools.ant.types.resources.comparators
+ ---- Falsely closes cycle? org.apache.tools.ant.taskdefs.compilers-org.apache.tools.ant.types.selectors
+ ---- Falsely closes cycle? org.apache.tools.ant-org.apache.tools.ant.util.regexp
+ ---- Falsely closes cycle? org.apache.tools.ant.taskdefs.compilers-org.apache.tools.ant.types.resources
+ ---- Falsely closes cycle? org.apache.tools.ant.types.resources.selectors-org.apache.tools.ant.taskdefs.condition
+ ---- Falsely closes cycle? org.apache.tools.ant.filters-org.apache.tools.ant.taskdefs
+ ---- Falsely closes cycle? org.apache.tools.ant.types.resources.selectors-org.apache.tools.ant.taskdefs
+ ---- Falsely closes cycle? org.apache.tools.ant.helper-org.apache.tools.ant.types
+predicted: 675
+ground: 675
+Filtering Time;66
+675 675
+ROW=truth and COL=predicted
+class  0 |     634 |      35 |
+class  1 |       0 |       6 |
+Precision;Recall;smile.validation.FMeasure@32eebfca;Specificity;Sensitivity;TP;FN;FP;TN;
+ yes;0.14634146341463414;1.0;0.2553191489361702;0.9476831091180867;1.0;6;0;35;634;
+ no;1.0;0.9476831091180867;0.9731389102072142;1.0;0.9476831091180867;634;35;0;6;
+ avg;0.573170731707317;0.9738415545590433;0.6142290295716922;0.9738415545590433;0.9738415545590433;
+apache-ant-1.7.0 ## apache-ant-1.8.0 ## apache-ant-1.9.0
+outputScores
+PAQUETES -- 29
+[fields-methods-calls#Cosine, variables#Cosine, fields-variables-methods#Cosine, fields#Cosine, fields-variables-methods-calls#Cosine, methods#Cosine, imports-fields-methods-variables#Cosine, imports#Cosine, comments#Cosine, imports-fields-methods-variables-comments#Cosine, fields-methods#Cosine, imports-fields-methods-variables-comments-calls#Cosine, imports-fields-methods-variables-calls#Cosine, fields-variables#Cosine, calls#Cosine, methods-calls#Cosine]
+comments#Cosine
+=== Confusion Matrix ===
+
+   a   b   <-- classified as
+   5   0 |   a = true
+  74 643 |   b = false
+
+79 --- [org.apache.tools.zip-org.apache.tools.tar, org.apache.tools.ant.taskdefs-org.apache.tools.ant.util.regexp, org.apache.tools.ant.taskdefs.email-org.apache.tools.ant.taskdefs, org.apache.tools.ant.filters-org.apache.tools.ant.filters.util, org.apache.tools.ant.util.facade-org.apache.tools.ant.util, org.apache.tools.ant.types.selectors.modifiedselector-org.apache.tools.ant.listener, org.apache.tools.ant.types.selectors.modifiedselector-org.apache.tools.ant.input, org.apache.tools.ant.types-org.apache.tools.ant.filters.util, org.apache.tools.ant-org.apache.tools.ant.taskdefs.email, org.apache.tools.ant.types.selectors.modifiedselector-org.apache.tools.ant.util.regexp, org.apache.tools.ant.types.selectors.modifiedselector-org.apache.tools.zip, org.apache.tools.tar-org.apache.tools.zip, org.apache.tools.ant.types.selectors.modifiedselector-org.apache.tools.ant.taskdefs, org.apache.tools.ant.util-org.apache.tools.ant.input, org.apache.tools.ant.types-org.apache.tools.ant.types.resources.comparators, org.apache.tools.ant.types-org.apache.tools.ant.taskdefs.compilers, org.apache.tools.ant.types.mappers-org.apache.tools.ant.types.selectors, org.apache.tools.ant-org.apache.tools.ant.taskdefs.rmic, org.apache.tools.ant.types.selectors.modifiedselector-org.apache.tools.ant.filters, org.apache.tools.ant.util.regexp-org.apache.tools.ant.taskdefs, org.apache.tools.mail-org.apache.tools.ant.listener, org.apache.tools.ant.taskdefs.compilers-org.apache.tools.zip, org.apache.tools.ant.taskdefs-org.apache.tools.ant.dispatch, org.apache.tools.ant.types.selectors.modifiedselector-org.apache.tools.ant.types.resources.comparators, org.apache.tools.ant-org.apache.tools.ant.listener, org.apache.tools.ant.taskdefs.compilers-org.apache.tools.ant.filters, org.apache.tools.ant.taskdefs-org.apache.tools.ant.helper, org.apache.tools.ant.types.selectors.modifiedselector-org.apache.tools.ant.filters.util, org.apache.tools.ant.filters.util-org.apache.tools.ant.taskdefs, org.apache.tools.ant-org.apache.tools.ant.util.regexp, org.apache.tools.ant.util.regexp-org.apache.tools.ant.filters, org.apache.tools.ant.filters.util-org.apache.tools.ant.types.resources, org.apache.tools.ant.util.regexp-org.apache.tools.ant.types.resources, org.apache.tools.ant-org.apache.tools.tar, org.apache.tools.ant.types-org.apache.tools.ant.taskdefs.email, org.apache.tools.ant.filters.util-org.apache.tools.ant.taskdefs.condition, org.apache.tools.ant.util.regexp-org.apache.tools.ant.types.resources.selectors, org.apache.tools.ant.filters-org.apache.tools.ant.property, org.apache.tools.ant.property-org.apache.tools.ant.filters, org.apache.tools.ant.loader-org.apache.tools.ant.types, org.apache.tools.ant.types.resources-org.apache.tools.ant.taskdefs.condition, org.apache.tools.ant.types-org.apache.tools.ant.input, org.apache.tools.ant.taskdefs.compilers-org.apache.tools.ant.types.resources, org.apache.tools.ant.types-org.apache.tools.ant.listener, org.apache.tools.ant.taskdefs.email-org.apache.tools.ant.types.selectors, org.apache.tools.ant.filters-org.apache.tools.ant.taskdefs, org.apache.tools.ant-org.apache.tools.zip, org.apache.tools.zip-org.apache.tools.ant.helper, org.apache.tools.ant-org.apache.tools.ant.loader, org.apache.tools.ant.taskdefs.email-org.apache.tools.ant.taskdefs.condition, org.apache.tools.ant.taskdefs.compilers-org.apache.tools.ant.helper, org.apache.tools.ant.filters.util-org.apache.tools.ant.types.mappers, org.apache.tools.ant.types-org.apache.tools.ant.types.resources.selectors, org.apache.tools.ant.taskdefs-org.apache.tools.ant.listener, org.apache.tools.ant.taskdefs.compilers-org.apache.tools.ant.types.selectors.modifiedselector, org.apache.tools.ant-org.apache.tools.ant.filters, org.apache.tools.ant.taskdefs.compilers-org.apache.tools.ant.util.regexp, org.apache.tools.ant.types.resources.selectors-org.apache.tools.ant.taskdefs.condition, org.apache.tools.ant.types.selectors-org.apache.tools.ant.taskdefs, org.apache.tools.ant.loader-org.apache.tools.ant.util, org.apache.tools.ant.types.resources-org.apache.tools.ant.helper, org.apache.tools.mail-org.apache.tools.ant.taskdefs.email, org.apache.tools.ant.taskdefs.compilers-org.apache.tools.ant.filters.util, org.apache.tools.ant.types.selectors.modifiedselector-org.apache.tools.ant.taskdefs.condition, org.apache.tools.ant.taskdefs.compilers-org.apache.tools.ant.types.resources.selectors, org.apache.tools.ant.util-org.apache.tools.tar, org.apache.tools.ant.loader-org.apache.tools.bzip2, org.apache.tools.ant.types-org.apache.tools.ant.property, org.apache.tools.ant-org.apache.tools.ant.types.resources.comparators, org.apache.tools.ant.util-org.apache.tools.zip, org.apache.tools.ant-org.apache.tools.ant.types.resources.selectors, org.apache.tools.ant.util.regexp-org.apache.tools.ant.types.selectors, org.apache.tools.ant.filters.util-org.apache.tools.ant.types.selectors, org.apache.tools.ant.util.regexp-org.apache.tools.ant.taskdefs.condition, org.apache.tools.ant.types.resources-org.apache.tools.ant.filters, org.apache.tools.ant-org.apache.tools.ant.filters.util, org.apache.tools.ant.types-org.apache.tools.ant.taskdefs.rmic, org.apache.tools.ant.taskdefs.compilers-org.apache.tools.ant.types.selectors, org.apache.tools.ant.types.resources-org.apache.tools.ant.taskdefs.email]
+Classification Time;405
+ ---- Falsely closes cycle? org.apache.tools.ant.taskdefs-org.apache.tools.ant.util.regexp
+ ---- Falsely closes cycle? org.apache.tools.ant.util-org.apache.tools.ant.input
+ ---- Falsely closes cycle? org.apache.tools.ant.types-org.apache.tools.ant.taskdefs.compilers
+ ---- Falsely closes cycle? org.apache.tools.ant.taskdefs-org.apache.tools.ant.dispatch
+ ---- Falsely closes cycle? org.apache.tools.ant.filters.util-org.apache.tools.ant.taskdefs.condition
+ ---- Falsely closes cycle? org.apache.tools.ant.property-org.apache.tools.ant.filters
+ ---- Falsely closes cycle? org.apache.tools.ant.types.resources-org.apache.tools.ant.taskdefs.condition
+ ---- Falsely closes cycle? org.apache.tools.ant.types-org.apache.tools.ant.input
+ ---- Falsely closes cycle? org.apache.tools.ant.taskdefs.compilers-org.apache.tools.ant.helper
+ ---- Falsely closes cycle? org.apache.tools.ant.types.selectors-org.apache.tools.ant.taskdefs
+ ---- Falsely closes cycle? org.apache.tools.ant.types.selectors.modifiedselector-org.apache.tools.ant.taskdefs.condition
+ ---- Falsely closes cycle? org.apache.tools.ant.types-org.apache.tools.ant.types.resources.comparators
+ ---- Falsely closes cycle? org.apache.tools.ant.types.mappers-org.apache.tools.ant.types.selectors
+ ---- Falsely closes cycle? org.apache.tools.ant.types.selectors.modifiedselector-org.apache.tools.ant.types.resources.comparators
+ ---- Falsely closes cycle? org.apache.tools.ant.taskdefs-org.apache.tools.ant.helper
+ ---- Falsely closes cycle? org.apache.tools.ant.util.regexp-org.apache.tools.ant.types.resources
+ ---- Falsely closes cycle? org.apache.tools.ant.taskdefs.email-org.apache.tools.ant.taskdefs.condition
+ ---- Falsely closes cycle? org.apache.tools.ant.taskdefs.compilers-org.apache.tools.ant.util.regexp
+ ---- Falsely closes cycle? org.apache.tools.ant.loader-org.apache.tools.ant.util
+ ---- Falsely closes cycle? org.apache.tools.ant-org.apache.tools.ant.types.resources.selectors
+ ---- Falsely closes cycle? org.apache.tools.ant.types.selectors.modifiedselector-org.apache.tools.ant.util.regexp
+ ---- Falsely closes cycle? org.apache.tools.ant.filters.util-org.apache.tools.ant.taskdefs
+ ---- Falsely closes cycle? org.apache.tools.ant.util.regexp-org.apache.tools.ant.filters
+ ---- Falsely closes cycle? org.apache.tools.ant.types-org.apache.tools.ant.taskdefs.email
+ ---- Falsely closes cycle? org.apache.tools.ant-org.apache.tools.zip
+ ---- Falsely closes cycle? org.apache.tools.ant.filters.util-org.apache.tools.ant.types.selectors
+ ---- Falsely closes cycle? org.apache.tools.ant.util.regexp-org.apache.tools.ant.taskdefs.condition
+ ---- Falsely closes cycle? org.apache.tools.ant-org.apache.tools.ant.filters.util
+ ---- Falsely closes cycle? org.apache.tools.ant.types-org.apache.tools.ant.taskdefs.rmic
+ ---- Falsely closes cycle? org.apache.tools.ant.types.resources-org.apache.tools.ant.taskdefs.email
+ ---- Falsely closes cycle? org.apache.tools.ant.taskdefs.email-org.apache.tools.ant.taskdefs
+ ---- Falsely closes cycle? org.apache.tools.ant.filters-org.apache.tools.ant.filters.util
+ ---- Falsely closes cycle? org.apache.tools.ant.util.facade-org.apache.tools.ant.util
+ ---- Falsely closes cycle? org.apache.tools.ant-org.apache.tools.ant.taskdefs.rmic
+ ---- Falsely closes cycle? org.apache.tools.ant.types.resources-org.apache.tools.ant.helper
+ ---- Falsely closes cycle? org.apache.tools.ant.taskdefs.compilers-org.apache.tools.ant.types.resources.selectors
+ ---- Falsely closes cycle? org.apache.tools.ant.types.resources-org.apache.tools.ant.filters
+ ---- Falsely closes cycle? org.apache.tools.ant.types-org.apache.tools.ant.filters.util
+ ---- Falsely closes cycle? org.apache.tools.ant.types.selectors.modifiedselector-org.apache.tools.zip
+ ---- Falsely closes cycle? org.apache.tools.ant.taskdefs.email-org.apache.tools.ant.types.selectors
+ ---- Falsely closes cycle? org.apache.tools.ant.types-org.apache.tools.ant.types.resources.selectors
+ ---- Falsely closes cycle? org.apache.tools.ant.taskdefs.compilers-org.apache.tools.ant.types.selectors.modifiedselector
+ ---- Falsely closes cycle? org.apache.tools.ant-org.apache.tools.ant.filters
+ ---- Falsely closes cycle? org.apache.tools.ant.loader-org.apache.tools.bzip2
+ ---- Falsely closes cycle? org.apache.tools.ant.types-org.apache.tools.ant.property
+ ---- Falsely closes cycle? org.apache.tools.ant.util-org.apache.tools.zip
+ ---- Falsely closes cycle? org.apache.tools.ant.util.regexp-org.apache.tools.ant.types.selectors
+ ---- Falsely closes cycle? org.apache.tools.ant.types.selectors.modifiedselector-org.apache.tools.ant.taskdefs
+ ---- Falsely closes cycle? org.apache.tools.ant.taskdefs.compilers-org.apache.tools.zip
+ ---- Falsely closes cycle? org.apache.tools.ant.types.selectors.modifiedselector-org.apache.tools.ant.filters.util
+ ---- Falsely closes cycle? org.apache.tools.ant.filters.util-org.apache.tools.ant.types.resources
+ ---- Falsely closes cycle? org.apache.tools.ant-org.apache.tools.tar
+ ---- Falsely closes cycle? org.apache.tools.ant.util.regexp-org.apache.tools.ant.types.resources.selectors
+ ---- Falsely closes cycle? org.apache.tools.ant.util-org.apache.tools.tar
+ ---- Falsely closes cycle? org.apache.tools.ant-org.apache.tools.ant.types.resources.comparators
+ ---- Falsely closes cycle? org.apache.tools.ant.taskdefs.compilers-org.apache.tools.ant.types.selectors
+ ---- Falsely closes cycle? org.apache.tools.ant.types.selectors.modifiedselector-org.apache.tools.ant.input
+ ---- Falsely closes cycle? org.apache.tools.ant.util.regexp-org.apache.tools.ant.taskdefs
+ ---- Falsely closes cycle? org.apache.tools.ant-org.apache.tools.ant.util.regexp
+ ---- Falsely closes cycle? org.apache.tools.ant.taskdefs.compilers-org.apache.tools.ant.types.resources
+ ---- Falsely closes cycle? org.apache.tools.ant.types.resources.selectors-org.apache.tools.ant.taskdefs.condition
+ ---- Falsely closes cycle? org.apache.tools.ant.taskdefs.compilers-org.apache.tools.ant.filters.util
+ ---- Falsely closes cycle? org.apache.tools.ant-org.apache.tools.ant.taskdefs.email
+ ---- Falsely closes cycle? org.apache.tools.ant.types.selectors.modifiedselector-org.apache.tools.ant.filters
+ ---- Falsely closes cycle? org.apache.tools.ant.taskdefs.compilers-org.apache.tools.ant.filters
+ ---- Falsely closes cycle? org.apache.tools.ant.filters-org.apache.tools.ant.taskdefs
+predicted: 722
+ground: 722
+Filtering Time;56
+722 722
+ROW=truth and COL=predicted
+class  0 |     652 |      66 |
+class  1 |       0 |       4 |
+Precision;Recall;smile.validation.FMeasure@782663d3;Specificity;Sensitivity;TP;FN;FP;TN;
+ yes;0.05714285714285714;1.0;0.1081081081081081;0.9080779944289693;1.0;4;0;66;652;
+ no;1.0;0.9080779944289693;0.9518248175182481;1.0;0.9080779944289693;652;66;0;4;
+ avg;0.5285714285714286;0.9540389972144847;0.529966462813178;0.9540389972144847;0.9540389972144847;
+apache-ant-1.8.0 ## apache-ant-1.9.0 ## apache-ant-1.10.0
+outputScores

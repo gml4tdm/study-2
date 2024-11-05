@@ -6,7 +6,7 @@ import typing
 import pydantic_xml
 
 
-FILENAME = 'apache-camel-2.0.0-src_apache-camel-2.1.0-src-predicted_dependendencies_smo-rbf.xml'
+FILENAME = '../replication/apache-camel-2.0.0-src_apache-camel-2.1.0-src-predicted_dependendencies_smo-rbf.xml'
 
 
 ################################################################################
@@ -116,7 +116,7 @@ def main():
 
     print(len(prediction.dependencies))
 
-    with open('predictions.json') as f:
+    with open('../replication/predictions.json') as f:
         data = json.load(f)
 
     print(len(data['predictions']))
@@ -138,7 +138,7 @@ def main():
     print('Unique Vertices in 1:', len(vertices_1 - vertices_2))
     print('Unique Vertices in 2:', len(vertices_2 - vertices_1))
 
-    with open('apache-camel-2.0.0.odem') as f:
+    with open('../replication/apache-camel-2.0.0.odem') as f:
         odem = ODEM.from_xml(f.read())
 
     vertices_3 = set()

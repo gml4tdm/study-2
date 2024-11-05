@@ -1,0 +1,1250 @@
+[apache-camel-2.0.0, apache-camel-2.1.0, apache-camel-2.2.0, apache-camel-2.3.0, apache-camel-2.4.0, apache-camel-2.5.0, apache-camel-2.6.0, apache-camel-2.7.0, apache-camel-2.8.0, apache-camel-2.9.0, apache-camel-2.10.0, apache-camel-2.11.0, apache-camel-2.12.0, apache-camel-2.13.0, apache-camel-2.14.0, apache-camel-2.15.0, apache-camel-2.16.0, apache-camel-2.17.0]
+apache-camel-2.0.0 ## apache-camel-2.1.0 ## apache-camel-2.2.0
+outputScores
+[fields-methods-calls#Cosine, variables#Cosine, fields-variables-methods#Cosine, fields#Cosine, fields-variables-methods-calls#Cosine, methods#Cosine, imports-fields-methods-variables#Cosine, imports#Cosine, comments#Cosine, imports-fields-methods-variables-comments#Cosine, fields-methods#Cosine, imports-fields-methods-variables-comments-calls#Cosine, imports-fields-methods-variables-calls#Cosine, fields-variables#Cosine, calls#Cosine, methods-calls#Cosine]
+comments#Cosine
+PAQUETES -- 48
+[fields-methods-calls#Cosine, variables#Cosine, fields-variables-methods#Cosine, fields#Cosine, fields-variables-methods-calls#Cosine, methods#Cosine, imports-fields-methods-variables#Cosine, imports#Cosine, comments#Cosine, imports-fields-methods-variables-comments#Cosine, fields-methods#Cosine, imports-fields-methods-variables-comments-calls#Cosine, imports-fields-methods-variables-calls#Cosine, fields-variables#Cosine, calls#Cosine, methods-calls#Cosine]
+comments#Cosine
+[fields-methods-calls#Cosine, variables#Cosine, fields-variables-methods#Cosine, fields#Cosine, fields-variables-methods-calls#Cosine, methods#Cosine, imports-fields-methods-variables#Cosine, imports#Cosine, comments#Cosine, imports-fields-methods-variables-comments#Cosine, fields-methods#Cosine, imports-fields-methods-variables-comments-calls#Cosine, imports-fields-methods-variables-calls#Cosine, fields-variables#Cosine, calls#Cosine, methods-calls#Cosine]
+comments#Cosine
+=== Confusion Matrix ===
+
+    a    b   <-- classified as
+   11    0 |    a = true
+   37 2167 |    b = false
+
+48 --- [org.apache.camel.builder.xml-org.apache.camel.model, org.apache.camel.component.seda-org.apache.camel.component.vm, org.apache.camel.processor-org.apache.camel.component.bean, org.apache.camel.component.seda-org.apache.camel.model, org.apache.camel.component.seda-org.apache.camel.builder, org.apache.camel.processor.interceptor-org.apache.camel.management, org.apache.camel.builder-org.apache.camel.management.event, org.apache.camel.impl-org.apache.camel.processor.aggregate, org.apache.camel-org.apache.camel.util, org.apache.camel.processor.idempotent-org.apache.camel.model, org.apache.camel.component.dataset-org.apache.camel.builder, org.apache.camel.converter.jaxp-org.apache.camel.converter, org.apache.camel.component.file-org.apache.camel.builder, org.apache.camel.util-org.apache.camel.builder, org.apache.camel.model-org.apache.camel.processor.exceptionpolicy, org.apache.camel.impl.converter-org.apache.camel.builder, org.apache.camel.impl-org.apache.camel.component.file, org.apache.camel.builder.xml-org.apache.camel.builder, org.apache.camel.processor.interceptor-org.apache.camel.builder, org.apache.camel.builder-org.apache.camel.component.bean, org.apache.camel.builder-org.apache.camel.management, org.apache.camel.view-org.apache.camel.spi, org.apache.camel.converter.jaxp-org.apache.camel.converter.stream, org.apache.camel.spi-org.apache.camel.util, org.apache.camel.view-org.apache.camel.impl, org.apache.camel.component.seda-org.apache.camel.processor.aggregate, org.apache.camel.impl.converter-org.apache.camel.impl, org.apache.camel.converter-org.apache.camel.converter.jaxp, org.apache.camel.processor.idempotent-org.apache.camel.component.file, org.apache.camel-org.apache.camel.impl, org.apache.camel.component.file-org.apache.camel.component.file.strategy, org.apache.camel.component.bean-org.apache.camel.model, org.apache.camel.processor.exceptionpolicy-org.apache.camel.builder, org.apache.camel.model.dataformat-org.apache.camel.builder, org.apache.camel.component.bean-org.apache.camel.processor.aggregate, org.apache.camel.component.dataset-org.apache.camel.model, org.apache.camel.component.mock-org.apache.camel.component.dataset, org.apache.camel.component.dataset-org.apache.camel.spi, org.apache.camel.component.mock-org.apache.camel.model, org.apache.camel.component.seda-org.apache.camel.processor, org.apache.camel.model.language-org.apache.camel.model, org.apache.camel.processor.loadbalancer-org.apache.camel.model, org.apache.camel.processor.resequencer-org.apache.camel.model.config, org.apache.camel.processor.loadbalancer-org.apache.camel.component.browse, org.apache.camel.processor-org.apache.camel.builder, org.apache.camel.builder-org.apache.camel.component.mock, org.apache.camel.converter.jaxp-org.apache.camel.view, org.apache.camel.builder-org.apache.camel.util.concurrent]
+Classification Time;1731
+ ---- Falsely closes cycle? org.apache.camel.builder.xml-org.apache.camel.model
+ ---- Falsely closes cycle? org.apache.camel.impl.converter-org.apache.camel.impl
+ ---- Falsely closes cycle? org.apache.camel.processor.interceptor-org.apache.camel.management
+ ---- Falsely closes cycle? org.apache.camel.impl.converter-org.apache.camel.builder
+ ---- Falsely closes cycle? org.apache.camel.model.dataformat-org.apache.camel.builder
+ ---- Falsely closes cycle? org.apache.camel.impl-org.apache.camel.processor.aggregate
+ ---- Falsely closes cycle? org.apache.camel.processor.resequencer-org.apache.camel.model.config
+ ---- Falsely closes cycle? org.apache.camel.component.seda-org.apache.camel.model
+ ---- Falsely closes cycle? org.apache.camel.view-org.apache.camel.impl
+ ---- Falsely closes cycle? org.apache.camel.impl-org.apache.camel.component.file
+ ---- Falsely closes cycle? org.apache.camel.builder.xml-org.apache.camel.builder
+ ---- Falsely closes cycle? org.apache.camel.component.seda-org.apache.camel.processor
+ ---- Falsely closes cycle? org.apache.camel.component.seda-org.apache.camel.builder
+ ---- Falsely closes cycle? org.apache.camel.model.language-org.apache.camel.model
+ ---- Falsely closes cycle? org.apache.camel.processor.interceptor-org.apache.camel.builder
+ ---- Falsely closes cycle? org.apache.camel.processor-org.apache.camel.component.bean
+ ---- Falsely closes cycle? org.apache.camel.component.dataset-org.apache.camel.spi
+ ---- Falsely closes cycle? org.apache.camel.model-org.apache.camel.processor.exceptionpolicy
+ ---- Falsely closes cycle? org.apache.camel.spi-org.apache.camel.util
+ ---- Falsely closes cycle? org.apache.camel.component.seda-org.apache.camel.processor.aggregate
+ ---- Falsely closes cycle? org.apache.camel.processor.idempotent-org.apache.camel.component.file
+ ---- Falsely closes cycle? org.apache.camel.component.file-org.apache.camel.builder
+ ---- Falsely closes cycle? org.apache.camel.component.bean-org.apache.camel.processor.aggregate
+ ---- Falsely closes cycle? org.apache.camel.converter-org.apache.camel.converter.jaxp
+ ---- Falsely closes cycle? org.apache.camel.component.bean-org.apache.camel.model
+ ---- Falsely closes cycle? org.apache.camel.component.dataset-org.apache.camel.builder
+ ---- Falsely closes cycle? org.apache.camel.util-org.apache.camel.builder
+ ---- Falsely closes cycle? org.apache.camel-org.apache.camel.impl
+ ---- Falsely closes cycle? org.apache.camel.processor.exceptionpolicy-org.apache.camel.builder
+ ---- Falsely closes cycle? org.apache.camel.processor.loadbalancer-org.apache.camel.model
+ ---- Falsely closes cycle? org.apache.camel.processor.idempotent-org.apache.camel.model
+ ---- Falsely closes cycle? org.apache.camel.component.mock-org.apache.camel.model
+ ---- Falsely closes cycle? org.apache.camel.component.dataset-org.apache.camel.model
+ ---- Falsely closes cycle? org.apache.camel.view-org.apache.camel.spi
+ ---- Falsely closes cycle? org.apache.camel.converter.jaxp-org.apache.camel.view
+ ---- Falsely closes cycle? org.apache.camel.builder-org.apache.camel.util.concurrent
+predicted: 2215
+ground: 2215
+Filtering Time;14
+2215 2215
+ROW=truth and COL=predicted
+class  0 |    2172 |      36 |
+class  1 |       0 |       7 |
+Precision;Recall;smile.validation.FMeasure@76f2b07d;Specificity;Sensitivity;TP;FN;FP;TN;
+ yes;0.16279069767441862;1.0;0.28;0.9836956521739131;1.0;7;0;36;2172;
+ no;1.0;0.9836956521739131;0.9917808219178083;1.0;0.9836956521739131;2172;36;0;7;
+ avg;0.5813953488372093;0.9918478260869565;0.6358904109589041;0.9918478260869565;0.9918478260869565;
+apache-camel-2.1.0 ## apache-camel-2.2.0 ## apache-camel-2.3.0
+outputScores
+PAQUETES -- 50
+[fields-methods-calls#Cosine, variables#Cosine, fields-variables-methods#Cosine, fields#Cosine, fields-variables-methods-calls#Cosine, methods#Cosine, imports-fields-methods-variables#Cosine, imports#Cosine, comments#Cosine, imports-fields-methods-variables-comments#Cosine, fields-methods#Cosine, imports-fields-methods-variables-comments-calls#Cosine, imports-fields-methods-variables-calls#Cosine, fields-variables#Cosine, calls#Cosine, methods-calls#Cosine]
+comments#Cosine
+=== Confusion Matrix ===
+
+    a    b   <-- classified as
+   11    0 |    a = true
+   32 2162 |    b = false
+
+43 --- [org.apache.camel.builder.xml-org.apache.camel.model, org.apache.camel.component.seda-org.apache.camel.component.vm, org.apache.camel.processor.aggregate-org.apache.camel.spi, org.apache.camel.processor.aggregate-org.apache.camel.component.bean, org.apache.camel.component.direct-org.apache.camel.spi, org.apache.camel.model.language-org.apache.camel.impl, org.apache.camel.processor-org.apache.camel.component.bean, org.apache.camel.component.seda-org.apache.camel.builder, org.apache.camel.processor.interceptor-org.apache.camel.management, org.apache.camel.util.concurrent-org.apache.camel.spi, org.apache.camel.impl-org.apache.camel.processor.aggregate, org.apache.camel.processor.idempotent-org.apache.camel.model, org.apache.camel.model-org.apache.camel.processor.validation, org.apache.camel.component.dataset-org.apache.camel.builder, org.apache.camel.util.concurrent-org.apache.camel.util, org.apache.camel.model-org.apache.camel.processor.exceptionpolicy, org.apache.camel.processor.exceptionpolicy-org.apache.camel.spi, org.apache.camel.impl-org.apache.camel.component.file, org.apache.camel.builder.xml-org.apache.camel.builder, org.apache.camel.processor.interceptor-org.apache.camel.builder, org.apache.camel.processor.aggregate-org.apache.camel.model, org.apache.camel.model-org.apache.camel.view, org.apache.camel.view-org.apache.camel.spi, org.apache.camel.converter.jaxp-org.apache.camel.converter.stream, org.apache.camel.spi-org.apache.camel.util, org.apache.camel.util.concurrent-org.apache.camel, org.apache.camel.view-org.apache.camel.impl, org.apache.camel.converter-org.apache.camel.converter.jaxp, org.apache.camel.component.bean-org.apache.camel.model, org.apache.camel.processor.exceptionpolicy-org.apache.camel.builder, org.apache.camel.model.dataformat-org.apache.camel.builder, org.apache.camel.util.concurrent-org.apache.camel.model, org.apache.camel.builder.xml-org.apache.camel.impl, org.apache.camel.processor.aggregate-org.apache.camel.processor, org.apache.camel.processor.validation-org.apache.camel.processor, org.apache.camel.component.dataset-org.apache.camel.model, org.apache.camel.component.mock-org.apache.camel.component.dataset, org.apache.camel.component.dataset-org.apache.camel.spi, org.apache.camel.component.mock-org.apache.camel.model, org.apache.camel.model.language-org.apache.camel.model, org.apache.camel.processor.loadbalancer-org.apache.camel.model, org.apache.camel.processor.resequencer-org.apache.camel.model.config, org.apache.camel.impl-org.apache.camel.builder.xml]
+Classification Time;1023
+ ---- Falsely closes cycle? org.apache.camel.builder.xml-org.apache.camel.model
+ ---- Falsely closes cycle? org.apache.camel.processor.interceptor-org.apache.camel.management
+ ---- Falsely closes cycle? org.apache.camel.model-org.apache.camel.view
+ ---- Falsely closes cycle? org.apache.camel.model.dataformat-org.apache.camel.builder
+ ---- Falsely closes cycle? org.apache.camel.impl-org.apache.camel.processor.aggregate
+ ---- Falsely closes cycle? org.apache.camel.component.direct-org.apache.camel.spi
+ ---- Falsely closes cycle? org.apache.camel.processor.exceptionpolicy-org.apache.camel.spi
+ ---- Falsely closes cycle? org.apache.camel.processor.resequencer-org.apache.camel.model.config
+ ---- Falsely closes cycle? org.apache.camel.view-org.apache.camel.impl
+ ---- Falsely closes cycle? org.apache.camel.impl-org.apache.camel.component.file
+ ---- Falsely closes cycle? org.apache.camel.builder.xml-org.apache.camel.builder
+ ---- Falsely closes cycle? org.apache.camel.component.seda-org.apache.camel.builder
+ ---- Falsely closes cycle? org.apache.camel.model.language-org.apache.camel.impl
+ ---- Falsely closes cycle? org.apache.camel.model.language-org.apache.camel.model
+ ---- Falsely closes cycle? org.apache.camel.processor.interceptor-org.apache.camel.builder
+ ---- Falsely closes cycle? org.apache.camel.processor-org.apache.camel.component.bean
+ ---- Falsely closes cycle? org.apache.camel.component.dataset-org.apache.camel.spi
+ ---- Falsely closes cycle? org.apache.camel.processor.aggregate-org.apache.camel.spi
+ ---- Falsely closes cycle? org.apache.camel.model-org.apache.camel.processor.exceptionpolicy
+ ---- Falsely closes cycle? org.apache.camel.spi-org.apache.camel.util
+ ---- Falsely closes cycle? org.apache.camel.converter-org.apache.camel.converter.jaxp
+ ---- Falsely closes cycle? org.apache.camel.component.bean-org.apache.camel.model
+ ---- Falsely closes cycle? org.apache.camel.component.dataset-org.apache.camel.builder
+ ---- Falsely closes cycle? org.apache.camel.processor.aggregate-org.apache.camel.model
+ ---- Falsely closes cycle? org.apache.camel.processor.exceptionpolicy-org.apache.camel.builder
+ ---- Falsely closes cycle? org.apache.camel.processor.loadbalancer-org.apache.camel.model
+ ---- Falsely closes cycle? org.apache.camel.impl-org.apache.camel.builder.xml
+ ---- Falsely closes cycle? org.apache.camel.processor.idempotent-org.apache.camel.model
+ ---- Falsely closes cycle? org.apache.camel.component.mock-org.apache.camel.model
+ ---- Falsely closes cycle? org.apache.camel.processor.aggregate-org.apache.camel.component.bean
+ ---- Falsely closes cycle? org.apache.camel.component.dataset-org.apache.camel.model
+ ---- Falsely closes cycle? org.apache.camel.view-org.apache.camel.spi
+predicted: 2205
+ground: 2205
+Filtering Time;9
+2205 2205
+ROW=truth and COL=predicted
+class  0 |    2166 |      32 |
+class  1 |       0 |       7 |
+Precision;Recall;smile.validation.FMeasure@2f943d71;Specificity;Sensitivity;TP;FN;FP;TN;
+ yes;0.1794871794871795;1.0;0.30434782608695654;0.9854413102820746;1.0;7;0;32;2166;
+ no;1.0;0.9854413102820746;0.9926672777268561;1.0;0.9854413102820746;2166;32;0;7;
+ avg;0.5897435897435898;0.9927206551410372;0.6485075519069063;0.9927206551410372;0.9927206551410372;
+apache-camel-2.2.0 ## apache-camel-2.3.0 ## apache-camel-2.4.0
+outputScores
+PAQUETES -- 50
+[fields-methods-calls#Cosine, variables#Cosine, fields-variables-methods#Cosine, fields#Cosine, fields-variables-methods-calls#Cosine, methods#Cosine, imports-fields-methods-variables#Cosine, imports#Cosine, comments#Cosine, imports-fields-methods-variables-comments#Cosine, fields-methods#Cosine, imports-fields-methods-variables-comments-calls#Cosine, imports-fields-methods-variables-calls#Cosine, fields-variables#Cosine, calls#Cosine, methods-calls#Cosine]
+comments#Cosine
+=== Confusion Matrix ===
+
+    a    b   <-- classified as
+   14    0 |    a = true
+   35 2243 |    b = false
+
+49 --- [org.apache.camel.component.seda-org.apache.camel.component.vm, org.apache.camel.processor.idempotent-org.apache.camel.impl.converter, org.apache.camel.component.direct-org.apache.camel.builder, org.apache.camel.component.seda-org.apache.camel.model, org.apache.camel.component.seda-org.apache.camel.impl.converter, org.apache.camel.impl-org.apache.camel.processor.aggregate, org.apache.camel.component.log-org.apache.camel.builder, org.apache.camel.builder.xml-org.apache.camel.builder, org.apache.camel.processor.aggregate-org.apache.camel.model, org.apache.camel.model.language-org.apache.camel.component.bean, org.apache.camel.impl.converter-org.apache.camel.processor, org.apache.camel.processor.loadbalancer-org.apache.camel.processor, org.apache.camel.builder-org.apache.camel.processor.interceptor, org.apache.camel.spi-org.apache.camel.util, org.apache.camel.view-org.apache.camel.impl, org.apache.camel.converter-org.apache.camel.converter.jaxp, org.apache.camel.component.bean-org.apache.camel.model, org.apache.camel.model.dataformat-org.apache.camel.builder, org.apache.camel.component.mock-org.apache.camel.component.dataset, org.apache.camel.model.language-org.apache.camel.model, org.apache.camel.impl-org.apache.camel.builder.xml, org.apache.camel.component.direct-org.apache.camel.impl.converter, org.apache.camel.builder.xml-org.apache.camel.model, org.apache.camel.converter.stream-org.apache.camel.spi, org.apache.camel.converter.stream-org.apache.camel.impl, org.apache.camel.processor.aggregate-org.apache.camel.component.bean, org.apache.camel.converter-org.apache.camel.model, org.apache.camel.model.language-org.apache.camel.impl, org.apache.camel.processor-org.apache.camel.component.bean, org.apache.camel.processor.loadbalancer-org.apache.camel.impl.converter, org.apache.camel.component.seda-org.apache.camel.builder, org.apache.camel.processor.interceptor-org.apache.camel.management, org.apache.camel.processor-org.apache.camel.impl.converter, org.apache.camel.processor.idempotent-org.apache.camel.model, org.apache.camel.impl.converter-org.apache.camel.builder, org.apache.camel.processor.exceptionpolicy-org.apache.camel.spi, org.apache.camel.impl-org.apache.camel.component.file, org.apache.camel.impl-org.apache.camel.management.event, org.apache.camel.view-org.apache.camel.spi, org.apache.camel.component.log-org.apache.camel.model, org.apache.camel.processor.idempotent-org.apache.camel.component.file, org.apache.camel.component.direct-org.apache.camel.util, org.apache.camel.processor.loadbalancer-org.apache.camel.spi, org.apache.camel.component.mock-org.apache.camel.model, org.apache.camel.processor.loadbalancer-org.apache.camel.model, org.apache.camel.builder-org.apache.camel.component.direct, org.apache.camel.processor.resequencer-org.apache.camel.model.config, org.apache.camel.util-org.apache.camel.model, org.apache.camel.builder-org.apache.camel.util.concurrent]
+Classification Time;875
+ ---- Falsely closes cycle? org.apache.camel.builder.xml-org.apache.camel.model
+ ---- Falsely closes cycle? org.apache.camel.processor.interceptor-org.apache.camel.management
+ ---- Falsely closes cycle? org.apache.camel.impl.converter-org.apache.camel.builder
+ ---- Falsely closes cycle? org.apache.camel.model.dataformat-org.apache.camel.builder
+ ---- Falsely closes cycle? org.apache.camel.converter.stream-org.apache.camel.spi
+ ---- Falsely closes cycle? org.apache.camel.processor.loadbalancer-org.apache.camel.spi
+ ---- Falsely closes cycle? org.apache.camel.impl-org.apache.camel.processor.aggregate
+ ---- Falsely closes cycle? org.apache.camel.processor.exceptionpolicy-org.apache.camel.spi
+ ---- Falsely closes cycle? org.apache.camel.component.log-org.apache.camel.model
+ ---- Falsely closes cycle? org.apache.camel.processor.resequencer-org.apache.camel.model.config
+ ---- Falsely closes cycle? org.apache.camel.component.seda-org.apache.camel.model
+ ---- Falsely closes cycle? org.apache.camel.component.seda-org.apache.camel.impl.converter
+ ---- Falsely closes cycle? org.apache.camel.view-org.apache.camel.impl
+ ---- Falsely closes cycle? org.apache.camel.component.direct-org.apache.camel.util
+ ---- Falsely closes cycle? org.apache.camel.converter.stream-org.apache.camel.impl
+ ---- Falsely closes cycle? org.apache.camel.impl-org.apache.camel.component.file
+ ---- Falsely closes cycle? org.apache.camel.builder.xml-org.apache.camel.builder
+ ---- Falsely closes cycle? org.apache.camel.component.seda-org.apache.camel.builder
+ ---- Falsely closes cycle? org.apache.camel.model.language-org.apache.camel.impl
+ ---- Falsely closes cycle? org.apache.camel.impl-org.apache.camel.management.event
+ ---- Falsely closes cycle? org.apache.camel.builder-org.apache.camel.processor.interceptor
+ ---- Falsely closes cycle? org.apache.camel.model.language-org.apache.camel.model
+ ---- Falsely closes cycle? org.apache.camel.processor-org.apache.camel.component.bean
+ ---- Falsely closes cycle? org.apache.camel.component.log-org.apache.camel.builder
+ ---- Falsely closes cycle? org.apache.camel.spi-org.apache.camel.util
+ ---- Falsely closes cycle? org.apache.camel.processor.idempotent-org.apache.camel.component.file
+ ---- Falsely closes cycle? org.apache.camel.converter-org.apache.camel.converter.jaxp
+ ---- Falsely closes cycle? org.apache.camel.component.bean-org.apache.camel.model
+ ---- Falsely closes cycle? org.apache.camel.processor.aggregate-org.apache.camel.model
+ ---- Falsely closes cycle? org.apache.camel.processor.loadbalancer-org.apache.camel.model
+ ---- Falsely closes cycle? org.apache.camel.impl-org.apache.camel.builder.xml
+ ---- Falsely closes cycle? org.apache.camel.processor.idempotent-org.apache.camel.model
+ ---- Falsely closes cycle? org.apache.camel.component.mock-org.apache.camel.model
+ ---- Falsely closes cycle? org.apache.camel.component.direct-org.apache.camel.builder
+ ---- Falsely closes cycle? org.apache.camel.processor.aggregate-org.apache.camel.component.bean
+ ---- Falsely closes cycle? org.apache.camel.converter-org.apache.camel.model
+ ---- Falsely closes cycle? org.apache.camel.util-org.apache.camel.model
+ ---- Falsely closes cycle? org.apache.camel.view-org.apache.camel.spi
+ ---- Falsely closes cycle? org.apache.camel.builder-org.apache.camel.util.concurrent
+predicted: 2292
+ground: 2292
+Filtering Time;118
+2292 2292
+ROW=truth and COL=predicted
+class  0 |    2245 |      39 |
+class  1 |       0 |       8 |
+Precision;Recall;smile.validation.FMeasure@27808f31;Specificity;Sensitivity;TP;FN;FP;TN;
+ yes;0.1702127659574468;1.0;0.2909090909090909;0.9829246935201401;1.0;8;0;39;2245;
+ no;1.0;0.9829246935201401;0.9913888275557519;1.0;0.9829246935201401;2245;39;0;8;
+ avg;0.5851063829787234;0.9914623467600701;0.6411489592324213;0.9914623467600701;0.9914623467600701;
+apache-camel-2.3.0 ## apache-camel-2.4.0 ## apache-camel-2.5.0
+outputScores
+PAQUETES -- 51
+[fields-methods-calls#Cosine, variables#Cosine, fields-variables-methods#Cosine, fields#Cosine, fields-variables-methods-calls#Cosine, methods#Cosine, imports-fields-methods-variables#Cosine, imports#Cosine, comments#Cosine, imports-fields-methods-variables-comments#Cosine, fields-methods#Cosine, imports-fields-methods-variables-comments-calls#Cosine, imports-fields-methods-variables-calls#Cosine, fields-variables#Cosine, calls#Cosine, methods-calls#Cosine]
+comments#Cosine
+=== Confusion Matrix ===
+
+    a    b   <-- classified as
+    5    0 |    a = true
+   42 2537 |    b = false
+
+47 --- [org.apache.camel.builder.xml-org.apache.camel.model, org.apache.camel.component.seda-org.apache.camel.component.vm, org.apache.camel.component.file-org.apache.camel.converter, org.apache.camel.processor.aggregate-org.apache.camel.component.bean, org.apache.camel.component.direct-org.apache.camel.builder, org.apache.camel.model.language-org.apache.camel.impl, org.apache.camel.processor-org.apache.camel.component.bean, org.apache.camel.component.seda-org.apache.camel.model, org.apache.camel.component.seda-org.apache.camel.builder, org.apache.camel.processor.interceptor-org.apache.camel.management, org.apache.camel.impl-org.apache.camel.processor.aggregate, org.apache.camel.processor.idempotent-org.apache.camel.model, org.apache.camel.model-org.apache.camel.converter, org.apache.camel.component.log-org.apache.camel.builder, org.apache.camel.processor-org.apache.camel.converter, org.apache.camel.component.bean-org.apache.camel.model.language, org.apache.camel.impl.osgi.tracker-org.apache.camel.impl.osgi, org.apache.camel.impl.converter-org.apache.camel.builder, org.apache.camel.processor.exceptionpolicy-org.apache.camel.spi, org.apache.camel.impl-org.apache.camel.component.file, org.apache.camel.builder.xml-org.apache.camel.builder, org.apache.camel.processor.aggregate-org.apache.camel.model, org.apache.camel.view-org.apache.camel.spi, org.apache.camel.builder-org.apache.camel.processor.interceptor, org.apache.camel.spi-org.apache.camel.util, org.apache.camel.impl.converter-org.apache.camel.model, org.apache.camel.component.direct-org.apache.camel.model, org.apache.camel.view-org.apache.camel.impl, org.apache.camel.component.file-org.apache.camel.language.simple, org.apache.camel.component.log-org.apache.camel.model, org.apache.camel.processor.idempotent-org.apache.camel.component.file, org.apache.camel.component.bean-org.apache.camel.model, org.apache.camel.processor.exceptionpolicy-org.apache.camel.builder, org.apache.camel.model.dataformat-org.apache.camel.builder, org.apache.camel.component.dataset-org.apache.camel.model, org.apache.camel.component.mock-org.apache.camel.component.dataset, org.apache.camel.processor.loadbalancer-org.apache.camel.spi, org.apache.camel.component.mock-org.apache.camel.model, org.apache.camel.model.language-org.apache.camel.model, org.apache.camel.processor.loadbalancer-org.apache.camel.model, org.apache.camel.processor.resequencer-org.apache.camel.model.config, org.apache.camel.impl-org.apache.camel.builder.xml, org.apache.camel.impl.osgi-org.apache.camel.builder, org.apache.camel.processor.exceptionpolicy-org.apache.camel.processor, org.apache.camel.impl.scan-org.apache.camel.impl.osgi, org.apache.camel.util-org.apache.camel.model, org.apache.camel.builder-org.apache.camel.util.concurrent]
+Classification Time;1066
+ ---- Falsely closes cycle? org.apache.camel.builder.xml-org.apache.camel.model
+ ---- Falsely closes cycle? org.apache.camel.processor.interceptor-org.apache.camel.management
+ ---- Falsely closes cycle? org.apache.camel.impl.converter-org.apache.camel.builder
+ ---- Falsely closes cycle? org.apache.camel.model.dataformat-org.apache.camel.builder
+ ---- Falsely closes cycle? org.apache.camel.processor.loadbalancer-org.apache.camel.spi
+ ---- Falsely closes cycle? org.apache.camel.impl-org.apache.camel.processor.aggregate
+ ---- Falsely closes cycle? org.apache.camel.component.log-org.apache.camel.model
+ ---- Falsely closes cycle? org.apache.camel.processor.resequencer-org.apache.camel.model.config
+ ---- Falsely closes cycle? org.apache.camel.component.seda-org.apache.camel.model
+ ---- Falsely closes cycle? org.apache.camel.view-org.apache.camel.impl
+ ---- Falsely closes cycle? org.apache.camel.impl-org.apache.camel.component.file
+ ---- Falsely closes cycle? org.apache.camel.builder.xml-org.apache.camel.builder
+ ---- Falsely closes cycle? org.apache.camel.component.seda-org.apache.camel.builder
+ ---- Falsely closes cycle? org.apache.camel.component.direct-org.apache.camel.model
+ ---- Falsely closes cycle? org.apache.camel.model.language-org.apache.camel.impl
+ ---- Falsely closes cycle? org.apache.camel.builder-org.apache.camel.processor.interceptor
+ ---- Falsely closes cycle? org.apache.camel.model.language-org.apache.camel.model
+ ---- Falsely closes cycle? org.apache.camel.processor.exceptionpolicy-org.apache.camel.processor
+ ---- Falsely closes cycle? org.apache.camel.processor-org.apache.camel.component.bean
+ ---- Falsely closes cycle? org.apache.camel.component.log-org.apache.camel.builder
+ ---- Falsely closes cycle? org.apache.camel.impl.osgi-org.apache.camel.builder
+ ---- Falsely closes cycle? org.apache.camel.component.bean-org.apache.camel.model.language
+ ---- Falsely closes cycle? org.apache.camel.spi-org.apache.camel.util
+ ---- Falsely closes cycle? org.apache.camel.processor.idempotent-org.apache.camel.component.file
+ ---- Falsely closes cycle? org.apache.camel.component.bean-org.apache.camel.model
+ ---- Falsely closes cycle? org.apache.camel.processor.aggregate-org.apache.camel.model
+ ---- Falsely closes cycle? org.apache.camel.processor.exceptionpolicy-org.apache.camel.builder
+ ---- Falsely closes cycle? org.apache.camel.impl.converter-org.apache.camel.model
+ ---- Falsely closes cycle? org.apache.camel.processor.loadbalancer-org.apache.camel.model
+ ---- Falsely closes cycle? org.apache.camel.impl-org.apache.camel.builder.xml
+ ---- Falsely closes cycle? org.apache.camel.processor.idempotent-org.apache.camel.model
+ ---- Falsely closes cycle? org.apache.camel.component.mock-org.apache.camel.model
+ ---- Falsely closes cycle? org.apache.camel.component.direct-org.apache.camel.builder
+ ---- Falsely closes cycle? org.apache.camel.processor.aggregate-org.apache.camel.component.bean
+ ---- Falsely closes cycle? org.apache.camel.component.dataset-org.apache.camel.model
+ ---- Falsely closes cycle? org.apache.camel.util-org.apache.camel.model
+ ---- Falsely closes cycle? org.apache.camel.view-org.apache.camel.spi
+ ---- Falsely closes cycle? org.apache.camel.builder-org.apache.camel.util.concurrent
+predicted: 2584
+ground: 2584
+Filtering Time;144
+2584 2584
+ROW=truth and COL=predicted
+class  0 |    2541 |      38 |
+class  1 |       0 |       5 |
+Precision;Recall;smile.validation.FMeasure@6043cd28;Specificity;Sensitivity;TP;FN;FP;TN;
+ yes;0.11627906976744186;1.0;0.20833333333333334;0.9852656068243505;1.0;5;0;38;2541;
+ no;1.0;0.9852656068243505;0.9925781250000001;1.0;0.9852656068243505;2541;38;0;5;
+ avg;0.5581395348837209;0.9926328034121752;0.6004557291666667;0.9926328034121752;0.9926328034121752;
+apache-camel-2.4.0 ## apache-camel-2.5.0 ## apache-camel-2.6.0
+outputScores
+PAQUETES -- 54
+[fields-methods-calls#Cosine, variables#Cosine, fields-variables-methods#Cosine, fields#Cosine, fields-variables-methods-calls#Cosine, methods#Cosine, imports-fields-methods-variables#Cosine, imports#Cosine, comments#Cosine, imports-fields-methods-variables-comments#Cosine, fields-methods#Cosine, imports-fields-methods-variables-comments-calls#Cosine, imports-fields-methods-variables-calls#Cosine, fields-variables#Cosine, calls#Cosine, methods-calls#Cosine]
+comments#Cosine
+=== Confusion Matrix ===
+
+    a    b   <-- classified as
+    5    0 |    a = true
+   35 2643 |    b = false
+
+40 --- [org.apache.camel.builder.xml-org.apache.camel.model, org.apache.camel.component.seda-org.apache.camel.component.vm, org.apache.camel.component.direct-org.apache.camel.builder, org.apache.camel.model.language-org.apache.camel.impl, org.apache.camel.processor-org.apache.camel.component.bean, org.apache.camel.component.seda-org.apache.camel.model, org.apache.camel.component.seda-org.apache.camel.builder, org.apache.camel.impl-org.apache.camel.processor.aggregate, org.apache.camel.processor.idempotent-org.apache.camel.model, org.apache.camel.impl.osgi.tracker-org.apache.camel.impl.osgi, org.apache.camel.impl.converter-org.apache.camel.builder, org.apache.camel.impl-org.apache.camel.component.file, org.apache.camel.builder.xml-org.apache.camel.builder, org.apache.camel.processor.aggregate-org.apache.camel.model, org.apache.camel.model-org.apache.camel.view, org.apache.camel.view-org.apache.camel.spi, org.apache.camel.management-org.apache.camel.component.bean, org.apache.camel.spi-org.apache.camel.util, org.apache.camel.view-org.apache.camel.impl, org.apache.camel.management.mbean-org.apache.camel.component.bean, org.apache.camel.component.log-org.apache.camel.model, org.apache.camel-org.apache.camel.view, org.apache.camel.processor.idempotent-org.apache.camel.component.file, org.apache.camel-org.apache.camel.impl, org.apache.camel.impl.osgi-org.apache.camel.impl, org.apache.camel.converter-org.apache.camel.spi, org.apache.camel.component.bean-org.apache.camel.model, org.apache.camel.processor.exceptionpolicy-org.apache.camel.builder, org.apache.camel.model.dataformat-org.apache.camel.builder, org.apache.camel.component.dataset-org.apache.camel.model, org.apache.camel.processor.validation-org.apache.camel.model, org.apache.camel.component.mock-org.apache.camel.component.dataset, org.apache.camel.processor.loadbalancer-org.apache.camel.spi, org.apache.camel.component.mock-org.apache.camel.model, org.apache.camel.model.language-org.apache.camel.model, org.apache.camel.processor.loadbalancer-org.apache.camel.model, org.apache.camel.processor.resequencer-org.apache.camel.model.config, org.apache.camel.impl-org.apache.camel.builder.xml, org.apache.camel.impl.scan-org.apache.camel.impl.osgi, org.apache.camel.converter.jaxp-org.apache.camel.view]
+Classification Time;1031
+ ---- Falsely closes cycle? org.apache.camel.builder.xml-org.apache.camel.model
+ ---- Falsely closes cycle? org.apache.camel.model-org.apache.camel.view
+ ---- Falsely closes cycle? org.apache.camel.impl.converter-org.apache.camel.builder
+ ---- Falsely closes cycle? org.apache.camel.impl.osgi-org.apache.camel.impl
+ ---- Falsely closes cycle? org.apache.camel.model.dataformat-org.apache.camel.builder
+ ---- Falsely closes cycle? org.apache.camel.processor.loadbalancer-org.apache.camel.spi
+ ---- Falsely closes cycle? org.apache.camel.impl-org.apache.camel.processor.aggregate
+ ---- Falsely closes cycle? org.apache.camel.component.log-org.apache.camel.model
+ ---- Falsely closes cycle? org.apache.camel.processor.resequencer-org.apache.camel.model.config
+ ---- Falsely closes cycle? org.apache.camel.component.seda-org.apache.camel.model
+ ---- Falsely closes cycle? org.apache.camel.view-org.apache.camel.impl
+ ---- Falsely closes cycle? org.apache.camel.impl-org.apache.camel.component.file
+ ---- Falsely closes cycle? org.apache.camel.builder.xml-org.apache.camel.builder
+ ---- Falsely closes cycle? org.apache.camel.component.seda-org.apache.camel.builder
+ ---- Falsely closes cycle? org.apache.camel.model.language-org.apache.camel.impl
+ ---- Falsely closes cycle? org.apache.camel.model.language-org.apache.camel.model
+ ---- Falsely closes cycle? org.apache.camel.processor-org.apache.camel.component.bean
+ ---- Falsely closes cycle? org.apache.camel.converter-org.apache.camel.spi
+ ---- Falsely closes cycle? org.apache.camel.spi-org.apache.camel.util
+ ---- Falsely closes cycle? org.apache.camel.processor.idempotent-org.apache.camel.component.file
+ ---- Falsely closes cycle? org.apache.camel.component.bean-org.apache.camel.model
+ ---- Falsely closes cycle? org.apache.camel.processor.aggregate-org.apache.camel.model
+ ---- Falsely closes cycle? org.apache.camel.processor.exceptionpolicy-org.apache.camel.builder
+ ---- Falsely closes cycle? org.apache.camel.processor.loadbalancer-org.apache.camel.model
+ ---- Falsely closes cycle? org.apache.camel.impl-org.apache.camel.builder.xml
+ ---- Falsely closes cycle? org.apache.camel.processor.idempotent-org.apache.camel.model
+ ---- Falsely closes cycle? org.apache.camel.component.mock-org.apache.camel.model
+ ---- Falsely closes cycle? org.apache.camel.component.direct-org.apache.camel.builder
+ ---- Falsely closes cycle? org.apache.camel.component.dataset-org.apache.camel.model
+ ---- Falsely closes cycle? org.apache.camel.view-org.apache.camel.spi
+ ---- Falsely closes cycle? org.apache.camel.processor.validation-org.apache.camel.model
+ ---- Falsely closes cycle? org.apache.camel.converter.jaxp-org.apache.camel.view
+predicted: 2683
+ground: 2683
+Filtering Time;172
+2683 2683
+ROW=truth and COL=predicted
+class  0 |    2647 |      32 |
+class  1 |       0 |       4 |
+Precision;Recall;smile.validation.FMeasure@63440df3;Specificity;Sensitivity;TP;FN;FP;TN;
+ yes;0.1111111111111111;1.0;0.19999999999999998;0.9880552444942142;1.0;4;0;32;2647;
+ no;1.0;0.9880552444942142;0.9939917386406308;1.0;0.9880552444942142;2647;32;0;4;
+ avg;0.5555555555555556;0.9940276222471072;0.5969958693203155;0.9940276222471072;0.9940276222471072;
+apache-camel-2.5.0 ## apache-camel-2.6.0 ## apache-camel-2.7.0
+outputScores
+PAQUETES -- 55
+[fields-methods-calls#Cosine, variables#Cosine, fields-variables-methods#Cosine, fields#Cosine, fields-variables-methods-calls#Cosine, methods#Cosine, imports-fields-methods-variables#Cosine, imports#Cosine, comments#Cosine, imports-fields-methods-variables-comments#Cosine, fields-methods#Cosine, imports-fields-methods-variables-comments-calls#Cosine, imports-fields-methods-variables-calls#Cosine, fields-variables#Cosine, calls#Cosine, methods-calls#Cosine]
+comments#Cosine
+=== Confusion Matrix ===
+
+    a    b   <-- classified as
+    2    0 |    a = true
+   40 2636 |    b = false
+
+42 --- [org.apache.camel.builder.xml-org.apache.camel.model, org.apache.camel.component.seda-org.apache.camel.component.vm, org.apache.camel.component.direct-org.apache.camel.builder, org.apache.camel.model.language-org.apache.camel.impl, org.apache.camel.processor-org.apache.camel.component.bean, org.apache.camel.component.seda-org.apache.camel.model, org.apache.camel.component.seda-org.apache.camel.builder, org.apache.camel.processor.interceptor-org.apache.camel.management, org.apache.camel.impl-org.apache.camel.processor.aggregate, org.apache.camel.processor.idempotent-org.apache.camel.model, org.apache.camel.impl.osgi.tracker-org.apache.camel.impl.osgi, org.apache.camel.impl.converter-org.apache.camel.builder, org.apache.camel.impl-org.apache.camel.component.file, org.apache.camel.model.loadbalancer-org.apache.camel.util, org.apache.camel.builder.xml-org.apache.camel.builder, org.apache.camel.processor.aggregate-org.apache.camel.model, org.apache.camel.model-org.apache.camel.view, org.apache.camel.view-org.apache.camel.spi, org.apache.camel.spi-org.apache.camel.util, org.apache.camel.impl-org.apache.camel.component.mock, org.apache.camel.view-org.apache.camel.impl, org.apache.camel.language.bean-org.apache.camel.impl, org.apache.camel.language.simple-org.apache.camel.component.file, org.apache.camel.converter-org.apache.camel.converter.jaxp, org.apache.camel.component.log-org.apache.camel.model, org.apache.camel.processor.idempotent-org.apache.camel.component.file, org.apache.camel.impl.osgi-org.apache.camel.impl, org.apache.camel.component.bean-org.apache.camel.model, org.apache.camel.processor.exceptionpolicy-org.apache.camel.builder, org.apache.camel.model.dataformat-org.apache.camel.builder, org.apache.camel.component.dataset-org.apache.camel.model, org.apache.camel.util.concurrent-org.apache.camel.impl, org.apache.camel.component.properties-org.apache.camel.builder, org.apache.camel.component.mock-org.apache.camel.component.dataset, org.apache.camel.processor.loadbalancer-org.apache.camel.spi, org.apache.camel.component.mock-org.apache.camel.model, org.apache.camel.model.language-org.apache.camel.model, org.apache.camel.processor.loadbalancer-org.apache.camel.model, org.apache.camel.processor.resequencer-org.apache.camel.model.config, org.apache.camel.impl-org.apache.camel.builder.xml, org.apache.camel.impl.scan-org.apache.camel.impl.osgi, org.apache.camel.converter.jaxp-org.apache.camel.view]
+Classification Time;993
+ ---- Falsely closes cycle? org.apache.camel.builder.xml-org.apache.camel.model
+ ---- Falsely closes cycle? org.apache.camel.processor.interceptor-org.apache.camel.management
+ ---- Falsely closes cycle? org.apache.camel.model-org.apache.camel.view
+ ---- Falsely closes cycle? org.apache.camel.language.simple-org.apache.camel.component.file
+ ---- Falsely closes cycle? org.apache.camel.impl.converter-org.apache.camel.builder
+ ---- Falsely closes cycle? org.apache.camel.impl.osgi-org.apache.camel.impl
+ ---- Falsely closes cycle? org.apache.camel.model.dataformat-org.apache.camel.builder
+ ---- Falsely closes cycle? org.apache.camel.processor.loadbalancer-org.apache.camel.spi
+ ---- Falsely closes cycle? org.apache.camel.impl-org.apache.camel.processor.aggregate
+ ---- Falsely closes cycle? org.apache.camel.component.log-org.apache.camel.model
+ ---- Falsely closes cycle? org.apache.camel.processor.resequencer-org.apache.camel.model.config
+ ---- Falsely closes cycle? org.apache.camel.component.seda-org.apache.camel.model
+ ---- Falsely closes cycle? org.apache.camel.view-org.apache.camel.impl
+ ---- Falsely closes cycle? org.apache.camel.impl-org.apache.camel.component.file
+ ---- Falsely closes cycle? org.apache.camel.builder.xml-org.apache.camel.builder
+ ---- Falsely closes cycle? org.apache.camel.component.seda-org.apache.camel.builder
+ ---- Falsely closes cycle? org.apache.camel.model.language-org.apache.camel.impl
+ ---- Falsely closes cycle? org.apache.camel.model.language-org.apache.camel.model
+ ---- Falsely closes cycle? org.apache.camel.processor-org.apache.camel.component.bean
+ ---- Falsely closes cycle? org.apache.camel.util.concurrent-org.apache.camel.impl
+ ---- Falsely closes cycle? org.apache.camel.spi-org.apache.camel.util
+ ---- Falsely closes cycle? org.apache.camel.processor.idempotent-org.apache.camel.component.file
+ ---- Falsely closes cycle? org.apache.camel.converter-org.apache.camel.converter.jaxp
+ ---- Falsely closes cycle? org.apache.camel.component.bean-org.apache.camel.model
+ ---- Falsely closes cycle? org.apache.camel.processor.aggregate-org.apache.camel.model
+ ---- Falsely closes cycle? org.apache.camel.processor.exceptionpolicy-org.apache.camel.builder
+ ---- Falsely closes cycle? org.apache.camel.language.bean-org.apache.camel.impl
+ ---- Falsely closes cycle? org.apache.camel.processor.loadbalancer-org.apache.camel.model
+ ---- Falsely closes cycle? org.apache.camel.impl-org.apache.camel.builder.xml
+ ---- Falsely closes cycle? org.apache.camel.processor.idempotent-org.apache.camel.model
+ ---- Falsely closes cycle? org.apache.camel.component.mock-org.apache.camel.model
+ ---- Falsely closes cycle? org.apache.camel.component.direct-org.apache.camel.builder
+ ---- Falsely closes cycle? org.apache.camel.component.dataset-org.apache.camel.model
+ ---- Falsely closes cycle? org.apache.camel.component.properties-org.apache.camel.builder
+ ---- Falsely closes cycle? org.apache.camel.view-org.apache.camel.spi
+ ---- Falsely closes cycle? org.apache.camel.converter.jaxp-org.apache.camel.view
+predicted: 2678
+ground: 2678
+Filtering Time;189
+2678 2678
+ROW=truth and COL=predicted
+class  0 |    2640 |      36 |
+class  1 |       0 |       2 |
+Precision;Recall;smile.validation.FMeasure@2db7a79b;Specificity;Sensitivity;TP;FN;FP;TN;
+ yes;0.05263157894736842;1.0;0.1;0.9865470852017937;1.0;2;0;36;2640;
+ no;1.0;0.9865470852017937;0.9932279909706546;1.0;0.9865470852017937;2640;36;0;2;
+ avg;0.5263157894736842;0.9932735426008968;0.5466139954853273;0.9932735426008968;0.9932735426008968;
+apache-camel-2.6.0 ## apache-camel-2.7.0 ## apache-camel-2.8.0
+outputScores
+PAQUETES -- 55
+[fields-methods-calls#Cosine, variables#Cosine, fields-variables-methods#Cosine, fields#Cosine, fields-variables-methods-calls#Cosine, methods#Cosine, imports-fields-methods-variables#Cosine, imports#Cosine, comments#Cosine, imports-fields-methods-variables-comments#Cosine, fields-methods#Cosine, imports-fields-methods-variables-comments-calls#Cosine, imports-fields-methods-variables-calls#Cosine, fields-variables#Cosine, calls#Cosine, methods-calls#Cosine]
+comments#Cosine
+=== Confusion Matrix ===
+
+    a    b   <-- classified as
+    6    1 |    a = true
+   37 2632 |    b = false
+
+43 --- [org.apache.camel.builder.xml-org.apache.camel.model, org.apache.camel.component.seda-org.apache.camel.component.vm, org.apache.camel.component.direct-org.apache.camel.builder, org.apache.camel.model.language-org.apache.camel.impl, org.apache.camel.processor-org.apache.camel.component.bean, org.apache.camel.component.seda-org.apache.camel.model, org.apache.camel.component.seda-org.apache.camel.builder, org.apache.camel.impl-org.apache.camel.processor.aggregate, org.apache.camel.processor.idempotent-org.apache.camel.model, org.apache.camel.component.bean-org.apache.camel.model.language, org.apache.camel.impl.osgi.tracker-org.apache.camel.impl.osgi, org.apache.camel.util-org.apache.camel.builder, org.apache.camel.impl.converter-org.apache.camel.builder, org.apache.camel.builder.xml-org.apache.camel.builder, org.apache.camel.processor.aggregate-org.apache.camel.model, org.apache.camel.model-org.apache.camel.view, org.apache.camel.component.ref-org.apache.camel.util, org.apache.camel.view-org.apache.camel.spi, org.apache.camel.impl.converter-org.apache.camel.model, org.apache.camel.view-org.apache.camel.impl, org.apache.camel.component.mock-org.apache.camel.model.language, org.apache.camel.impl.converter-org.apache.camel.converter, org.apache.camel.component.log-org.apache.camel.model, org.apache.camel.processor.idempotent-org.apache.camel.component.file, org.apache.camel.impl.osgi-org.apache.camel.impl, org.apache.camel.component.bean-org.apache.camel.model, org.apache.camel.processor.exceptionpolicy-org.apache.camel.builder, org.apache.camel.model.dataformat-org.apache.camel.builder, org.apache.camel.component.dataset-org.apache.camel.model, org.apache.camel.util.concurrent-org.apache.camel.impl, org.apache.camel.component.properties-org.apache.camel.builder, org.apache.camel.component.mock-org.apache.camel.component.dataset, org.apache.camel.builder-org.apache.camel.language.simple, org.apache.camel.processor.loadbalancer-org.apache.camel.spi, org.apache.camel.component.mock-org.apache.camel.model, org.apache.camel.model.language-org.apache.camel.model, org.apache.camel.processor.loadbalancer-org.apache.camel.model, org.apache.camel.processor.resequencer-org.apache.camel.model.config, org.apache.camel.impl-org.apache.camel.builder.xml, org.apache.camel.impl.scan-org.apache.camel.impl.osgi, org.apache.camel.impl.converter-org.apache.camel.converter.jaxp, org.apache.camel.util-org.apache.camel.model, org.apache.camel.converter.jaxp-org.apache.camel.view]
+Classification Time;1121
+ ---- Falsely closes cycle? org.apache.camel.builder.xml-org.apache.camel.model
+ ---- Falsely closes cycle? org.apache.camel.model-org.apache.camel.view
+ ---- Falsely closes cycle? org.apache.camel.impl.converter-org.apache.camel.builder
+ ---- Falsely closes cycle? org.apache.camel.impl.osgi-org.apache.camel.impl
+ ---- Falsely closes cycle? org.apache.camel.model.dataformat-org.apache.camel.builder
+ ---- Falsely closes cycle? org.apache.camel.processor.loadbalancer-org.apache.camel.spi
+ ---- Falsely closes cycle? org.apache.camel.impl-org.apache.camel.processor.aggregate
+ ---- Falsely closes cycle? org.apache.camel.component.log-org.apache.camel.model
+ ---- Falsely closes cycle? org.apache.camel.processor.resequencer-org.apache.camel.model.config
+ ---- Falsely closes cycle? org.apache.camel.component.seda-org.apache.camel.model
+ ---- Falsely closes cycle? org.apache.camel.view-org.apache.camel.impl
+ ---- Falsely closes cycle? org.apache.camel.builder.xml-org.apache.camel.builder
+ ---- Falsely closes cycle? org.apache.camel.component.seda-org.apache.camel.builder
+ ---- Falsely closes cycle? org.apache.camel.model.language-org.apache.camel.impl
+ ---- Falsely closes cycle? org.apache.camel.model.language-org.apache.camel.model
+ ---- Falsely closes cycle? org.apache.camel.processor-org.apache.camel.component.bean
+ ---- Falsely closes cycle? org.apache.camel.util.concurrent-org.apache.camel.impl
+ ---- Falsely closes cycle? org.apache.camel.component.bean-org.apache.camel.model.language
+ ---- Falsely closes cycle? org.apache.camel.processor.idempotent-org.apache.camel.component.file
+ ---- Falsely closes cycle? org.apache.camel.component.bean-org.apache.camel.model
+ ---- Falsely closes cycle? org.apache.camel.util-org.apache.camel.builder
+ ---- Falsely closes cycle? org.apache.camel.processor.aggregate-org.apache.camel.model
+ ---- Falsely closes cycle? org.apache.camel.processor.exceptionpolicy-org.apache.camel.builder
+ ---- Falsely closes cycle? org.apache.camel.impl.converter-org.apache.camel.model
+ ---- Falsely closes cycle? org.apache.camel.processor.loadbalancer-org.apache.camel.model
+ ---- Falsely closes cycle? org.apache.camel.impl-org.apache.camel.builder.xml
+ ---- Falsely closes cycle? org.apache.camel.processor.idempotent-org.apache.camel.model
+ ---- Falsely closes cycle? org.apache.camel.component.mock-org.apache.camel.model
+ ---- Falsely closes cycle? org.apache.camel.component.direct-org.apache.camel.builder
+ ---- Falsely closes cycle? org.apache.camel.component.dataset-org.apache.camel.model
+ ---- Falsely closes cycle? org.apache.camel.component.properties-org.apache.camel.builder
+ ---- Falsely closes cycle? org.apache.camel.component.ref-org.apache.camel.util
+ ---- Falsely closes cycle? org.apache.camel.view-org.apache.camel.spi
+ ---- Falsely closes cycle? org.apache.camel.converter.jaxp-org.apache.camel.view
+predicted: 2676
+ground: 2676
+Filtering Time;336
+2676 2676
+ROW=truth and COL=predicted
+class  0 |    2636 |      34 |
+class  1 |       1 |       5 |
+Precision;Recall;smile.validation.FMeasure@7403c468;Specificity;Sensitivity;TP;FN;FP;TN;
+ yes;0.1282051282051282;0.8333333333333334;0.2222222222222222;0.9872659176029962;0.8333333333333334;5;1;34;2636;
+ no;0.999620781190747;0.9872659176029962;0.9934049368758243;0.8333333333333334;0.9872659176029962;2636;34;1;5;
+ avg;0.5639129546979376;0.9102996254681648;0.6078135795490233;0.9102996254681648;0.9102996254681648;
+apache-camel-2.7.0 ## apache-camel-2.8.0 ## apache-camel-2.9.0
+outputScores
+PAQUETES -- 55
+[fields-methods-calls#Cosine, variables#Cosine, fields-variables-methods#Cosine, fields#Cosine, fields-variables-methods-calls#Cosine, methods#Cosine, imports-fields-methods-variables#Cosine, imports#Cosine, comments#Cosine, imports-fields-methods-variables-comments#Cosine, fields-methods#Cosine, imports-fields-methods-variables-comments-calls#Cosine, imports-fields-methods-variables-calls#Cosine, fields-variables#Cosine, calls#Cosine, methods-calls#Cosine]
+comments#Cosine
+=== Confusion Matrix ===
+
+    a    b   <-- classified as
+    7    0 |    a = true
+   46 2833 |    b = false
+
+53 --- [org.apache.camel.component.seda-org.apache.camel.component.vm, org.apache.camel.language.ref-org.apache.camel.util, org.apache.camel.component.direct-org.apache.camel.builder, org.apache.camel.component.seda-org.apache.camel.model, org.apache.camel.language.header-org.apache.camel.util, org.apache.camel.impl-org.apache.camel.processor.aggregate, org.apache.camel.component.log-org.apache.camel.builder, org.apache.camel.component.mock-org.apache.camel.component.bean, org.apache.camel.component.bean-org.apache.camel.model.language, org.apache.camel.management.mbean-org.apache.camel.model.language, org.apache.camel.impl.osgi.tracker-org.apache.camel.impl.osgi, org.apache.camel.component.ref-org.apache.camel.spi, org.apache.camel.builder.xml-org.apache.camel.builder, org.apache.camel.processor.aggregate-org.apache.camel.model, org.apache.camel.language.property-org.apache.camel.util, org.apache.camel.management.event-org.apache.camel.spi, org.apache.camel.component.file-org.apache.camel.component.file.strategy, org.apache.camel.component.bean-org.apache.camel.model, org.apache.camel.model.dataformat-org.apache.camel.builder, org.apache.camel.language.simple-org.apache.camel.model, org.apache.camel.component.mock-org.apache.camel.component.dataset, org.apache.camel.util.jsse-org.apache.camel.model.dataformat, org.apache.camel.model.language-org.apache.camel.model, org.apache.camel.impl-org.apache.camel.builder.xml, org.apache.camel.processor.exceptionpolicy-org.apache.camel.processor, org.apache.camel.impl.scan-org.apache.camel.impl.osgi, org.apache.camel.builder.xml-org.apache.camel.model, org.apache.camel.management-org.apache.camel.util.concurrent, org.apache.camel.processor.aggregate-org.apache.camel.component.bean, org.apache.camel.component.browse-org.apache.camel.util, org.apache.camel.model.language-org.apache.camel.impl, org.apache.camel.processor-org.apache.camel.component.bean, org.apache.camel.component.seda-org.apache.camel.builder, org.apache.camel.management.mbean-org.apache.camel.util.concurrent, org.apache.camel.component.dataset-org.apache.camel.builder, org.apache.camel.impl-org.apache.camel.language.bean, org.apache.camel.language.constant-org.apache.camel.util, org.apache.camel.builder-org.apache.camel.util.jsse, org.apache.camel.processor.interceptor-org.apache.camel.builder, org.apache.camel.view-org.apache.camel.spi, org.apache.camel.component.log-org.apache.camel.model, org.apache.camel.model.dataformat-org.apache.camel.util.jsse, org.apache.camel.impl-org.apache.camel.model.dataformat, org.apache.camel.processor.exceptionpolicy-org.apache.camel.builder, org.apache.camel.component.dataset-org.apache.camel.model, org.apache.camel.component.properties-org.apache.camel.builder, org.apache.camel.processor.loadbalancer-org.apache.camel.spi, org.apache.camel.management-org.apache.camel.model.language, org.apache.camel.component.mock-org.apache.camel.model, org.apache.camel.processor.loadbalancer-org.apache.camel.model, org.apache.camel.processor.resequencer-org.apache.camel.model.config, org.apache.camel.processor.loadbalancer-org.apache.camel.component.browse, org.apache.camel.builder-org.apache.camel.util.concurrent]
+Classification Time;1306
+ ---- Falsely closes cycle? org.apache.camel.builder.xml-org.apache.camel.model
+ ---- Falsely closes cycle? org.apache.camel.language.header-org.apache.camel.util
+ ---- Falsely closes cycle? org.apache.camel.model.dataformat-org.apache.camel.builder
+ ---- Falsely closes cycle? org.apache.camel.language.simple-org.apache.camel.model
+ ---- Falsely closes cycle? org.apache.camel.processor.loadbalancer-org.apache.camel.spi
+ ---- Falsely closes cycle? org.apache.camel.impl-org.apache.camel.processor.aggregate
+ ---- Falsely closes cycle? org.apache.camel.component.ref-org.apache.camel.spi
+ ---- Falsely closes cycle? org.apache.camel.language.property-org.apache.camel.util
+ ---- Falsely closes cycle? org.apache.camel.impl-org.apache.camel.language.bean
+ ---- Falsely closes cycle? org.apache.camel.component.log-org.apache.camel.model
+ ---- Falsely closes cycle? org.apache.camel.processor.resequencer-org.apache.camel.model.config
+ ---- Falsely closes cycle? org.apache.camel.component.seda-org.apache.camel.model
+ ---- Falsely closes cycle? org.apache.camel.language.constant-org.apache.camel.util
+ ---- Falsely closes cycle? org.apache.camel.builder.xml-org.apache.camel.builder
+ ---- Falsely closes cycle? org.apache.camel.component.seda-org.apache.camel.builder
+ ---- Falsely closes cycle? org.apache.camel.model.language-org.apache.camel.impl
+ ---- Falsely closes cycle? org.apache.camel.management.mbean-org.apache.camel.model.language
+ ---- Falsely closes cycle? org.apache.camel.model.language-org.apache.camel.model
+ ---- Falsely closes cycle? org.apache.camel.processor.interceptor-org.apache.camel.builder
+ ---- Falsely closes cycle? org.apache.camel.processor.exceptionpolicy-org.apache.camel.processor
+ ---- Falsely closes cycle? org.apache.camel.processor-org.apache.camel.component.bean
+ ---- Falsely closes cycle? org.apache.camel.management-org.apache.camel.model.language
+ ---- Falsely closes cycle? org.apache.camel.component.log-org.apache.camel.builder
+ ---- Falsely closes cycle? org.apache.camel.component.browse-org.apache.camel.util
+ ---- Falsely closes cycle? org.apache.camel.component.bean-org.apache.camel.model.language
+ ---- Falsely closes cycle? org.apache.camel.util.jsse-org.apache.camel.model.dataformat
+ ---- Falsely closes cycle? org.apache.camel.component.mock-org.apache.camel.component.bean
+ ---- Falsely closes cycle? org.apache.camel.component.bean-org.apache.camel.model
+ ---- Falsely closes cycle? org.apache.camel.component.dataset-org.apache.camel.builder
+ ---- Falsely closes cycle? org.apache.camel.processor.aggregate-org.apache.camel.model
+ ---- Falsely closes cycle? org.apache.camel.processor.exceptionpolicy-org.apache.camel.builder
+ ---- Falsely closes cycle? org.apache.camel.processor.loadbalancer-org.apache.camel.model
+ ---- Falsely closes cycle? org.apache.camel.impl-org.apache.camel.builder.xml
+ ---- Falsely closes cycle? org.apache.camel.component.mock-org.apache.camel.model
+ ---- Falsely closes cycle? org.apache.camel.component.direct-org.apache.camel.builder
+ ---- Falsely closes cycle? org.apache.camel.processor.aggregate-org.apache.camel.component.bean
+ ---- Falsely closes cycle? org.apache.camel.management.mbean-org.apache.camel.util.concurrent
+ ---- Falsely closes cycle? org.apache.camel.impl-org.apache.camel.model.dataformat
+ ---- Falsely closes cycle? org.apache.camel.management-org.apache.camel.util.concurrent
+ ---- Falsely closes cycle? org.apache.camel.component.dataset-org.apache.camel.model
+ ---- Falsely closes cycle? org.apache.camel.component.properties-org.apache.camel.builder
+ ---- Falsely closes cycle? org.apache.camel.view-org.apache.camel.spi
+ ---- Falsely closes cycle? org.apache.camel.language.ref-org.apache.camel.util
+ ---- Falsely closes cycle? org.apache.camel.builder-org.apache.camel.util.concurrent
+predicted: 2886
+ground: 2886
+Filtering Time;51
+2886 2886
+ROW=truth and COL=predicted
+class  0 |    2839 |      44 |
+class  1 |       0 |       3 |
+Precision;Recall;smile.validation.FMeasure@544a2ea6;Specificity;Sensitivity;TP;FN;FP;TN;
+ yes;0.06382978723404255;1.0;0.12;0.9847381200138744;1.0;3;0;44;2839;
+ no;1.0;0.9847381200138744;0.9923103809856693;1.0;0.9847381200138744;2839;44;0;3;
+ avg;0.5319148936170213;0.9923690600069373;0.5561551904928346;0.9923690600069373;0.9923690600069373;
+apache-camel-2.8.0 ## apache-camel-2.9.0 ## apache-camel-2.10.0
+outputScores
+PAQUETES -- 57
+[fields-methods-calls#Cosine, variables#Cosine, fields-variables-methods#Cosine, fields#Cosine, fields-variables-methods-calls#Cosine, methods#Cosine, imports-fields-methods-variables#Cosine, imports#Cosine, comments#Cosine, imports-fields-methods-variables-comments#Cosine, fields-methods#Cosine, imports-fields-methods-variables-comments-calls#Cosine, imports-fields-methods-variables-calls#Cosine, fields-variables#Cosine, calls#Cosine, methods-calls#Cosine]
+comments#Cosine
+=== Confusion Matrix ===
+
+    a    b   <-- classified as
+   10    0 |    a = true
+   81 3987 |    b = false
+
+91 --- [org.apache.camel.main-org.apache.camel.component.bean, org.apache.camel-org.apache.camel.support, org.apache.camel.component.log-org.apache.camel.support, org.apache.camel.component.seda-org.apache.camel.component.vm, org.apache.camel.component.file-org.apache.camel.converter, org.apache.camel.processor.validation-org.apache.camel.support, org.apache.camel.component.direct-org.apache.camel.builder, org.apache.camel.util.concurrent-org.apache.camel.processor.resequencer, org.apache.camel.component.seda-org.apache.camel.model, org.apache.camel.main-org.apache.camel.spi, org.apache.camel.language.simple.types-org.apache.camel.language.simple.ast, org.apache.camel.component.xslt-org.apache.camel.model, org.apache.camel.impl-org.apache.camel.processor.aggregate, org.apache.camel.component.log-org.apache.camel.builder, org.apache.camel.component.mock-org.apache.camel.support, org.apache.camel.component.mock-org.apache.camel.component.bean, org.apache.camel.language.tokenizer-org.apache.camel.model.language, org.apache.camel.component.bean-org.apache.camel.model.language, org.apache.camel.management.mbean-org.apache.camel.model.language, org.apache.camel.impl.osgi.tracker-org.apache.camel.impl.osgi, org.apache.camel.component.ref-org.apache.camel.spi, org.apache.camel.component.test-org.apache.camel.spi, org.apache.camel.builder.xml-org.apache.camel.builder, org.apache.camel.view-org.apache.camel.main, org.apache.camel.processor.aggregate-org.apache.camel.model, org.apache.camel.processor.validation-org.apache.camel.util, org.apache.camel.builder-org.apache.camel.main, org.apache.camel.component.test-org.apache.camel.model, org.apache.camel.spi-org.apache.camel.util, org.apache.camel.util.concurrent-org.apache.camel, org.apache.camel.component-org.apache.camel.component.language, org.apache.camel-org.apache.camel.impl, org.apache.camel.management-org.apache.camel.processor.idempotent, org.apache.camel.component.file-org.apache.camel.component.file.strategy, org.apache.camel.component.bean-org.apache.camel.model, org.apache.camel.model.language-org.apache.camel.builder.xml, org.apache.camel.model.dataformat-org.apache.camel.builder, org.apache.camel.converter.stream-org.apache.camel.impl.converter, org.apache.camel.component.mock-org.apache.camel.component.dataset, org.apache.camel.component.file-org.apache.camel.impl.converter, org.apache.camel.util.jsse-org.apache.camel.model.dataformat, org.apache.camel.model.language-org.apache.camel.model, org.apache.camel.impl-org.apache.camel.builder.xml, org.apache.camel.processor.exceptionpolicy-org.apache.camel.processor, org.apache.camel.impl.scan-org.apache.camel.impl.osgi, org.apache.camel.processor-org.apache.camel.processor.interceptor, org.apache.camel.api.management.mbean-org.apache.camel.component, org.apache.camel.builder.xml-org.apache.camel.model, org.apache.camel.builder-org.apache.camel.processor.aggregate, org.apache.camel.processor.aggregate-org.apache.camel.component.bean, org.apache.camel.processor-org.apache.camel.model.language, org.apache.camel.component.browse-org.apache.camel.util, org.apache.camel.processor.exceptionpolicy-org.apache.camel.impl, org.apache.camel.model.language-org.apache.camel.impl, org.apache.camel.processor-org.apache.camel.component.bean, org.apache.camel.model-org.apache.camel.main, org.apache.camel.component.seda-org.apache.camel.builder, org.apache.camel-org.apache.camel.util, org.apache.camel.component.mock-org.apache.camel.component.test, org.apache.camel.management.mbean-org.apache.camel.support, org.apache.camel.processor.validation-org.apache.camel.component.validator, org.apache.camel.component-org.apache.camel.builder, org.apache.camel.impl-org.apache.camel.language.bean, org.apache.camel.management.mbean-org.apache.camel.management, org.apache.camel.processor.interceptor-org.apache.camel.builder, org.apache.camel.view-org.apache.camel.spi, org.apache.camel.component.direct-org.apache.camel.model, org.apache.camel.language.simple.ast-org.apache.camel.language.simple, org.apache.camel.processor.loadbalancer-org.apache.camel.model.loadbalancer, org.apache.camel.impl.converter-org.apache.camel.impl, org.apache.camel.component.log-org.apache.camel.model, org.apache.camel.impl-org.apache.camel.model.dataformat, org.apache.camel.impl.osgi-org.apache.camel.impl, org.apache.camel.processor.exceptionpolicy-org.apache.camel.builder, org.apache.camel.util.jsse-org.apache.camel.util, org.apache.camel.component.dataset-org.apache.camel.model, org.apache.camel.converter.jaxp-org.apache.camel.component.xslt, org.apache.camel.component.properties-org.apache.camel.builder, org.apache.camel.language.simple.types-org.apache.camel.language.simple, org.apache.camel.language.bean-org.apache.camel.model.language, org.apache.camel.component.mock-org.apache.camel.model, org.apache.camel.processor.loadbalancer-org.apache.camel.spi, org.apache.camel.management-org.apache.camel.model.language, org.apache.camel.processor.loadbalancer-org.apache.camel.model, org.apache.camel.processor.resequencer-org.apache.camel.model.config, org.apache.camel.processor.loadbalancer-org.apache.camel.component.browse, org.apache.camel.component-org.apache.camel.model, org.apache.camel.util-org.apache.camel.model, org.apache.camel.builder-org.apache.camel.util.concurrent, org.apache.camel.management.mbean-org.apache.camel.processor.idempotent, org.apache.camel.converter.jaxp-org.apache.camel.view]
+Classification Time;1584
+ ---- Falsely closes cycle? org.apache.camel.builder.xml-org.apache.camel.model
+ ---- Falsely closes cycle? org.apache.camel.language.tokenizer-org.apache.camel.model.language
+ ---- Falsely closes cycle? org.apache.camel.model.dataformat-org.apache.camel.builder
+ ---- Falsely closes cycle? org.apache.camel.impl-org.apache.camel.processor.aggregate
+ ---- Falsely closes cycle? org.apache.camel.component.log-org.apache.camel.model
+ ---- Falsely closes cycle? org.apache.camel.component.seda-org.apache.camel.model
+ ---- Falsely closes cycle? org.apache.camel.processor.loadbalancer-org.apache.camel.model.loadbalancer
+ ---- Falsely closes cycle? org.apache.camel.builder.xml-org.apache.camel.builder
+ ---- Falsely closes cycle? org.apache.camel.builder-org.apache.camel.processor.aggregate
+ ---- Falsely closes cycle? org.apache.camel.model-org.apache.camel.main
+ ---- Falsely closes cycle? org.apache.camel.main-org.apache.camel.component.bean
+ ---- Falsely closes cycle? org.apache.camel.util.concurrent-org.apache.camel.processor.resequencer
+ ---- Falsely closes cycle? org.apache.camel.processor.exceptionpolicy-org.apache.camel.processor
+ ---- Falsely closes cycle? org.apache.camel.component.log-org.apache.camel.builder
+ ---- Falsely closes cycle? org.apache.camel.language.simple.types-org.apache.camel.language.simple.ast
+ ---- Falsely closes cycle? org.apache.camel.component.test-org.apache.camel.model
+ ---- Falsely closes cycle? org.apache.camel.component.browse-org.apache.camel.util
+ ---- Falsely closes cycle? org.apache.camel.component.test-org.apache.camel.spi
+ ---- Falsely closes cycle? org.apache.camel.util.jsse-org.apache.camel.model.dataformat
+ ---- Falsely closes cycle? org.apache.camel-org.apache.camel.support
+ ---- Falsely closes cycle? org.apache.camel.component.mock-org.apache.camel.component.bean
+ ---- Falsely closes cycle? org.apache.camel.spi-org.apache.camel.util
+ ---- Falsely closes cycle? org.apache.camel.component.log-org.apache.camel.support
+ ---- Falsely closes cycle? org.apache.camel.converter.stream-org.apache.camel.impl.converter
+ ---- Falsely closes cycle? org.apache.camel.component-org.apache.camel.builder
+ ---- Falsely closes cycle? org.apache.camel.processor-org.apache.camel.model.language
+ ---- Falsely closes cycle? org.apache.camel.component.bean-org.apache.camel.model
+ ---- Falsely closes cycle? org.apache.camel.processor.loadbalancer-org.apache.camel.model
+ ---- Falsely closes cycle? org.apache.camel.impl-org.apache.camel.builder.xml
+ ---- Falsely closes cycle? org.apache.camel-org.apache.camel.util
+ ---- Falsely closes cycle? org.apache.camel.component.mock-org.apache.camel.model
+ ---- Falsely closes cycle? org.apache.camel.component.direct-org.apache.camel.builder
+ ---- Falsely closes cycle? org.apache.camel.impl-org.apache.camel.model.dataformat
+ ---- Falsely closes cycle? org.apache.camel.component-org.apache.camel.model
+ ---- Falsely closes cycle? org.apache.camel.component.properties-org.apache.camel.builder
+ ---- Falsely closes cycle? org.apache.camel.util-org.apache.camel.model
+ ---- Falsely closes cycle? org.apache.camel.view-org.apache.camel.main
+ ---- Falsely closes cycle? org.apache.camel.view-org.apache.camel.spi
+ ---- Falsely closes cycle? org.apache.camel.builder-org.apache.camel.util.concurrent
+ ---- Falsely closes cycle? org.apache.camel.impl.converter-org.apache.camel.impl
+ ---- Falsely closes cycle? org.apache.camel.impl.osgi-org.apache.camel.impl
+ ---- Falsely closes cycle? org.apache.camel.component.mock-org.apache.camel.support
+ ---- Falsely closes cycle? org.apache.camel.processor.loadbalancer-org.apache.camel.spi
+ ---- Falsely closes cycle? org.apache.camel.component.ref-org.apache.camel.spi
+ ---- Falsely closes cycle? org.apache.camel.impl-org.apache.camel.language.bean
+ ---- Falsely closes cycle? org.apache.camel.processor.resequencer-org.apache.camel.model.config
+ ---- Falsely closes cycle? org.apache.camel.component.xslt-org.apache.camel.model
+ ---- Falsely closes cycle? org.apache.camel.component.file-org.apache.camel.impl.converter
+ ---- Falsely closes cycle? org.apache.camel.management.mbean-org.apache.camel.support
+ ---- Falsely closes cycle? org.apache.camel.processor.exceptionpolicy-org.apache.camel.impl
+ ---- Falsely closes cycle? org.apache.camel.component.seda-org.apache.camel.builder
+ ---- Falsely closes cycle? org.apache.camel.component.direct-org.apache.camel.model
+ ---- Falsely closes cycle? org.apache.camel.processor-org.apache.camel.processor.interceptor
+ ---- Falsely closes cycle? org.apache.camel.model.language-org.apache.camel.impl
+ ---- Falsely closes cycle? org.apache.camel.management.mbean-org.apache.camel.model.language
+ ---- Falsely closes cycle? org.apache.camel.language.simple.types-org.apache.camel.language.simple
+ ---- Falsely closes cycle? org.apache.camel.model.language-org.apache.camel.model
+ ---- Falsely closes cycle? org.apache.camel.processor.interceptor-org.apache.camel.builder
+ ---- Falsely closes cycle? org.apache.camel.processor-org.apache.camel.component.bean
+ ---- Falsely closes cycle? org.apache.camel.management.mbean-org.apache.camel.management
+ ---- Falsely closes cycle? org.apache.camel.management-org.apache.camel.model.language
+ ---- Falsely closes cycle? org.apache.camel.language.simple.ast-org.apache.camel.language.simple
+ ---- Falsely closes cycle? org.apache.camel.language.bean-org.apache.camel.model.language
+ ---- Falsely closes cycle? org.apache.camel.component.bean-org.apache.camel.model.language
+ ---- Falsely closes cycle? org.apache.camel.management.mbean-org.apache.camel.processor.idempotent
+ ---- Falsely closes cycle? org.apache.camel.processor.aggregate-org.apache.camel.model
+ ---- Falsely closes cycle? org.apache.camel.builder-org.apache.camel.main
+ ---- Falsely closes cycle? org.apache.camel-org.apache.camel.impl
+ ---- Falsely closes cycle? org.apache.camel.processor.exceptionpolicy-org.apache.camel.builder
+ ---- Falsely closes cycle? org.apache.camel.management-org.apache.camel.processor.idempotent
+ ---- Falsely closes cycle? org.apache.camel.processor.aggregate-org.apache.camel.component.bean
+ ---- Falsely closes cycle? org.apache.camel.component.dataset-org.apache.camel.model
+ ---- Falsely closes cycle? org.apache.camel.converter.jaxp-org.apache.camel.view
+predicted: 4078
+ground: 4078
+Filtering Time;70
+4078 4078
+ROW=truth and COL=predicted
+class  0 |    3998 |      73 |
+class  1 |       0 |       7 |
+Precision;Recall;smile.validation.FMeasure@545997b1;Specificity;Sensitivity;TP;FN;FP;TN;
+ yes;0.0875;1.0;0.16091954022988506;0.9820682878899534;1.0;7;0;73;3998;
+ no;1.0;0.9820682878899534;0.9909530301152559;1.0;0.9820682878899534;3998;73;0;7;
+ avg;0.54375;0.9910341439449767;0.5759362851725705;0.9910341439449767;0.9910341439449767;
+apache-camel-2.9.0 ## apache-camel-2.10.0 ## apache-camel-2.11.0
+outputScores
+PAQUETES -- 68
+[fields-methods-calls#Cosine, variables#Cosine, fields-variables-methods#Cosine, fields#Cosine, fields-variables-methods-calls#Cosine, methods#Cosine, imports-fields-methods-variables#Cosine, imports#Cosine, comments#Cosine, imports-fields-methods-variables-comments#Cosine, fields-methods#Cosine, imports-fields-methods-variables-comments-calls#Cosine, imports-fields-methods-variables-calls#Cosine, fields-variables#Cosine, calls#Cosine, methods-calls#Cosine]
+comments#Cosine
+=== Confusion Matrix ===
+
+    a    b   <-- classified as
+    7    0 |    a = true
+   61 4403 |    b = false
+
+68 --- [org.apache.camel-org.apache.camel.support, org.apache.camel.component.seda-org.apache.camel.component.vm, org.apache.camel.component.direct-org.apache.camel.builder, org.apache.camel.util.concurrent-org.apache.camel.processor.resequencer, org.apache.camel.component.seda-org.apache.camel.model, org.apache.camel.model.language-org.apache.camel.support, org.apache.camel.language.simple.types-org.apache.camel.language.simple.ast, org.apache.camel.component.xslt-org.apache.camel.model, org.apache.camel.impl-org.apache.camel.processor.aggregate, org.apache.camel.component.mock-org.apache.camel.support, org.apache.camel.management-org.apache.camel.builder.xml, org.apache.camel.component.bean-org.apache.camel.model.language, org.apache.camel.management.mbean-org.apache.camel.model.language, org.apache.camel.impl.osgi.tracker-org.apache.camel.impl.osgi, org.apache.camel.component.ref-org.apache.camel.spi, org.apache.camel.component.test-org.apache.camel.spi, org.apache.camel.builder.xml-org.apache.camel.builder, org.apache.camel.view-org.apache.camel.main, org.apache.camel.processor.aggregate-org.apache.camel.model, org.apache.camel.management-org.apache.camel.component.log, org.apache.camel.builder-org.apache.camel.main, org.apache.camel.spi-org.apache.camel.util, org.apache.camel.component.vm-org.apache.camel.component.stub, org.apache.camel-org.apache.camel.impl, org.apache.camel.component.file-org.apache.camel.component.file.strategy, org.apache.camel.component.bean-org.apache.camel.model, org.apache.camel.model.dataformat-org.apache.camel.builder, org.apache.camel.language.simple-org.apache.camel.support, org.apache.camel.util.jsse-org.apache.camel.model.dataformat, org.apache.camel.model.language-org.apache.camel.model, org.apache.camel.impl-org.apache.camel.builder.xml, org.apache.camel.processor.validation-org.apache.camel.spi, org.apache.camel.builder.xml-org.apache.camel.model, org.apache.camel.component.timer-org.apache.camel.util, org.apache.camel.spi-org.apache.camel.impl, org.apache.camel.component.browse-org.apache.camel.util, org.apache.camel.model.language-org.apache.camel.impl, org.apache.camel.processor-org.apache.camel.component.bean, org.apache.camel.model-org.apache.camel.main, org.apache.camel.component.seda-org.apache.camel.builder, org.apache.camel-org.apache.camel.util, org.apache.camel.component.dataset-org.apache.camel.builder, org.apache.camel.management.mbean-org.apache.camel.support, org.apache.camel-org.apache.camel.processor, org.apache.camel.language.xpath-org.apache.camel.support, org.apache.camel.util-org.apache.camel.builder, org.apache.camel.processor.interceptor-org.apache.camel.builder, org.apache.camel.component.directvm-org.apache.camel.model, org.apache.camel.component.directvm-org.apache.camel.spi, org.apache.camel.view-org.apache.camel.spi, org.apache.camel.processor.validation-org.apache.camel.converter.jaxp, org.apache.camel.language.simple.ast-org.apache.camel.language.simple, org.apache.camel.impl.converter-org.apache.camel.impl, org.apache.camel.component.log-org.apache.camel.model, org.apache.camel.impl-org.apache.camel.model.dataformat, org.apache.camel.processor.interceptor-org.apache.camel.api.management.mbean, org.apache.camel.processor.exceptionpolicy-org.apache.camel.builder, org.apache.camel.component.dataset-org.apache.camel.model, org.apache.camel.component.directvm-org.apache.camel.support, org.apache.camel.component.properties-org.apache.camel.builder, org.apache.camel.language.simple.types-org.apache.camel.language.simple, org.apache.camel.component.mock-org.apache.camel.model, org.apache.camel.management-org.apache.camel.model.language, org.apache.camel.processor.loadbalancer-org.apache.camel.model, org.apache.camel-org.apache.camel.component.bean, org.apache.camel.processor.resequencer-org.apache.camel.model.config, org.apache.camel.util-org.apache.camel.model, org.apache.camel.builder-org.apache.camel.util.concurrent]
+Classification Time;1916
+ ---- Falsely closes cycle? org.apache.camel.builder.xml-org.apache.camel.model
+ ---- Falsely closes cycle? org.apache.camel.language.xpath-org.apache.camel.support
+ ---- Falsely closes cycle? org.apache.camel.model.dataformat-org.apache.camel.builder
+ ---- Falsely closes cycle? org.apache.camel.impl-org.apache.camel.processor.aggregate
+ ---- Falsely closes cycle? org.apache.camel.component.log-org.apache.camel.model
+ ---- Falsely closes cycle? org.apache.camel.component.seda-org.apache.camel.model
+ ---- Falsely closes cycle? org.apache.camel.builder.xml-org.apache.camel.builder
+ ---- Falsely closes cycle? org.apache.camel.model-org.apache.camel.main
+ ---- Falsely closes cycle? org.apache.camel.util.concurrent-org.apache.camel.processor.resequencer
+ ---- Falsely closes cycle? org.apache.camel.language.simple.types-org.apache.camel.language.simple.ast
+ ---- Falsely closes cycle? org.apache.camel.spi-org.apache.camel.impl
+ ---- Falsely closes cycle? org.apache.camel.component.browse-org.apache.camel.util
+ ---- Falsely closes cycle? org.apache.camel.component.test-org.apache.camel.spi
+ ---- Falsely closes cycle? org.apache.camel.model.language-org.apache.camel.support
+ ---- Falsely closes cycle? org.apache.camel.util.jsse-org.apache.camel.model.dataformat
+ ---- Falsely closes cycle? org.apache.camel.component.timer-org.apache.camel.util
+ ---- Falsely closes cycle? org.apache.camel.component.directvm-org.apache.camel.model
+ ---- Falsely closes cycle? org.apache.camel-org.apache.camel.support
+ ---- Falsely closes cycle? org.apache.camel.spi-org.apache.camel.util
+ ---- Falsely closes cycle? org.apache.camel.component.directvm-org.apache.camel.spi
+ ---- Falsely closes cycle? org.apache.camel.component.bean-org.apache.camel.model
+ ---- Falsely closes cycle? org.apache.camel.component.dataset-org.apache.camel.builder
+ ---- Falsely closes cycle? org.apache.camel.util-org.apache.camel.builder
+ ---- Falsely closes cycle? org.apache.camel.management-org.apache.camel.builder.xml
+ ---- Falsely closes cycle? org.apache.camel.processor.loadbalancer-org.apache.camel.model
+ ---- Falsely closes cycle? org.apache.camel.impl-org.apache.camel.builder.xml
+ ---- Falsely closes cycle? org.apache.camel-org.apache.camel.util
+ ---- Falsely closes cycle? org.apache.camel.component.mock-org.apache.camel.model
+ ---- Falsely closes cycle? org.apache.camel.component.direct-org.apache.camel.builder
+ ---- Falsely closes cycle? org.apache.camel.impl-org.apache.camel.model.dataformat
+ ---- Falsely closes cycle? org.apache.camel.component.properties-org.apache.camel.builder
+ ---- Falsely closes cycle? org.apache.camel-org.apache.camel.component.bean
+ ---- Falsely closes cycle? org.apache.camel.util-org.apache.camel.model
+ ---- Falsely closes cycle? org.apache.camel.view-org.apache.camel.main
+ ---- Falsely closes cycle? org.apache.camel.view-org.apache.camel.spi
+ ---- Falsely closes cycle? org.apache.camel.builder-org.apache.camel.util.concurrent
+ ---- Falsely closes cycle? org.apache.camel.impl.converter-org.apache.camel.impl
+ ---- Falsely closes cycle? org.apache.camel.component.mock-org.apache.camel.support
+ ---- Falsely closes cycle? org.apache.camel.component.ref-org.apache.camel.spi
+ ---- Falsely closes cycle? org.apache.camel.processor.resequencer-org.apache.camel.model.config
+ ---- Falsely closes cycle? org.apache.camel.component.xslt-org.apache.camel.model
+ ---- Falsely closes cycle? org.apache.camel.management.mbean-org.apache.camel.support
+ ---- Falsely closes cycle? org.apache.camel.component.seda-org.apache.camel.builder
+ ---- Falsely closes cycle? org.apache.camel.model.language-org.apache.camel.impl
+ ---- Falsely closes cycle? org.apache.camel.management.mbean-org.apache.camel.model.language
+ ---- Falsely closes cycle? org.apache.camel.language.simple.types-org.apache.camel.language.simple
+ ---- Falsely closes cycle? org.apache.camel.model.language-org.apache.camel.model
+ ---- Falsely closes cycle? org.apache.camel.processor.interceptor-org.apache.camel.builder
+ ---- Falsely closes cycle? org.apache.camel.processor-org.apache.camel.component.bean
+ ---- Falsely closes cycle? org.apache.camel.management-org.apache.camel.model.language
+ ---- Falsely closes cycle? org.apache.camel.language.simple.ast-org.apache.camel.language.simple
+ ---- Falsely closes cycle? org.apache.camel.component.bean-org.apache.camel.model.language
+ ---- Falsely closes cycle? org.apache.camel.processor.aggregate-org.apache.camel.model
+ ---- Falsely closes cycle? org.apache.camel.builder-org.apache.camel.main
+ ---- Falsely closes cycle? org.apache.camel-org.apache.camel.impl
+ ---- Falsely closes cycle? org.apache.camel.component.directvm-org.apache.camel.support
+ ---- Falsely closes cycle? org.apache.camel.processor.exceptionpolicy-org.apache.camel.builder
+ ---- Falsely closes cycle? org.apache.camel.component.dataset-org.apache.camel.model
+ ---- Falsely closes cycle? org.apache.camel-org.apache.camel.processor
+predicted: 4471
+ground: 4471
+Filtering Time;71
+4471 4471
+ROW=truth and COL=predicted
+class  0 |    4408 |      59 |
+class  1 |       0 |       4 |
+Precision;Recall;smile.validation.FMeasure@5fdba6f9;Specificity;Sensitivity;TP;FN;FP;TN;
+ yes;0.06349206349206349;1.0;0.11940298507462686;0.9867920304454891;1.0;4;0;59;4408;
+ no;1.0;0.9867920304454891;0.9933521126760564;1.0;0.9867920304454891;4408;59;0;4;
+ avg;0.5317460317460317;0.9933960152227446;0.5563775488753416;0.9933960152227446;0.9933960152227446;
+apache-camel-2.10.0 ## apache-camel-2.11.0 ## apache-camel-2.12.0
+outputScores
+PAQUETES -- 70
+[fields-methods-calls#Cosine, variables#Cosine, fields-variables-methods#Cosine, fields#Cosine, fields-variables-methods-calls#Cosine, methods#Cosine, imports-fields-methods-variables#Cosine, imports#Cosine, comments#Cosine, imports-fields-methods-variables-comments#Cosine, fields-methods#Cosine, imports-fields-methods-variables-comments-calls#Cosine, imports-fields-methods-variables-calls#Cosine, fields-variables#Cosine, calls#Cosine, methods-calls#Cosine]
+comments#Cosine
+=== Confusion Matrix ===
+
+    a    b   <-- classified as
+   12    1 |    a = true
+   58 4808 |    b = false
+
+70 --- [org.apache.camel-org.apache.camel.support, org.apache.camel.component.seda-org.apache.camel.component.vm, org.apache.camel.util.concurrent-org.apache.camel.processor.resequencer, org.apache.camel.component.seda-org.apache.camel.model, org.apache.camel.language.simple.types-org.apache.camel.language.simple.ast, org.apache.camel.impl-org.apache.camel.processor.aggregate, org.apache.camel.component.mock-org.apache.camel.support, org.apache.camel.component.bean-org.apache.camel.model.language, org.apache.camel.impl.osgi.tracker-org.apache.camel.impl.osgi, org.apache.camel.component.ref-org.apache.camel.spi, org.apache.camel.component.test-org.apache.camel.spi, org.apache.camel.builder.xml-org.apache.camel.builder, org.apache.camel.view-org.apache.camel.main, org.apache.camel.processor.aggregate-org.apache.camel.model, org.apache.camel.component.validator-org.apache.camel.converter, org.apache.camel.builder-org.apache.camel.main, org.apache.camel.spi-org.apache.camel.util, org.apache.camel.component.vm-org.apache.camel.component.stub, org.apache.camel.processor-org.apache.camel.component.mock, org.apache.camel.component-org.apache.camel.component.language, org.apache.camel-org.apache.camel.impl, org.apache.camel.component.file-org.apache.camel.component.file.strategy, org.apache.camel.component.bean-org.apache.camel.model, org.apache.camel.model.dataformat-org.apache.camel.builder, org.apache.camel.processor.aggregate-org.apache.camel.builder, org.apache.camel.processor-org.apache.camel.management.mbean, org.apache.camel.model.loadbalancer-org.apache.camel.impl, org.apache.camel.util.jsse-org.apache.camel.model.dataformat, org.apache.camel.model.language-org.apache.camel.model, org.apache.camel.impl-org.apache.camel.builder.xml, org.apache.camel.processor.interceptor-org.apache.camel.management.event, org.apache.camel.impl.scan-org.apache.camel.impl.osgi, org.apache.camel.processor-org.apache.camel.processor.interceptor, org.apache.camel.builder.xml-org.apache.camel.model, org.apache.camel.component.timer-org.apache.camel.util, org.apache.camel.spi-org.apache.camel.impl, org.apache.camel.builder-org.apache.camel.processor.aggregate, org.apache.camel.processor.aggregate-org.apache.camel.component.bean, org.apache.camel.processor-org.apache.camel.model.language, org.apache.camel.component.browse-org.apache.camel.util, org.apache.camel.model.language-org.apache.camel.impl, org.apache.camel.processor-org.apache.camel.component.bean, org.apache.camel.model-org.apache.camel.main, org.apache.camel.component.seda-org.apache.camel.builder, org.apache.camel.processor-org.apache.camel.api.management, org.apache.camel.language.simple.ast-org.apache.camel.impl, org.apache.camel-org.apache.camel.util, org.apache.camel.management.mbean-org.apache.camel.support, org.apache.camel.language.simple-org.apache.camel.impl, org.apache.camel-org.apache.camel.processor, org.apache.camel.management.mbean-org.apache.camel.management, org.apache.camel.processor.interceptor-org.apache.camel.builder, org.apache.camel.component.directvm-org.apache.camel.model, org.apache.camel.component.directvm-org.apache.camel.spi, org.apache.camel.view-org.apache.camel.spi, org.apache.camel.language.simple.ast-org.apache.camel.language.simple, org.apache.camel.impl.converter-org.apache.camel.impl, org.apache.camel.processor-org.apache.camel.management, org.apache.camel.impl.osgi-org.apache.camel.impl, org.apache.camel.processor.exceptionpolicy-org.apache.camel.builder, org.apache.camel.processor.aggregate-org.apache.camel.processor, org.apache.camel.component.dataset-org.apache.camel.model, org.apache.camel.language.simple.types-org.apache.camel.language.simple, org.apache.camel.component.mock-org.apache.camel.model, org.apache.camel.management-org.apache.camel.model.language, org.apache.camel.processor.loadbalancer-org.apache.camel.model, org.apache.camel-org.apache.camel.component.bean, org.apache.camel.processor.resequencer-org.apache.camel.model.config, org.apache.camel.language.simple-org.apache.camel.spi, org.apache.camel-org.apache.camel.model.language]
+Classification Time;2215
+ ---- Falsely closes cycle? org.apache.camel.builder.xml-org.apache.camel.model
+ ---- Falsely closes cycle? org.apache.camel.model.dataformat-org.apache.camel.builder
+ ---- Falsely closes cycle? org.apache.camel.impl-org.apache.camel.processor.aggregate
+ ---- Falsely closes cycle? org.apache.camel.component.seda-org.apache.camel.model
+ ---- Falsely closes cycle? org.apache.camel.builder.xml-org.apache.camel.builder
+ ---- Falsely closes cycle? org.apache.camel.language.simple.ast-org.apache.camel.impl
+ ---- Falsely closes cycle? org.apache.camel.builder-org.apache.camel.processor.aggregate
+ ---- Falsely closes cycle? org.apache.camel.model-org.apache.camel.main
+ ---- Falsely closes cycle? org.apache.camel.util.concurrent-org.apache.camel.processor.resequencer
+ ---- Falsely closes cycle? org.apache.camel.language.simple.types-org.apache.camel.language.simple.ast
+ ---- Falsely closes cycle? org.apache.camel.model.loadbalancer-org.apache.camel.impl
+ ---- Falsely closes cycle? org.apache.camel.spi-org.apache.camel.impl
+ ---- Falsely closes cycle? org.apache.camel.component.browse-org.apache.camel.util
+ ---- Falsely closes cycle? org.apache.camel.component.test-org.apache.camel.spi
+ ---- Falsely closes cycle? org.apache.camel.util.jsse-org.apache.camel.model.dataformat
+ ---- Falsely closes cycle? org.apache.camel.component.timer-org.apache.camel.util
+ ---- Falsely closes cycle? org.apache.camel.component.directvm-org.apache.camel.model
+ ---- Falsely closes cycle? org.apache.camel-org.apache.camel.support
+ ---- Falsely closes cycle? org.apache.camel.spi-org.apache.camel.util
+ ---- Falsely closes cycle? org.apache.camel.processor-org.apache.camel.api.management
+ ---- Falsely closes cycle? org.apache.camel.component.directvm-org.apache.camel.spi
+ ---- Falsely closes cycle? org.apache.camel.processor-org.apache.camel.model.language
+ ---- Falsely closes cycle? org.apache.camel.component.bean-org.apache.camel.model
+ ---- Falsely closes cycle? org.apache.camel.processor.loadbalancer-org.apache.camel.model
+ ---- Falsely closes cycle? org.apache.camel.impl-org.apache.camel.builder.xml
+ ---- Falsely closes cycle? org.apache.camel.component.mock-org.apache.camel.model
+ ---- Falsely closes cycle? org.apache.camel-org.apache.camel.component.bean
+ ---- Falsely closes cycle? org.apache.camel.view-org.apache.camel.main
+ ---- Falsely closes cycle? org.apache.camel.view-org.apache.camel.spi
+ ---- Falsely closes cycle? org.apache.camel.impl.converter-org.apache.camel.impl
+ ---- Falsely closes cycle? org.apache.camel.impl.osgi-org.apache.camel.impl
+ ---- Falsely closes cycle? org.apache.camel-org.apache.camel.model.language
+ ---- Falsely closes cycle? org.apache.camel.component.mock-org.apache.camel.support
+ ---- Falsely closes cycle? org.apache.camel.component.ref-org.apache.camel.spi
+ ---- Falsely closes cycle? org.apache.camel.processor.resequencer-org.apache.camel.model.config
+ ---- Falsely closes cycle? org.apache.camel.management.mbean-org.apache.camel.support
+ ---- Falsely closes cycle? org.apache.camel.component.seda-org.apache.camel.builder
+ ---- Falsely closes cycle? org.apache.camel.model.language-org.apache.camel.impl
+ ---- Falsely closes cycle? org.apache.camel.processor.aggregate-org.apache.camel.processor
+ ---- Falsely closes cycle? org.apache.camel.language.simple.types-org.apache.camel.language.simple
+ ---- Falsely closes cycle? org.apache.camel.model.language-org.apache.camel.model
+ ---- Falsely closes cycle? org.apache.camel.processor.interceptor-org.apache.camel.builder
+ ---- Falsely closes cycle? org.apache.camel.processor-org.apache.camel.component.bean
+ ---- Falsely closes cycle? org.apache.camel.management.mbean-org.apache.camel.management
+ ---- Falsely closes cycle? org.apache.camel.management-org.apache.camel.model.language
+ ---- Falsely closes cycle? org.apache.camel.language.simple.ast-org.apache.camel.language.simple
+ ---- Falsely closes cycle? org.apache.camel.language.simple-org.apache.camel.impl
+ ---- Falsely closes cycle? org.apache.camel.component.bean-org.apache.camel.model.language
+ ---- Falsely closes cycle? org.apache.camel.processor.aggregate-org.apache.camel.model
+ ---- Falsely closes cycle? org.apache.camel.builder-org.apache.camel.main
+ ---- Falsely closes cycle? org.apache.camel.processor-org.apache.camel.component.mock
+ ---- Falsely closes cycle? org.apache.camel.processor.exceptionpolicy-org.apache.camel.builder
+ ---- Falsely closes cycle? org.apache.camel.language.simple-org.apache.camel.spi
+ ---- Falsely closes cycle? org.apache.camel.component.dataset-org.apache.camel.model
+ ---- Falsely closes cycle? org.apache.camel-org.apache.camel.processor
+ ---- Falsely closes cycle? org.apache.camel.component.validator-org.apache.camel.converter
+predicted: 4879
+ground: 4879
+Filtering Time;97
+4879 4879
+ROW=truth and COL=predicted
+class  0 |    4814 |      56 |
+class  1 |       1 |       8 |
+Precision;Recall;smile.validation.FMeasure@15b3e5b;Specificity;Sensitivity;TP;FN;FP;TN;
+ yes;0.125;0.8888888888888888;0.2191780821917808;0.9885010266940452;0.8888888888888888;8;1;56;4814;
+ no;0.9997923156801661;0.9885010266940452;0.9941146102219928;0.8888888888888888;0.9885010266940452;4814;56;1;8;
+ avg;0.5623961578400831;0.9386949577914669;0.6066463462068867;0.9386949577914669;0.9386949577914669;
+apache-camel-2.11.0 ## apache-camel-2.12.0 ## apache-camel-2.13.0
+outputScores
+PAQUETES -- 73
+[fields-methods-calls#Cosine, variables#Cosine, fields-variables-methods#Cosine, fields#Cosine, fields-variables-methods-calls#Cosine, methods#Cosine, imports-fields-methods-variables#Cosine, imports#Cosine, comments#Cosine, imports-fields-methods-variables-comments#Cosine, fields-methods#Cosine, imports-fields-methods-variables-comments-calls#Cosine, imports-fields-methods-variables-calls#Cosine, fields-variables#Cosine, calls#Cosine, methods-calls#Cosine]
+comments#Cosine
+=== Confusion Matrix ===
+
+    a    b   <-- classified as
+    6    0 |    a = true
+   70 5075 |    b = false
+
+76 --- [org.apache.camel-org.apache.camel.support, org.apache.camel.component.seda-org.apache.camel.component.vm, org.apache.camel.util.concurrent-org.apache.camel.processor.resequencer, org.apache.camel.component.seda-org.apache.camel.model, org.apache.camel.language.simple.types-org.apache.camel.language.simple.ast, org.apache.camel.impl-org.apache.camel.processor.aggregate, org.apache.camel.component.mock-org.apache.camel.support, org.apache.camel.processor-org.apache.camel.converter.stream, org.apache.camel.component.bean-org.apache.camel.model.language, org.apache.camel.component.directvm-org.apache.camel.builder, org.apache.camel.impl.osgi.tracker-org.apache.camel.impl.osgi, org.apache.camel.component.ref-org.apache.camel.spi, org.apache.camel.builder.xml-org.apache.camel.builder, org.apache.camel.view-org.apache.camel.main, org.apache.camel.processor.aggregate-org.apache.camel.model, org.apache.camel.builder-org.apache.camel.main, org.apache.camel.spi-org.apache.camel.util, org.apache.camel.view-org.apache.camel.impl, org.apache.camel.component.vm-org.apache.camel.component.stub, org.apache.camel.processor-org.apache.camel.component.mock, org.apache.camel.component-org.apache.camel.component.language, org.apache.camel.processor.binding-org.apache.camel.support, org.apache.camel.component.file-org.apache.camel.component.file.strategy, org.apache.camel.component.bean-org.apache.camel.model, org.apache.camel.model.dataformat-org.apache.camel.builder, org.apache.camel.component.binding-org.apache.camel.model, org.apache.camel.model.loadbalancer-org.apache.camel.impl, org.apache.camel.util.jsse-org.apache.camel.model.dataformat, org.apache.camel.model.language-org.apache.camel.model, org.apache.camel.impl-org.apache.camel.builder.xml, org.apache.camel.component.vm-org.apache.camel, org.apache.camel.impl.scan-org.apache.camel.impl.osgi, org.apache.camel.builder.xml-org.apache.camel.model, org.apache.camel.component.timer-org.apache.camel.util, org.apache.camel.spi-org.apache.camel.impl, org.apache.camel.builder-org.apache.camel.processor.aggregate, org.apache.camel.processor-org.apache.camel.model.language, org.apache.camel.component.browse-org.apache.camel.util, org.apache.camel.model.language-org.apache.camel.impl, org.apache.camel.processor-org.apache.camel.component.bean, org.apache.camel.model-org.apache.camel.main, org.apache.camel.component.seda-org.apache.camel.builder, org.apache.camel.language.simple.ast-org.apache.camel.impl, org.apache.camel.component.dataset-org.apache.camel.builder, org.apache.camel.management.mbean-org.apache.camel.support, org.apache.camel.util.toolbox-org.apache.camel.impl, org.apache.camel.component.direct-org.apache.camel.component.directvm, org.apache.camel.language.simple-org.apache.camel.impl, org.apache.camel-org.apache.camel.processor, org.apache.camel.component.directvm-org.apache.camel.component.direct, org.apache.camel.util-org.apache.camel.builder, org.apache.camel.component.binding-org.apache.camel.processor, org.apache.camel.management.mbean-org.apache.camel.management, org.apache.camel.processor.interceptor-org.apache.camel.builder, org.apache.camel.util.toolbox-org.apache.camel.spi, org.apache.camel.component.dataformat-org.apache.camel.model, org.apache.camel.component.directvm-org.apache.camel.model, org.apache.camel.view-org.apache.camel.spi, org.apache.camel.language.simple.ast-org.apache.camel.language.simple, org.apache.camel.processor.loadbalancer-org.apache.camel.model.loadbalancer, org.apache.camel.impl.converter-org.apache.camel.impl, org.apache.camel.impl.osgi-org.apache.camel.impl, org.apache.camel.processor.exceptionpolicy-org.apache.camel.builder, org.apache.camel.converter.jaxp-org.apache.camel.builder.xml, org.apache.camel.processor.aggregate-org.apache.camel.processor, org.apache.camel.component.dataset-org.apache.camel.model, org.apache.camel.component.properties-org.apache.camel.builder, org.apache.camel.language.simple.types-org.apache.camel.language.simple, org.apache.camel.component.mock-org.apache.camel.model, org.apache.camel.management-org.apache.camel.model.language, org.apache.camel.processor.loadbalancer-org.apache.camel.model, org.apache.camel-org.apache.camel.component.bean, org.apache.camel.processor.resequencer-org.apache.camel.model.config, org.apache.camel.language.simple-org.apache.camel.spi, org.apache.camel-org.apache.camel.model.language, org.apache.camel.builder-org.apache.camel.util.concurrent]
+Classification Time;2256
+ ---- Falsely closes cycle? org.apache.camel.builder.xml-org.apache.camel.model
+ ---- Falsely closes cycle? org.apache.camel.model.dataformat-org.apache.camel.builder
+ ---- Falsely closes cycle? org.apache.camel.impl-org.apache.camel.processor.aggregate
+ ---- Falsely closes cycle? org.apache.camel.component.seda-org.apache.camel.model
+ ---- Falsely closes cycle? org.apache.camel.view-org.apache.camel.impl
+ ---- Falsely closes cycle? org.apache.camel.processor.loadbalancer-org.apache.camel.model.loadbalancer
+ ---- Falsely closes cycle? org.apache.camel.builder.xml-org.apache.camel.builder
+ ---- Falsely closes cycle? org.apache.camel.language.simple.ast-org.apache.camel.impl
+ ---- Falsely closes cycle? org.apache.camel.builder-org.apache.camel.processor.aggregate
+ ---- Falsely closes cycle? org.apache.camel.model-org.apache.camel.main
+ ---- Falsely closes cycle? org.apache.camel.util.concurrent-org.apache.camel.processor.resequencer
+ ---- Falsely closes cycle? org.apache.camel.language.simple.types-org.apache.camel.language.simple.ast
+ ---- Falsely closes cycle? org.apache.camel.processor-org.apache.camel.converter.stream
+ ---- Falsely closes cycle? org.apache.camel.component.directvm-org.apache.camel.builder
+ ---- Falsely closes cycle? org.apache.camel.model.loadbalancer-org.apache.camel.impl
+ ---- Falsely closes cycle? org.apache.camel.spi-org.apache.camel.impl
+ ---- Falsely closes cycle? org.apache.camel.component.browse-org.apache.camel.util
+ ---- Falsely closes cycle? org.apache.camel.processor.binding-org.apache.camel.support
+ ---- Falsely closes cycle? org.apache.camel.util.jsse-org.apache.camel.model.dataformat
+ ---- Falsely closes cycle? org.apache.camel.component.timer-org.apache.camel.util
+ ---- Falsely closes cycle? org.apache.camel.component.directvm-org.apache.camel.model
+ ---- Falsely closes cycle? org.apache.camel-org.apache.camel.support
+ ---- Falsely closes cycle? org.apache.camel.util.toolbox-org.apache.camel.impl
+ ---- Falsely closes cycle? org.apache.camel.spi-org.apache.camel.util
+ ---- Falsely closes cycle? org.apache.camel.processor-org.apache.camel.model.language
+ ---- Falsely closes cycle? org.apache.camel.component.bean-org.apache.camel.model
+ ---- Falsely closes cycle? org.apache.camel.component.dataset-org.apache.camel.builder
+ ---- Falsely closes cycle? org.apache.camel.util-org.apache.camel.builder
+ ---- Falsely closes cycle? org.apache.camel.processor.loadbalancer-org.apache.camel.model
+ ---- Falsely closes cycle? org.apache.camel.impl-org.apache.camel.builder.xml
+ ---- Falsely closes cycle? org.apache.camel.component.binding-org.apache.camel.processor
+ ---- Falsely closes cycle? org.apache.camel.component.mock-org.apache.camel.model
+ ---- Falsely closes cycle? org.apache.camel.component.properties-org.apache.camel.builder
+ ---- Falsely closes cycle? org.apache.camel-org.apache.camel.component.bean
+ ---- Falsely closes cycle? org.apache.camel.view-org.apache.camel.main
+ ---- Falsely closes cycle? org.apache.camel.view-org.apache.camel.spi
+ ---- Falsely closes cycle? org.apache.camel.builder-org.apache.camel.util.concurrent
+ ---- Falsely closes cycle? org.apache.camel.impl.converter-org.apache.camel.impl
+ ---- Falsely closes cycle? org.apache.camel.impl.osgi-org.apache.camel.impl
+ ---- Falsely closes cycle? org.apache.camel-org.apache.camel.model.language
+ ---- Falsely closes cycle? org.apache.camel.component.mock-org.apache.camel.support
+ ---- Falsely closes cycle? org.apache.camel.component.ref-org.apache.camel.spi
+ ---- Falsely closes cycle? org.apache.camel.processor.resequencer-org.apache.camel.model.config
+ ---- Falsely closes cycle? org.apache.camel.management.mbean-org.apache.camel.support
+ ---- Falsely closes cycle? org.apache.camel.component.seda-org.apache.camel.builder
+ ---- Falsely closes cycle? org.apache.camel.component.vm-org.apache.camel
+ ---- Falsely closes cycle? org.apache.camel.model.language-org.apache.camel.impl
+ ---- Falsely closes cycle? org.apache.camel.processor.aggregate-org.apache.camel.processor
+ ---- Falsely closes cycle? org.apache.camel.util.toolbox-org.apache.camel.spi
+ ---- Falsely closes cycle? org.apache.camel.language.simple.types-org.apache.camel.language.simple
+ ---- Falsely closes cycle? org.apache.camel.model.language-org.apache.camel.model
+ ---- Falsely closes cycle? org.apache.camel.processor.interceptor-org.apache.camel.builder
+ ---- Falsely closes cycle? org.apache.camel.processor-org.apache.camel.component.bean
+ ---- Falsely closes cycle? org.apache.camel.management.mbean-org.apache.camel.management
+ ---- Falsely closes cycle? org.apache.camel.management-org.apache.camel.model.language
+ ---- Falsely closes cycle? org.apache.camel.language.simple.ast-org.apache.camel.language.simple
+ ---- Falsely closes cycle? org.apache.camel.language.simple-org.apache.camel.impl
+ ---- Falsely closes cycle? org.apache.camel.component.bean-org.apache.camel.model.language
+ ---- Falsely closes cycle? org.apache.camel.component.dataformat-org.apache.camel.model
+ ---- Falsely closes cycle? org.apache.camel.processor.aggregate-org.apache.camel.model
+ ---- Falsely closes cycle? org.apache.camel.builder-org.apache.camel.main
+ ---- Falsely closes cycle? org.apache.camel.processor-org.apache.camel.component.mock
+ ---- Falsely closes cycle? org.apache.camel.processor.exceptionpolicy-org.apache.camel.builder
+ ---- Falsely closes cycle? org.apache.camel.component.directvm-org.apache.camel.component.direct
+ ---- Falsely closes cycle? org.apache.camel.language.simple-org.apache.camel.spi
+ ---- Falsely closes cycle? org.apache.camel.component.dataset-org.apache.camel.model
+ ---- Falsely closes cycle? org.apache.camel.component.binding-org.apache.camel.model
+ ---- Falsely closes cycle? org.apache.camel-org.apache.camel.processor
+predicted: 5151
+ground: 5151
+Filtering Time;94
+5151 5151
+ROW=truth and COL=predicted
+class  0 |    5082 |      68 |
+class  1 |       0 |       1 |
+Precision;Recall;smile.validation.FMeasure@17baae6e;Specificity;Sensitivity;TP;FN;FP;TN;
+ yes;0.014492753623188406;1.0;0.02857142857142857;0.9867961165048543;1.0;1;0;68;5082;
+ no;1.0;0.9867961165048543;0.993354182955434;1.0;0.9867961165048543;5082;68;0;1;
+ avg;0.5072463768115942;0.9933980582524271;0.5109628057634312;0.9933980582524271;0.9933980582524271;
+apache-camel-2.12.0 ## apache-camel-2.13.0 ## apache-camel-2.14.0
+outputScores
+PAQUETES -- 75
+[fields-methods-calls#Cosine, variables#Cosine, fields-variables-methods#Cosine, fields#Cosine, fields-variables-methods-calls#Cosine, methods#Cosine, imports-fields-methods-variables#Cosine, imports#Cosine, comments#Cosine, imports-fields-methods-variables-comments#Cosine, fields-methods#Cosine, imports-fields-methods-variables-comments-calls#Cosine, imports-fields-methods-variables-calls#Cosine, fields-variables#Cosine, calls#Cosine, methods-calls#Cosine]
+comments#Cosine
+=== Confusion Matrix ===
+
+    a    b   <-- classified as
+    1    1 |    a = true
+   69 5074 |    b = false
+
+70 --- [org.apache.camel-org.apache.camel.support, org.apache.camel.component.seda-org.apache.camel.component.vm, org.apache.camel.util.concurrent-org.apache.camel.processor.resequencer, org.apache.camel.component.seda-org.apache.camel.model, org.apache.camel.model.language-org.apache.camel.support, org.apache.camel.language.simple.types-org.apache.camel.language.simple.ast, org.apache.camel.impl-org.apache.camel.processor.aggregate, org.apache.camel.language.tokenizer-org.apache.camel.support, org.apache.camel.component.mock-org.apache.camel.support, org.apache.camel.component.bean-org.apache.camel.model.language, org.apache.camel.management.mbean-org.apache.camel.model.language, org.apache.camel.impl.osgi.tracker-org.apache.camel.impl.osgi, org.apache.camel.component.ref-org.apache.camel.spi, org.apache.camel.builder.xml-org.apache.camel.builder, org.apache.camel.view-org.apache.camel.main, org.apache.camel.processor.aggregate-org.apache.camel.model, org.apache.camel.builder-org.apache.camel.main, org.apache.camel.spi-org.apache.camel.util, org.apache.camel.component.vm-org.apache.camel.component.stub, org.apache.camel.component-org.apache.camel.component.language, org.apache.camel.component.file-org.apache.camel.component.file.strategy, org.apache.camel.component.bean-org.apache.camel.model, org.apache.camel.model.dataformat-org.apache.camel.builder, org.apache.camel.component.binding-org.apache.camel.model, org.apache.camel.model.loadbalancer-org.apache.camel.impl, org.apache.camel.component.mock-org.apache.camel.component.dataset, org.apache.camel.util.jsse-org.apache.camel.model.dataformat, org.apache.camel.model.language-org.apache.camel.model, org.apache.camel.impl-org.apache.camel.builder.xml, org.apache.camel.impl.scan-org.apache.camel.impl.osgi, org.apache.camel.builder.xml-org.apache.camel.model, org.apache.camel.component.timer-org.apache.camel.util, org.apache.camel.spi-org.apache.camel.impl, org.apache.camel.builder-org.apache.camel.processor.aggregate, org.apache.camel.processor-org.apache.camel.model.language, org.apache.camel.component.browse-org.apache.camel.util, org.apache.camel.model.language-org.apache.camel.impl, org.apache.camel.processor-org.apache.camel.component.bean, org.apache.camel.model-org.apache.camel.main, org.apache.camel.component.seda-org.apache.camel.builder, org.apache.camel.language.simple.ast-org.apache.camel.impl, org.apache.camel.component.dataset-org.apache.camel.builder, org.apache.camel.management.mbean-org.apache.camel.support, org.apache.camel.util.toolbox-org.apache.camel.impl, org.apache.camel.component.direct-org.apache.camel.component.directvm, org.apache.camel.language.simple-org.apache.camel.impl, org.apache.camel-org.apache.camel.processor, org.apache.camel.management.mbean-org.apache.camel.management, org.apache.camel.processor.interceptor-org.apache.camel.builder, org.apache.camel.util.toolbox-org.apache.camel.spi, org.apache.camel.component.dataformat-org.apache.camel.model, org.apache.camel.component.directvm-org.apache.camel.model, org.apache.camel.view-org.apache.camel.spi, org.apache.camel.language.simple.ast-org.apache.camel.language.simple, org.apache.camel.processor.loadbalancer-org.apache.camel.model.loadbalancer, org.apache.camel.impl.converter-org.apache.camel.impl, org.apache.camel.component.log-org.apache.camel.model, org.apache.camel.processor.exceptionpolicy-org.apache.camel.builder, org.apache.camel.processor.aggregate-org.apache.camel.processor, org.apache.camel.component.dataset-org.apache.camel.model, org.apache.camel.language.simple.types-org.apache.camel.language.simple, org.apache.camel.component.mock-org.apache.camel.model, org.apache.camel.management-org.apache.camel.model.language, org.apache.camel.processor.loadbalancer-org.apache.camel.model, org.apache.camel-org.apache.camel.component.bean, org.apache.camel.processor.resequencer-org.apache.camel.model.config, org.apache.camel.language.simple-org.apache.camel.spi, org.apache.camel.processor.loadbalancer-org.apache.camel.component.browse, org.apache.camel-org.apache.camel.model.language, org.apache.camel.builder-org.apache.camel.util.concurrent]
+Classification Time;2423
+ ---- Falsely closes cycle? org.apache.camel.builder.xml-org.apache.camel.model
+ ---- Falsely closes cycle? org.apache.camel.model.dataformat-org.apache.camel.builder
+ ---- Falsely closes cycle? org.apache.camel.impl-org.apache.camel.processor.aggregate
+ ---- Falsely closes cycle? org.apache.camel.component.log-org.apache.camel.model
+ ---- Falsely closes cycle? org.apache.camel.component.seda-org.apache.camel.model
+ ---- Falsely closes cycle? org.apache.camel.processor.loadbalancer-org.apache.camel.model.loadbalancer
+ ---- Falsely closes cycle? org.apache.camel.builder.xml-org.apache.camel.builder
+ ---- Falsely closes cycle? org.apache.camel.language.simple.ast-org.apache.camel.impl
+ ---- Falsely closes cycle? org.apache.camel.builder-org.apache.camel.processor.aggregate
+ ---- Falsely closes cycle? org.apache.camel.model-org.apache.camel.main
+ ---- Falsely closes cycle? org.apache.camel.util.concurrent-org.apache.camel.processor.resequencer
+ ---- Falsely closes cycle? org.apache.camel.language.simple.types-org.apache.camel.language.simple.ast
+ ---- Falsely closes cycle? org.apache.camel.model.loadbalancer-org.apache.camel.impl
+ ---- Falsely closes cycle? org.apache.camel.spi-org.apache.camel.impl
+ ---- Falsely closes cycle? org.apache.camel.component.browse-org.apache.camel.util
+ ---- Falsely closes cycle? org.apache.camel.model.language-org.apache.camel.support
+ ---- Falsely closes cycle? org.apache.camel.util.jsse-org.apache.camel.model.dataformat
+ ---- Falsely closes cycle? org.apache.camel.component.timer-org.apache.camel.util
+ ---- Falsely closes cycle? org.apache.camel.component.directvm-org.apache.camel.model
+ ---- Falsely closes cycle? org.apache.camel-org.apache.camel.support
+ ---- Falsely closes cycle? org.apache.camel.util.toolbox-org.apache.camel.impl
+ ---- Falsely closes cycle? org.apache.camel.spi-org.apache.camel.util
+ ---- Falsely closes cycle? org.apache.camel.processor-org.apache.camel.model.language
+ ---- Falsely closes cycle? org.apache.camel.component.bean-org.apache.camel.model
+ ---- Falsely closes cycle? org.apache.camel.component.dataset-org.apache.camel.builder
+ ---- Falsely closes cycle? org.apache.camel.processor.loadbalancer-org.apache.camel.model
+ ---- Falsely closes cycle? org.apache.camel.impl-org.apache.camel.builder.xml
+ ---- Falsely closes cycle? org.apache.camel.component.mock-org.apache.camel.model
+ ---- Falsely closes cycle? org.apache.camel-org.apache.camel.component.bean
+ ---- Falsely closes cycle? org.apache.camel.view-org.apache.camel.main
+ ---- Falsely closes cycle? org.apache.camel.view-org.apache.camel.spi
+ ---- Falsely closes cycle? org.apache.camel.builder-org.apache.camel.util.concurrent
+ ---- Falsely closes cycle? org.apache.camel.impl.converter-org.apache.camel.impl
+ ---- Falsely closes cycle? org.apache.camel-org.apache.camel.model.language
+ ---- Falsely closes cycle? org.apache.camel.component.mock-org.apache.camel.support
+ ---- Falsely closes cycle? org.apache.camel.component.ref-org.apache.camel.spi
+ ---- Falsely closes cycle? org.apache.camel.processor.resequencer-org.apache.camel.model.config
+ ---- Falsely closes cycle? org.apache.camel.management.mbean-org.apache.camel.support
+ ---- Falsely closes cycle? org.apache.camel.component.seda-org.apache.camel.builder
+ ---- Falsely closes cycle? org.apache.camel.model.language-org.apache.camel.impl
+ ---- Falsely closes cycle? org.apache.camel.processor.aggregate-org.apache.camel.processor
+ ---- Falsely closes cycle? org.apache.camel.management.mbean-org.apache.camel.model.language
+ ---- Falsely closes cycle? org.apache.camel.util.toolbox-org.apache.camel.spi
+ ---- Falsely closes cycle? org.apache.camel.language.simple.types-org.apache.camel.language.simple
+ ---- Falsely closes cycle? org.apache.camel.model.language-org.apache.camel.model
+ ---- Falsely closes cycle? org.apache.camel.processor.interceptor-org.apache.camel.builder
+ ---- Falsely closes cycle? org.apache.camel.processor-org.apache.camel.component.bean
+ ---- Falsely closes cycle? org.apache.camel.management.mbean-org.apache.camel.management
+ ---- Falsely closes cycle? org.apache.camel.management-org.apache.camel.model.language
+ ---- Falsely closes cycle? org.apache.camel.language.simple.ast-org.apache.camel.language.simple
+ ---- Falsely closes cycle? org.apache.camel.language.simple-org.apache.camel.impl
+ ---- Falsely closes cycle? org.apache.camel.component.bean-org.apache.camel.model.language
+ ---- Falsely closes cycle? org.apache.camel.component.dataformat-org.apache.camel.model
+ ---- Falsely closes cycle? org.apache.camel.processor.aggregate-org.apache.camel.model
+ ---- Falsely closes cycle? org.apache.camel.builder-org.apache.camel.main
+ ---- Falsely closes cycle? org.apache.camel.processor.exceptionpolicy-org.apache.camel.builder
+ ---- Falsely closes cycle? org.apache.camel.language.simple-org.apache.camel.spi
+ ---- Falsely closes cycle? org.apache.camel.component.dataset-org.apache.camel.model
+ ---- Falsely closes cycle? org.apache.camel.component.binding-org.apache.camel.model
+ ---- Falsely closes cycle? org.apache.camel-org.apache.camel.processor
+predicted: 5145
+ground: 5145
+Filtering Time;128
+5145 5145
+ROW=truth and COL=predicted
+class  0 |    5083 |      60 |
+class  1 |       1 |       1 |
+Precision;Recall;smile.validation.FMeasure@76b10754;Specificity;Sensitivity;TP;FN;FP;TN;
+ yes;0.01639344262295082;0.5;0.031746031746031744;0.9883336573984056;0.5;1;1;60;5083;
+ no;0.9998033044846577;0.9883336573984056;0.9940353964994623;0.5;0.9883336573984056;5083;60;1;1;
+ avg;0.5080983735538043;0.7441668286992028;0.512890714122747;0.7441668286992028;0.7441668286992028;
+apache-camel-2.13.0 ## apache-camel-2.14.0 ## apache-camel-2.15.0
+outputScores
+PAQUETES -- 75
+[fields-methods-calls#Cosine, variables#Cosine, fields-variables-methods#Cosine, fields#Cosine, fields-variables-methods-calls#Cosine, methods#Cosine, imports-fields-methods-variables#Cosine, imports#Cosine, comments#Cosine, imports-fields-methods-variables-comments#Cosine, fields-methods#Cosine, imports-fields-methods-variables-comments-calls#Cosine, imports-fields-methods-variables-calls#Cosine, fields-variables#Cosine, calls#Cosine, methods-calls#Cosine]
+comments#Cosine
+=== Confusion Matrix ===
+
+    a    b   <-- classified as
+   11    0 |    a = true
+   79 5492 |    b = false
+
+90 --- [org.apache.camel-org.apache.camel.support, org.apache.camel.model.rest-org.apache.camel.impl, org.apache.camel.component.vm-org.apache.camel.spi, org.apache.camel.util.concurrent-org.apache.camel.processor.resequencer, org.apache.camel.component.seda-org.apache.camel.model, org.apache.camel.language.simple.types-org.apache.camel.language.simple.ast, org.apache.camel.component.xslt-org.apache.camel.model, org.apache.camel.impl-org.apache.camel.processor.aggregate, org.apache.camel.component.mock-org.apache.camel.support, org.apache.camel.component.bean-org.apache.camel.model.language, org.apache.camel.impl.osgi.tracker-org.apache.camel.impl.osgi, org.apache.camel.component.ref-org.apache.camel.spi, org.apache.camel.builder.xml-org.apache.camel.builder, org.apache.camel.view-org.apache.camel.main, org.apache.camel.processor.aggregate-org.apache.camel.model, org.apache.camel.component.stub-org.apache.camel.spi, org.apache.camel.spi-org.apache.camel.builder, org.apache.camel.builder-org.apache.camel.main, org.apache.camel.component.test-org.apache.camel.model, org.apache.camel.spi-org.apache.camel.util, org.apache.camel.view-org.apache.camel.impl, org.apache.camel.component.file-org.apache.camel.support, org.apache.camel.component.vm-org.apache.camel.component.stub, org.apache.camel.management.event-org.apache.camel.util, org.apache.camel.component-org.apache.camel.component.language, org.apache.camel.component.file-org.apache.camel.component.file.strategy, org.apache.camel.component.bean-org.apache.camel.model, org.apache.camel.model.dataformat-org.apache.camel.builder, org.apache.camel.model.config-org.apache.camel.spi, org.apache.camel.component.file-org.apache.camel.model, org.apache.camel.component.binding-org.apache.camel.model, org.apache.camel.processor.binding-org.apache.camel.impl, org.apache.camel.model-org.apache.camel.component.properties, org.apache.camel.model.loadbalancer-org.apache.camel.impl, org.apache.camel.util.jsse-org.apache.camel.model.dataformat, org.apache.camel.model.language-org.apache.camel.model, org.apache.camel.impl-org.apache.camel.builder.xml, org.apache.camel.impl.scan-org.apache.camel.impl.osgi, org.apache.camel.builder.xml-org.apache.camel.model, org.apache.camel.component.timer-org.apache.camel.util, org.apache.camel.spi-org.apache.camel.impl, org.apache.camel.processor-org.apache.camel.model.rest, org.apache.camel.processor-org.apache.camel.model.language, org.apache.camel.component.browse-org.apache.camel.util, org.apache.camel.processor.exceptionpolicy-org.apache.camel.impl, org.apache.camel.model.language-org.apache.camel.impl, org.apache.camel.processor-org.apache.camel.component.bean, org.apache.camel.model-org.apache.camel.main, org.apache.camel.component.seda-org.apache.camel.builder, org.apache.camel.component.validator-org.apache.camel.model, org.apache.camel.language.simple.ast-org.apache.camel.impl, org.apache.camel.component.stub-org.apache.camel.component.seda, org.apache.camel.management.mbean-org.apache.camel.support, org.apache.camel.util.toolbox-org.apache.camel.impl, org.apache.camel.component.direct-org.apache.camel.component.directvm, org.apache.camel.language.simple-org.apache.camel.impl, org.apache.camel-org.apache.camel.processor, org.apache.camel.util-org.apache.camel.builder, org.apache.camel.management.mbean-org.apache.camel.management, org.apache.camel.component.language-org.apache.camel.model, org.apache.camel.processor.interceptor-org.apache.camel.builder, org.apache.camel.util.toolbox-org.apache.camel.spi, org.apache.camel.processor.binding-org.apache.camel.model.rest, org.apache.camel.component.dataformat-org.apache.camel.model, org.apache.camel.language.tokenizer-org.apache.camel.impl, org.apache.camel.component.directvm-org.apache.camel.model, org.apache.camel.view-org.apache.camel.spi, org.apache.camel-org.apache.camel.component.properties, org.apache.camel.language.simple.ast-org.apache.camel.language.simple, org.apache.camel.processor.loadbalancer-org.apache.camel.model.loadbalancer, org.apache.camel.impl.converter-org.apache.camel.impl, org.apache.camel.component.log-org.apache.camel.model, org.apache.camel.impl-org.apache.camel.model.dataformat, org.apache.camel.impl.osgi-org.apache.camel.impl, org.apache.camel.processor.exceptionpolicy-org.apache.camel.builder, org.apache.camel.component.stub-org.apache.camel, org.apache.camel.processor.aggregate-org.apache.camel.processor, org.apache.camel.util-org.apache.camel.component.properties, org.apache.camel.component.dataset-org.apache.camel.model, org.apache.camel.language.simple.types-org.apache.camel.language.simple, org.apache.camel.processor.validation-org.apache.camel.model, org.apache.camel.management-org.apache.camel.model.rest, org.apache.camel.component.mock-org.apache.camel.model, org.apache.camel.processor.loadbalancer-org.apache.camel.model, org.apache.camel-org.apache.camel.component.bean, org.apache.camel.processor.resequencer-org.apache.camel.model.config, org.apache.camel.language.simple-org.apache.camel.spi, org.apache.camel.processor.loadbalancer-org.apache.camel.component.browse, org.apache.camel.component-org.apache.camel.model, org.apache.camel.util-org.apache.camel.model]
+Classification Time;2629
+ ---- Falsely closes cycle? org.apache.camel.builder.xml-org.apache.camel.model
+ ---- Falsely closes cycle? org.apache.camel.language.tokenizer-org.apache.camel.impl
+ ---- Falsely closes cycle? org.apache.camel.model.dataformat-org.apache.camel.builder
+ ---- Falsely closes cycle? org.apache.camel.impl-org.apache.camel.processor.aggregate
+ ---- Falsely closes cycle? org.apache.camel.component.log-org.apache.camel.model
+ ---- Falsely closes cycle? org.apache.camel.component.seda-org.apache.camel.model
+ ---- Falsely closes cycle? org.apache.camel.view-org.apache.camel.impl
+ ---- Falsely closes cycle? org.apache.camel.processor.loadbalancer-org.apache.camel.model.loadbalancer
+ ---- Falsely closes cycle? org.apache.camel.builder.xml-org.apache.camel.builder
+ ---- Falsely closes cycle? org.apache.camel.language.simple.ast-org.apache.camel.impl
+ ---- Falsely closes cycle? org.apache.camel.processor-org.apache.camel.model.rest
+ ---- Falsely closes cycle? org.apache.camel.model-org.apache.camel.main
+ ---- Falsely closes cycle? org.apache.camel.util.concurrent-org.apache.camel.processor.resequencer
+ ---- Falsely closes cycle? org.apache.camel.management-org.apache.camel.model.rest
+ ---- Falsely closes cycle? org.apache.camel.language.simple.types-org.apache.camel.language.simple.ast
+ ---- Falsely closes cycle? org.apache.camel.component.test-org.apache.camel.model
+ ---- Falsely closes cycle? org.apache.camel.model.loadbalancer-org.apache.camel.impl
+ ---- Falsely closes cycle? org.apache.camel.component.browse-org.apache.camel.util
+ ---- Falsely closes cycle? org.apache.camel.util.jsse-org.apache.camel.model.dataformat
+ ---- Falsely closes cycle? org.apache.camel.component.timer-org.apache.camel.util
+ ---- Falsely closes cycle? org.apache.camel.component.directvm-org.apache.camel.model
+ ---- Falsely closes cycle? org.apache.camel-org.apache.camel.support
+ ---- Falsely closes cycle? org.apache.camel.util.toolbox-org.apache.camel.impl
+ ---- Falsely closes cycle? org.apache.camel.spi-org.apache.camel.util
+ ---- Falsely closes cycle? org.apache.camel.processor-org.apache.camel.model.language
+ ---- Falsely closes cycle? org.apache.camel.component.bean-org.apache.camel.model
+ ---- Falsely closes cycle? org.apache.camel.util-org.apache.camel.builder
+ ---- Falsely closes cycle? org.apache.camel.processor.loadbalancer-org.apache.camel.model
+ ---- Falsely closes cycle? org.apache.camel.processor.binding-org.apache.camel.impl
+ ---- Falsely closes cycle? org.apache.camel.impl-org.apache.camel.builder.xml
+ ---- Falsely closes cycle? org.apache.camel.component.mock-org.apache.camel.model
+ ---- Falsely closes cycle? org.apache.camel.model-org.apache.camel.component.properties
+ ---- Falsely closes cycle? org.apache.camel.impl-org.apache.camel.model.dataformat
+ ---- Falsely closes cycle? org.apache.camel.component-org.apache.camel.model
+ ---- Falsely closes cycle? org.apache.camel.component.stub-org.apache.camel.spi
+ ---- Falsely closes cycle? org.apache.camel.spi-org.apache.camel.builder
+ ---- Falsely closes cycle? org.apache.camel-org.apache.camel.component.bean
+ ---- Falsely closes cycle? org.apache.camel.view-org.apache.camel.main
+ ---- Falsely closes cycle? org.apache.camel.view-org.apache.camel.spi
+ ---- Falsely closes cycle? org.apache.camel.impl.converter-org.apache.camel.impl
+ ---- Falsely closes cycle? org.apache.camel.processor.binding-org.apache.camel.model.rest
+ ---- Falsely closes cycle? org.apache.camel.impl.osgi-org.apache.camel.impl
+ ---- Falsely closes cycle? org.apache.camel.component.mock-org.apache.camel.support
+ ---- Falsely closes cycle? org.apache.camel.component.ref-org.apache.camel.spi
+ ---- Falsely closes cycle? org.apache.camel.processor.resequencer-org.apache.camel.model.config
+ ---- Falsely closes cycle? org.apache.camel.component.xslt-org.apache.camel.model
+ ---- Falsely closes cycle? org.apache.camel-org.apache.camel.component.properties
+ ---- Falsely closes cycle? org.apache.camel.management.mbean-org.apache.camel.support
+ ---- Falsely closes cycle? org.apache.camel.processor.exceptionpolicy-org.apache.camel.impl
+ ---- Falsely closes cycle? org.apache.camel.component.seda-org.apache.camel.builder
+ ---- Falsely closes cycle? org.apache.camel.model.language-org.apache.camel.impl
+ ---- Falsely closes cycle? org.apache.camel.processor.aggregate-org.apache.camel.processor
+ ---- Falsely closes cycle? org.apache.camel.util.toolbox-org.apache.camel.spi
+ ---- Falsely closes cycle? org.apache.camel.language.simple.types-org.apache.camel.language.simple
+ ---- Falsely closes cycle? org.apache.camel.model.language-org.apache.camel.model
+ ---- Falsely closes cycle? org.apache.camel.processor.interceptor-org.apache.camel.builder
+ ---- Falsely closes cycle? org.apache.camel.component.file-org.apache.camel.support
+ ---- Falsely closes cycle? org.apache.camel.processor-org.apache.camel.component.bean
+ ---- Falsely closes cycle? org.apache.camel.management.mbean-org.apache.camel.management
+ ---- Falsely closes cycle? org.apache.camel.component.vm-org.apache.camel.spi
+ ---- Falsely closes cycle? org.apache.camel.language.simple.ast-org.apache.camel.language.simple
+ ---- Falsely closes cycle? org.apache.camel.language.simple-org.apache.camel.impl
+ ---- Falsely closes cycle? org.apache.camel.component.bean-org.apache.camel.model.language
+ ---- Falsely closes cycle? org.apache.camel.component.validator-org.apache.camel.model
+ ---- Falsely closes cycle? org.apache.camel.component.stub-org.apache.camel.component.seda
+ ---- Falsely closes cycle? org.apache.camel.model.rest-org.apache.camel.impl
+ ---- Falsely closes cycle? org.apache.camel.component.stub-org.apache.camel
+ ---- Falsely closes cycle? org.apache.camel.component.dataformat-org.apache.camel.model
+ ---- Falsely closes cycle? org.apache.camel.component.file-org.apache.camel.model
+ ---- Falsely closes cycle? org.apache.camel.processor.aggregate-org.apache.camel.model
+ ---- Falsely closes cycle? org.apache.camel.builder-org.apache.camel.main
+ ---- Falsely closes cycle? org.apache.camel.processor.exceptionpolicy-org.apache.camel.builder
+ ---- Falsely closes cycle? org.apache.camel.language.simple-org.apache.camel.spi
+ ---- Falsely closes cycle? org.apache.camel.component.language-org.apache.camel.model
+ ---- Falsely closes cycle? org.apache.camel.component.dataset-org.apache.camel.model
+ ---- Falsely closes cycle? org.apache.camel.component.binding-org.apache.camel.model
+ ---- Falsely closes cycle? org.apache.camel-org.apache.camel.processor
+ ---- Falsely closes cycle? org.apache.camel.processor.validation-org.apache.camel.model
+predicted: 5582
+ground: 5582
+Filtering Time;462
+5582 5582
+ROW=truth and COL=predicted
+class  0 |    5499 |      78 |
+class  1 |       0 |       5 |
+Precision;Recall;smile.validation.FMeasure@1442d7b5;Specificity;Sensitivity;TP;FN;FP;TN;
+ yes;0.060240963855421686;1.0;0.11363636363636363;0.986013986013986;1.0;5;0;78;5499;
+ no;1.0;0.986013986013986;0.9929577464788732;1.0;0.986013986013986;5499;78;0;5;
+ avg;0.5301204819277109;0.993006993006993;0.5532970550576184;0.993006993006993;0.993006993006993;
+apache-camel-2.14.0 ## apache-camel-2.15.0 ## apache-camel-2.16.0
+outputScores
+PAQUETES -- 78
+[fields-methods-calls#Cosine, variables#Cosine, fields-variables-methods#Cosine, fields#Cosine, fields-variables-methods-calls#Cosine, methods#Cosine, imports-fields-methods-variables#Cosine, imports#Cosine, comments#Cosine, imports-fields-methods-variables-comments#Cosine, fields-methods#Cosine, imports-fields-methods-variables-comments-calls#Cosine, imports-fields-methods-variables-calls#Cosine, fields-variables#Cosine, calls#Cosine, methods-calls#Cosine]
+comments#Cosine
+=== Confusion Matrix ===
+
+    a    b   <-- classified as
+   19    0 |    a = true
+   82 5627 |    b = false
+
+101 --- [org.apache.camel-org.apache.camel.support, org.apache.camel.model.rest-org.apache.camel.impl, org.apache.camel.util.concurrent-org.apache.camel.processor.resequencer, org.apache.camel.util.toolbox-org.apache.camel.builder.xml, org.apache.camel.language.simple.types-org.apache.camel.language.simple.ast, org.apache.camel.impl-org.apache.camel.processor.aggregate, org.apache.camel.component.bean-org.apache.camel.model.language, org.apache.camel.util.toolbox-org.apache.camel.model, org.apache.camel.component.file.strategy-org.apache.camel.support, org.apache.camel.builder-org.apache.camel.api.management.mbean, org.apache.camel.util.toolbox-org.apache.camel.converter.jaxp, org.apache.camel.component.file-org.apache.camel.component.file.strategy, org.apache.camel.component.bean-org.apache.camel.model, org.apache.camel-org.apache.camel.api.management.mbean, org.apache.camel.component.file-org.apache.camel.model, org.apache.camel.component.binding-org.apache.camel.model, org.apache.camel.model-org.apache.camel.component.properties, org.apache.camel.model.language-org.apache.camel.model, org.apache.camel.processor-org.apache.camel.component.properties, org.apache.camel.impl.scan-org.apache.camel.impl.osgi, org.apache.camel.builder.xml-org.apache.camel.model, org.apache.camel.processor-org.apache.camel.model.rest, org.apache.camel.model.language-org.apache.camel.impl, org.apache.camel.processor-org.apache.camel.component.bean, org.apache.camel.management.mbean-org.apache.camel.processor.loadbalancer, org.apache.camel.management.mbean-org.apache.camel.support, org.apache.camel.util.toolbox-org.apache.camel.impl, org.apache.camel.util-org.apache.camel.builder, org.apache.camel.management.mbean-org.apache.camel.management, org.apache.camel.processor.interceptor-org.apache.camel.builder, org.apache.camel.component.dataformat-org.apache.camel.model, org.apache.camel.util.toolbox-org.apache.camel.component.xslt, org.apache.camel.language.simple.ast-org.apache.camel.language.simple, org.apache.camel.impl.converter-org.apache.camel.impl, org.apache.camel.impl-org.apache.camel.api.management.mbean, org.apache.camel.component.log-org.apache.camel.model, org.apache.camel.impl-org.apache.camel.model.dataformat, org.apache.camel.impl.osgi-org.apache.camel.impl, org.apache.camel.processor.exceptionpolicy-org.apache.camel.builder, org.apache.camel.processor.aggregate-org.apache.camel.processor, org.apache.camel.management.mbean-org.apache.camel.processor.validation, org.apache.camel.management-org.apache.camel.component.properties, org.apache.camel.management-org.apache.camel.model.language, org.apache.camel.processor.resequencer-org.apache.camel.model.config, org.apache.camel.processor-org.apache.camel.api.management.mbean, org.apache.camel.component-org.apache.camel.model, org.apache.camel.component.seda-org.apache.camel.model, org.apache.camel.model.language-org.apache.camel.support, org.apache.camel.component.xslt-org.apache.camel.model, org.apache.camel.component.mock-org.apache.camel.support, org.apache.camel.management.mbean-org.apache.camel.model.language, org.apache.camel.impl.osgi.tracker-org.apache.camel.impl.osgi, org.apache.camel.builder.xml-org.apache.camel.builder, org.apache.camel.processor.aggregate-org.apache.camel.model, org.apache.camel.builder-org.apache.camel.main, org.apache.camel.component.test-org.apache.camel.model, org.apache.camel.spi-org.apache.camel.util, org.apache.camel.management.mbean-org.apache.camel.processor.aggregate, org.apache.camel.component.vm-org.apache.camel.component.stub, org.apache.camel.component-org.apache.camel.component.language, org.apache.camel.management-org.apache.camel.processor.validation, org.apache.camel.model.dataformat-org.apache.camel.builder, org.apache.camel.processor.binding-org.apache.camel.impl, org.apache.camel.model.loadbalancer-org.apache.camel.impl, org.apache.camel.util.jsse-org.apache.camel.model.dataformat, org.apache.camel.impl-org.apache.camel.builder.xml, org.apache.camel.management.mbean-org.apache.camel.component.properties, org.apache.camel.management-org.apache.camel.api.management.mbean, org.apache.camel.component.timer-org.apache.camel.util, org.apache.camel.builder-org.apache.camel.processor.aggregate, org.apache.camel.processor-org.apache.camel.model.language, org.apache.camel.component.browse-org.apache.camel.util, org.apache.camel.management-org.apache.camel.model.loadbalancer, org.apache.camel.processor.exceptionpolicy-org.apache.camel.impl, org.apache.camel.model-org.apache.camel.main, org.apache.camel.component.seda-org.apache.camel.builder, org.apache.camel.component.validator-org.apache.camel.model, org.apache.camel.language.simple.ast-org.apache.camel.impl, org.apache.camel.component.scheduler-org.apache.camel.util, org.apache.camel.component.direct-org.apache.camel.component.directvm, org.apache.camel.language.simple-org.apache.camel.impl, org.apache.camel.management-org.apache.camel.processor.loadbalancer, org.apache.camel.model.loadbalancer-org.apache.camel.model.language, org.apache.camel.component.language-org.apache.camel.model, org.apache.camel.util.toolbox-org.apache.camel.spi, org.apache.camel.management-org.apache.camel.processor.aggregate, org.apache.camel.processor.binding-org.apache.camel.model.rest, org.apache.camel.language.tokenizer-org.apache.camel.impl, org.apache.camel.component.directvm-org.apache.camel.model, org.apache.camel-org.apache.camel.component.properties, org.apache.camel.management.mbean-org.apache.camel.model.loadbalancer, org.apache.camel.component.dataset-org.apache.camel.model, org.apache.camel.language.simple.types-org.apache.camel.language.simple, org.apache.camel.management-org.apache.camel.model.rest, org.apache.camel.component.mock-org.apache.camel.model, org.apache.camel.processor.loadbalancer-org.apache.camel.model, org.apache.camel-org.apache.camel.component.bean, org.apache.camel.language.simple-org.apache.camel.spi, org.apache.camel.model-org.apache.camel.api.management.mbean, org.apache.camel.builder-org.apache.camel.util.concurrent, org.apache.camel.impl-org.apache.camel.component.rest]
+Classification Time;2826
+ ---- Falsely closes cycle? org.apache.camel.builder.xml-org.apache.camel.model
+ ---- Falsely closes cycle? org.apache.camel.language.tokenizer-org.apache.camel.impl
+ ---- Falsely closes cycle? org.apache.camel.impl-org.apache.camel.api.management.mbean
+ ---- Falsely closes cycle? org.apache.camel.model.dataformat-org.apache.camel.builder
+ ---- Falsely closes cycle? org.apache.camel.impl-org.apache.camel.processor.aggregate
+ ---- Falsely closes cycle? org.apache.camel.management.mbean-org.apache.camel.processor.loadbalancer
+ ---- Falsely closes cycle? org.apache.camel.component.log-org.apache.camel.model
+ ---- Falsely closes cycle? org.apache.camel.component.seda-org.apache.camel.model
+ ---- Falsely closes cycle? org.apache.camel.builder.xml-org.apache.camel.builder
+ ---- Falsely closes cycle? org.apache.camel.language.simple.ast-org.apache.camel.impl
+ ---- Falsely closes cycle? org.apache.camel.util.toolbox-org.apache.camel.model
+ ---- Falsely closes cycle? org.apache.camel.processor-org.apache.camel.model.rest
+ ---- Falsely closes cycle? org.apache.camel.builder-org.apache.camel.processor.aggregate
+ ---- Falsely closes cycle? org.apache.camel.builder-org.apache.camel.api.management.mbean
+ ---- Falsely closes cycle? org.apache.camel.model-org.apache.camel.main
+ ---- Falsely closes cycle? org.apache.camel.util.concurrent-org.apache.camel.processor.resequencer
+ ---- Falsely closes cycle? org.apache.camel.management-org.apache.camel.model.rest
+ ---- Falsely closes cycle? org.apache.camel.language.simple.types-org.apache.camel.language.simple.ast
+ ---- Falsely closes cycle? org.apache.camel.component.test-org.apache.camel.model
+ ---- Falsely closes cycle? org.apache.camel.management-org.apache.camel.processor.validation
+ ---- Falsely closes cycle? org.apache.camel.model.loadbalancer-org.apache.camel.impl
+ ---- Falsely closes cycle? org.apache.camel.component.browse-org.apache.camel.util
+ ---- Falsely closes cycle? org.apache.camel.model.language-org.apache.camel.support
+ ---- Falsely closes cycle? org.apache.camel.util.jsse-org.apache.camel.model.dataformat
+ ---- Falsely closes cycle? org.apache.camel.component.timer-org.apache.camel.util
+ ---- Falsely closes cycle? org.apache.camel.component.directvm-org.apache.camel.model
+ ---- Falsely closes cycle? org.apache.camel-org.apache.camel.support
+ ---- Falsely closes cycle? org.apache.camel.util.toolbox-org.apache.camel.impl
+ ---- Falsely closes cycle? org.apache.camel.spi-org.apache.camel.util
+ ---- Falsely closes cycle? org.apache.camel.management.mbean-org.apache.camel.component.properties
+ ---- Falsely closes cycle? org.apache.camel.processor-org.apache.camel.model.language
+ ---- Falsely closes cycle? org.apache.camel.component.bean-org.apache.camel.model
+ ---- Falsely closes cycle? org.apache.camel.util-org.apache.camel.builder
+ ---- Falsely closes cycle? org.apache.camel.management-org.apache.camel.processor.aggregate
+ ---- Falsely closes cycle? org.apache.camel.processor.loadbalancer-org.apache.camel.model
+ ---- Falsely closes cycle? org.apache.camel.processor.binding-org.apache.camel.impl
+ ---- Falsely closes cycle? org.apache.camel.impl-org.apache.camel.builder.xml
+ ---- Falsely closes cycle? org.apache.camel.management-org.apache.camel.api.management.mbean
+ ---- Falsely closes cycle? org.apache.camel.component.mock-org.apache.camel.model
+ ---- Falsely closes cycle? org.apache.camel.model-org.apache.camel.component.properties
+ ---- Falsely closes cycle? org.apache.camel.impl-org.apache.camel.model.dataformat
+ ---- Falsely closes cycle? org.apache.camel.component-org.apache.camel.model
+ ---- Falsely closes cycle? org.apache.camel-org.apache.camel.component.bean
+ ---- Falsely closes cycle? org.apache.camel.management-org.apache.camel.component.properties
+ ---- Falsely closes cycle? org.apache.camel.builder-org.apache.camel.util.concurrent
+ ---- Falsely closes cycle? org.apache.camel.impl.converter-org.apache.camel.impl
+ ---- Falsely closes cycle? org.apache.camel.processor.binding-org.apache.camel.model.rest
+ ---- Falsely closes cycle? org.apache.camel.impl.osgi-org.apache.camel.impl
+ ---- Falsely closes cycle? org.apache.camel.component.mock-org.apache.camel.support
+ ---- Falsely closes cycle? org.apache.camel.management-org.apache.camel.processor.loadbalancer
+ ---- Falsely closes cycle? org.apache.camel.processor.resequencer-org.apache.camel.model.config
+ ---- Falsely closes cycle? org.apache.camel.component.xslt-org.apache.camel.model
+ ---- Falsely closes cycle? org.apache.camel-org.apache.camel.component.properties
+ ---- Falsely closes cycle? org.apache.camel.model-org.apache.camel.api.management.mbean
+ ---- Falsely closes cycle? org.apache.camel.util.toolbox-org.apache.camel.builder.xml
+ ---- Falsely closes cycle? org.apache.camel.management.mbean-org.apache.camel.support
+ ---- Falsely closes cycle? org.apache.camel.processor.exceptionpolicy-org.apache.camel.impl
+ ---- Falsely closes cycle? org.apache.camel.component.seda-org.apache.camel.builder
+ ---- Falsely closes cycle? org.apache.camel.management.mbean-org.apache.camel.model.loadbalancer
+ ---- Falsely closes cycle? org.apache.camel.model.language-org.apache.camel.impl
+ ---- Falsely closes cycle? org.apache.camel.processor.aggregate-org.apache.camel.processor
+ ---- Falsely closes cycle? org.apache.camel.management.mbean-org.apache.camel.model.language
+ ---- Falsely closes cycle? org.apache.camel.util.toolbox-org.apache.camel.spi
+ ---- Falsely closes cycle? org.apache.camel.language.simple.types-org.apache.camel.language.simple
+ ---- Falsely closes cycle? org.apache.camel.processor.interceptor-org.apache.camel.builder
+ ---- Falsely closes cycle? org.apache.camel.component.file.strategy-org.apache.camel.support
+ ---- Falsely closes cycle? org.apache.camel.util.toolbox-org.apache.camel.converter.jaxp
+ ---- Falsely closes cycle? org.apache.camel.processor-org.apache.camel.component.bean
+ ---- Falsely closes cycle? org.apache.camel.management.mbean-org.apache.camel.management
+ ---- Falsely closes cycle? org.apache.camel.management-org.apache.camel.model.language
+ ---- Falsely closes cycle? org.apache.camel.language.simple.ast-org.apache.camel.language.simple
+ ---- Falsely closes cycle? org.apache.camel.language.simple-org.apache.camel.impl
+ ---- Falsely closes cycle? org.apache.camel.component.bean-org.apache.camel.model.language
+ ---- Falsely closes cycle? org.apache.camel.component.validator-org.apache.camel.model
+ ---- Falsely closes cycle? org.apache.camel.model.rest-org.apache.camel.impl
+ ---- Falsely closes cycle? org.apache.camel.processor-org.apache.camel.component.properties
+ ---- Falsely closes cycle? org.apache.camel.management-org.apache.camel.model.loadbalancer
+ ---- Falsely closes cycle? org.apache.camel.component.dataformat-org.apache.camel.model
+ ---- Falsely closes cycle? org.apache.camel.component.file-org.apache.camel.model
+ ---- Falsely closes cycle? org.apache.camel.management.mbean-org.apache.camel.processor.validation
+ ---- Falsely closes cycle? org.apache.camel.processor.aggregate-org.apache.camel.model
+ ---- Falsely closes cycle? org.apache.camel.builder-org.apache.camel.main
+ ---- Falsely closes cycle? org.apache.camel.component.scheduler-org.apache.camel.util
+ ---- Falsely closes cycle? org.apache.camel.processor.exceptionpolicy-org.apache.camel.builder
+ ---- Falsely closes cycle? org.apache.camel.processor-org.apache.camel.api.management.mbean
+ ---- Falsely closes cycle? org.apache.camel.management.mbean-org.apache.camel.processor.aggregate
+ ---- Falsely closes cycle? org.apache.camel.language.simple-org.apache.camel.spi
+ ---- Falsely closes cycle? org.apache.camel.component.language-org.apache.camel.model
+ ---- Falsely closes cycle? org.apache.camel.component.dataset-org.apache.camel.model
+ ---- Falsely closes cycle? org.apache.camel.component.binding-org.apache.camel.model
+predicted: 5728
+ground: 5728
+Filtering Time;508
+5728 5728
+ROW=truth and COL=predicted
+class  0 |    5634 |      90 |
+class  1 |       0 |       4 |
+Precision;Recall;smile.validation.FMeasure@4148db48;Specificity;Sensitivity;TP;FN;FP;TN;
+ yes;0.0425531914893617;1.0;0.08163265306122448;0.9842767295597484;1.0;4;0;90;5634;
+ no;1.0;0.9842767295597484;0.9920760697305863;1.0;0.9842767295597484;5634;90;0;4;
+ avg;0.5212765957446809;0.9921383647798743;0.5368543613959054;0.9921383647798743;0.9921383647798743;
+apache-camel-2.15.0 ## apache-camel-2.16.0 ## apache-camel-2.17.0
+outputScores
+PAQUETES -- 80
+[fields-methods-calls#Cosine, variables#Cosine, fields-variables-methods#Cosine, fields#Cosine, fields-variables-methods-calls#Cosine, methods#Cosine, imports-fields-methods-variables#Cosine, imports#Cosine, comments#Cosine, imports-fields-methods-variables-comments#Cosine, fields-methods#Cosine, imports-fields-methods-variables-comments-calls#Cosine, imports-fields-methods-variables-calls#Cosine, fields-variables#Cosine, calls#Cosine, methods-calls#Cosine]
+comments#Cosine
+=== Confusion Matrix ===
+
+    a    b   <-- classified as
+    5    0 |    a = true
+   90 5614 |    b = false
+
+95 --- [org.apache.camel-org.apache.camel.support, org.apache.camel.util.component-org.apache.camel.model, org.apache.camel.model.rest-org.apache.camel.impl, org.apache.camel.component.direct-org.apache.camel.builder, org.apache.camel.util.concurrent-org.apache.camel.processor.resequencer, org.apache.camel.component.seda-org.apache.camel.model, org.apache.camel.model.language-org.apache.camel.support, org.apache.camel.language.simple.types-org.apache.camel.language.simple.ast, org.apache.camel.component.xslt-org.apache.camel.model, org.apache.camel.impl-org.apache.camel.processor.aggregate, org.apache.camel.component.mock-org.apache.camel.support, org.apache.camel.component.bean-org.apache.camel.model.language, org.apache.camel.impl.osgi.tracker-org.apache.camel.impl.osgi, org.apache.camel.util.toolbox-org.apache.camel.model, org.apache.camel.builder.xml-org.apache.camel.builder, org.apache.camel.processor.aggregate-org.apache.camel.model, org.apache.camel.builder-org.apache.camel.api.management.mbean, org.apache.camel.builder-org.apache.camel.main, org.apache.camel.component.test-org.apache.camel.model, org.apache.camel.spi-org.apache.camel.util, org.apache.camel.builder-org.apache.camel.processor.interceptor, org.apache.camel.component.controlbus-org.apache.camel.model, org.apache.camel.component.vm-org.apache.camel.component.stub, org.apache.camel.component-org.apache.camel.component.language, org.apache.camel.component.bean-org.apache.camel.model, org.apache.camel.model.dataformat-org.apache.camel.builder, org.apache.camel.component.file-org.apache.camel.model, org.apache.camel.component.binding-org.apache.camel.model, org.apache.camel.component.beanclass-org.apache.camel.util, org.apache.camel.processor.binding-org.apache.camel.impl, org.apache.camel.model-org.apache.camel.component.properties, org.apache.camel.model.loadbalancer-org.apache.camel.impl, org.apache.camel.component.mock-org.apache.camel.component.dataset, org.apache.camel.util.jsse-org.apache.camel.model.dataformat, org.apache.camel.impl-org.apache.camel.builder.xml, org.apache.camel.processor-org.apache.camel.component.properties, org.apache.camel.processor.validation-org.apache.camel.converter, org.apache.camel.impl.scan-org.apache.camel.impl.osgi, org.apache.camel.management.mbean-org.apache.camel.component.properties, org.apache.camel.management-org.apache.camel.api.management.mbean, org.apache.camel.builder.xml-org.apache.camel.model, org.apache.camel.component.timer-org.apache.camel.util, org.apache.camel.management-org.apache.camel.util.concurrent, org.apache.camel.converter.stream-org.apache.camel.impl, org.apache.camel.processor-org.apache.camel.model.rest, org.apache.camel.builder-org.apache.camel.processor.aggregate, org.apache.camel.processor-org.apache.camel.model.language, org.apache.camel.component.browse-org.apache.camel.util, org.apache.camel.processor.exceptionpolicy-org.apache.camel.impl, org.apache.camel.model.language-org.apache.camel.impl, org.apache.camel.processor-org.apache.camel.component.bean, org.apache.camel.model-org.apache.camel.main, org.apache.camel.component.seda-org.apache.camel.builder, org.apache.camel.language.simple.ast-org.apache.camel.impl, org.apache.camel.component.mock-org.apache.camel.component.test, org.apache.camel.component.scheduler-org.apache.camel.util, org.apache.camel.component.validator-org.apache.camel.api.management, org.apache.camel.management.mbean-org.apache.camel.support, org.apache.camel.util.toolbox-org.apache.camel.impl, org.apache.camel.component.direct-org.apache.camel.component.directvm, org.apache.camel.component.controlbus-org.apache.camel.builder, org.apache.camel.language.simple-org.apache.camel.impl, org.apache.camel.impl-org.apache.camel.converter.stream, org.apache.camel.util-org.apache.camel.builder, org.apache.camel.management.mbean-org.apache.camel.management, org.apache.camel.component.language-org.apache.camel.model, org.apache.camel.processor.interceptor-org.apache.camel.builder, org.apache.camel.processor.binding-org.apache.camel.model.rest, org.apache.camel.component.dataformat-org.apache.camel.model, org.apache.camel.language.tokenizer-org.apache.camel.impl, org.apache.camel.component.directvm-org.apache.camel.model, org.apache.camel-org.apache.camel.component.properties, org.apache.camel.component.direct-org.apache.camel.model, org.apache.camel.language.simple.ast-org.apache.camel.language.simple, org.apache.camel.impl.converter-org.apache.camel.impl, org.apache.camel.component.log-org.apache.camel.model, org.apache.camel.impl-org.apache.camel.model.dataformat, org.apache.camel.impl.osgi-org.apache.camel.impl, org.apache.camel.processor.exceptionpolicy-org.apache.camel.builder, org.apache.camel.processor.aggregate-org.apache.camel.processor, org.apache.camel.component.dataset-org.apache.camel.model, org.apache.camel.language.simple.types-org.apache.camel.language.simple, org.apache.camel.management-org.apache.camel.model.rest, org.apache.camel.management-org.apache.camel.component.properties, org.apache.camel.component.mock-org.apache.camel.model, org.apache.camel.management-org.apache.camel.model.language, org.apache.camel.processor.loadbalancer-org.apache.camel.model, org.apache.camel-org.apache.camel.component.bean, org.apache.camel.processor.resequencer-org.apache.camel.model.config, org.apache.camel.language.simple-org.apache.camel.spi, org.apache.camel.model-org.apache.camel.api.management.mbean, org.apache.camel.processor-org.apache.camel.api.management.mbean, org.apache.camel.component-org.apache.camel.model, org.apache.camel.builder-org.apache.camel.util.concurrent, org.apache.camel.util-org.apache.camel.support]
+Classification Time;3153
+ ---- Falsely closes cycle? org.apache.camel.builder.xml-org.apache.camel.model
+ ---- Falsely closes cycle? org.apache.camel.language.tokenizer-org.apache.camel.impl
+ ---- Falsely closes cycle? org.apache.camel.model.dataformat-org.apache.camel.builder
+ ---- Falsely closes cycle? org.apache.camel.impl-org.apache.camel.processor.aggregate
+ ---- Falsely closes cycle? org.apache.camel.component.log-org.apache.camel.model
+ ---- Falsely closes cycle? org.apache.camel.component.seda-org.apache.camel.model
+ ---- Falsely closes cycle? org.apache.camel.converter.stream-org.apache.camel.impl
+ ---- Falsely closes cycle? org.apache.camel.builder.xml-org.apache.camel.builder
+ ---- Falsely closes cycle? org.apache.camel.language.simple.ast-org.apache.camel.impl
+ ---- Falsely closes cycle? org.apache.camel.util.toolbox-org.apache.camel.model
+ ---- Falsely closes cycle? org.apache.camel.processor-org.apache.camel.model.rest
+ ---- Falsely closes cycle? org.apache.camel.builder-org.apache.camel.processor.aggregate
+ ---- Falsely closes cycle? org.apache.camel.builder-org.apache.camel.api.management.mbean
+ ---- Falsely closes cycle? org.apache.camel.model-org.apache.camel.main
+ ---- Falsely closes cycle? org.apache.camel.util.concurrent-org.apache.camel.processor.resequencer
+ ---- Falsely closes cycle? org.apache.camel.component.validator-org.apache.camel.api.management
+ ---- Falsely closes cycle? org.apache.camel.management-org.apache.camel.model.rest
+ ---- Falsely closes cycle? org.apache.camel.language.simple.types-org.apache.camel.language.simple.ast
+ ---- Falsely closes cycle? org.apache.camel.component.test-org.apache.camel.model
+ ---- Falsely closes cycle? org.apache.camel.model.loadbalancer-org.apache.camel.impl
+ ---- Falsely closes cycle? org.apache.camel.component.browse-org.apache.camel.util
+ ---- Falsely closes cycle? org.apache.camel.model.language-org.apache.camel.support
+ ---- Falsely closes cycle? org.apache.camel.util.jsse-org.apache.camel.model.dataformat
+ ---- Falsely closes cycle? org.apache.camel.component.timer-org.apache.camel.util
+ ---- Falsely closes cycle? org.apache.camel.component.directvm-org.apache.camel.model
+ ---- Falsely closes cycle? org.apache.camel-org.apache.camel.support
+ ---- Falsely closes cycle? org.apache.camel.util.toolbox-org.apache.camel.impl
+ ---- Falsely closes cycle? org.apache.camel.spi-org.apache.camel.util
+ ---- Falsely closes cycle? org.apache.camel.management.mbean-org.apache.camel.component.properties
+ ---- Falsely closes cycle? org.apache.camel.processor-org.apache.camel.model.language
+ ---- Falsely closes cycle? org.apache.camel.component.bean-org.apache.camel.model
+ ---- Falsely closes cycle? org.apache.camel.util-org.apache.camel.builder
+ ---- Falsely closes cycle? org.apache.camel.processor.loadbalancer-org.apache.camel.model
+ ---- Falsely closes cycle? org.apache.camel.processor.binding-org.apache.camel.impl
+ ---- Falsely closes cycle? org.apache.camel.impl-org.apache.camel.builder.xml
+ ---- Falsely closes cycle? org.apache.camel.management-org.apache.camel.api.management.mbean
+ ---- Falsely closes cycle? org.apache.camel.component.mock-org.apache.camel.model
+ ---- Falsely closes cycle? org.apache.camel.component.direct-org.apache.camel.builder
+ ---- Falsely closes cycle? org.apache.camel.model-org.apache.camel.component.properties
+ ---- Falsely closes cycle? org.apache.camel.impl-org.apache.camel.model.dataformat
+ ---- Falsely closes cycle? org.apache.camel.component-org.apache.camel.model
+ ---- Falsely closes cycle? org.apache.camel.management-org.apache.camel.util.concurrent
+ ---- Falsely closes cycle? org.apache.camel-org.apache.camel.component.bean
+ ---- Falsely closes cycle? org.apache.camel.management-org.apache.camel.component.properties
+ ---- Falsely closes cycle? org.apache.camel.builder-org.apache.camel.util.concurrent
+ ---- Falsely closes cycle? org.apache.camel.impl.converter-org.apache.camel.impl
+ ---- Falsely closes cycle? org.apache.camel.processor.binding-org.apache.camel.model.rest
+ ---- Falsely closes cycle? org.apache.camel.util.component-org.apache.camel.model
+ ---- Falsely closes cycle? org.apache.camel.impl.osgi-org.apache.camel.impl
+ ---- Falsely closes cycle? org.apache.camel.component.mock-org.apache.camel.support
+ ---- Falsely closes cycle? org.apache.camel.component.beanclass-org.apache.camel.util
+ ---- Falsely closes cycle? org.apache.camel.processor.resequencer-org.apache.camel.model.config
+ ---- Falsely closes cycle? org.apache.camel.component.xslt-org.apache.camel.model
+ ---- Falsely closes cycle? org.apache.camel-org.apache.camel.component.properties
+ ---- Falsely closes cycle? org.apache.camel.model-org.apache.camel.api.management.mbean
+ ---- Falsely closes cycle? org.apache.camel.management.mbean-org.apache.camel.support
+ ---- Falsely closes cycle? org.apache.camel.component.controlbus-org.apache.camel.builder
+ ---- Falsely closes cycle? org.apache.camel.processor.exceptionpolicy-org.apache.camel.impl
+ ---- Falsely closes cycle? org.apache.camel.component.seda-org.apache.camel.builder
+ ---- Falsely closes cycle? org.apache.camel.component.direct-org.apache.camel.model
+ ---- Falsely closes cycle? org.apache.camel.model.language-org.apache.camel.impl
+ ---- Falsely closes cycle? org.apache.camel.processor.aggregate-org.apache.camel.processor
+ ---- Falsely closes cycle? org.apache.camel.builder-org.apache.camel.processor.interceptor
+ ---- Falsely closes cycle? org.apache.camel.language.simple.types-org.apache.camel.language.simple
+ ---- Falsely closes cycle? org.apache.camel.processor.interceptor-org.apache.camel.builder
+ ---- Falsely closes cycle? org.apache.camel.processor-org.apache.camel.component.bean
+ ---- Falsely closes cycle? org.apache.camel.management.mbean-org.apache.camel.management
+ ---- Falsely closes cycle? org.apache.camel.management-org.apache.camel.model.language
+ ---- Falsely closes cycle? org.apache.camel.language.simple.ast-org.apache.camel.language.simple
+ ---- Falsely closes cycle? org.apache.camel.language.simple-org.apache.camel.impl
+ ---- Falsely closes cycle? org.apache.camel.component.bean-org.apache.camel.model.language
+ ---- Falsely closes cycle? org.apache.camel.util-org.apache.camel.support
+ ---- Falsely closes cycle? org.apache.camel.model.rest-org.apache.camel.impl
+ ---- Falsely closes cycle? org.apache.camel.processor-org.apache.camel.component.properties
+ ---- Falsely closes cycle? org.apache.camel.component.dataformat-org.apache.camel.model
+ ---- Falsely closes cycle? org.apache.camel.component.file-org.apache.camel.model
+ ---- Falsely closes cycle? org.apache.camel.processor.aggregate-org.apache.camel.model
+ ---- Falsely closes cycle? org.apache.camel.builder-org.apache.camel.main
+ ---- Falsely closes cycle? org.apache.camel.component.scheduler-org.apache.camel.util
+ ---- Falsely closes cycle? org.apache.camel.component.controlbus-org.apache.camel.model
+ ---- Falsely closes cycle? org.apache.camel.processor.exceptionpolicy-org.apache.camel.builder
+ ---- Falsely closes cycle? org.apache.camel.processor-org.apache.camel.api.management.mbean
+ ---- Falsely closes cycle? org.apache.camel.language.simple-org.apache.camel.spi
+ ---- Falsely closes cycle? org.apache.camel.component.language-org.apache.camel.model
+ ---- Falsely closes cycle? org.apache.camel.component.dataset-org.apache.camel.model
+ ---- Falsely closes cycle? org.apache.camel.component.binding-org.apache.camel.model
+predicted: 5709
+ground: 5709
+Filtering Time;536
+5709 5709
+ROW=truth and COL=predicted
+class  0 |    5621 |      86 |
+class  1 |       0 |       2 |
+Precision;Recall;smile.validation.FMeasure@1445d7f;Specificity;Sensitivity;TP;FN;FP;TN;
+ yes;0.022727272727272728;1.0;0.044444444444444446;0.9849307867531102;1.0;2;0;86;5621;
+ no;1.0;0.9849307867531102;0.9924081920903955;1.0;0.9849307867531102;5621;86;0;2;
+ avg;0.5113636363636364;0.992465393376555;0.51842631826742;0.992465393376555;0.992465393376555;
