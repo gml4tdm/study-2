@@ -1,9 +1,11 @@
+use std::collections::HashMap;
 use std::path::PathBuf;
 use crate::utils::versions::ExtractProjectInformation;
 
 pub fn generate_train_test_triples(graph_files: Vec<PathBuf>,
                                    target_directory: PathBuf,
-                                   only_common_nodes_for_training: bool) -> anyhow::Result<()>
+                                   only_common_nodes_for_training: bool, 
+                                   mapping: HashMap<String, String>) -> anyhow::Result<()>
 {
     // Validate that all files are in the same project
     if graph_files.is_empty() {
@@ -34,7 +36,7 @@ pub fn generate_train_test_triples(graph_files: Vec<PathBuf>,
         let v3 = &versions[2];
         log::info!("Generating triple for {project}: {}, {}, {}", v1.0, v2.0, v3.0);
         let triple = crate::datasets::triples::VersionTriple::from_files(
-            v1.1.clone(), v2.1.clone(), v3.1.clone(), only_common_nodes_for_training
+            v1.1.clone(), v2.1.clone(), v3.1.clone(), only_common_nodes_for_training, mapping
         )?;
         let target_path = target_directory.join(
             format!("{}-{}-{}-{}.json", project, v1.0, v2.0, v3.0)

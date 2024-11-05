@@ -87,17 +87,112 @@ pub struct EdgeLabels {
 
 //////////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////
+// Getters/Setters
+//////////////////////////////////////////////////////////////////////////////////////////////////
+
+impl Graph {
+    pub fn nodes(&self) -> &Vec<Node> {
+        &self.nodes
+    }
+    pub fn edges(&self) -> &Vec<Edge> {
+        &self.edges
+    }
+    pub fn edge_labels(&self) -> &EdgeLabels {
+        &self.edge_labels
+    }
+    pub fn hierarchies(&self) -> &Vec<NodeHierarchy> {
+        &self.hierarchies
+    }
+    pub fn is_directed(&self) -> bool {
+        self.directed
+    }
+}
+
+impl Node {
+    pub fn name(&self) -> &str {
+        &self.name
+    }
+    pub fn files(&self) -> &Vec<String> {
+        &self.feature_files
+    }
+    pub fn files_mut(&mut self) -> &mut Vec<String> {
+        &mut self.feature_files
+    }
+}
+
+impl Edge {
+    pub fn from(&self) -> usize {
+        self.from
+    }
+    pub fn to(&self) -> usize {
+        self.to
+    }
+    pub fn edge_type(&self) -> &DependencySpec {
+        &self.edge_type
+    }
+}
+
+impl NodeHierarchy {
+    pub fn name(&self) -> &str {
+        &self.name
+    }
+    pub fn index(&self) -> Option<usize> {
+        self.index
+    }
+    pub fn children(&self) -> &Vec<NodeHierarchy> {
+        &self.children
+    }
+}
+
+impl EdgeLabels {
+    pub fn labels(&self) -> &Vec<bool> {
+        &self.labels
+    }
+    pub fn edges(&self) -> &Vec<(usize, usize)> {
+        &self.edges 
+    }
+}
+
+//////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////
 // Implementations
 //////////////////////////////////////////////////////////////////////////////////////////////////
 
 #[allow(unused)]
 impl VersionTriple {
+    pub fn project(&self) -> &str {
+        &self.project
+    }   
+    pub fn version_1(&self) -> &str {
+        &self.version_1
+    }
+    pub fn version_2(&self) -> &str {
+        &self.version_2
+    }
+    pub fn version_3(&self) -> &str {
+        &self.version_3
+    }
+    pub fn metadata(&self) -> VersionTripleMetadata {
+        self.metadata
+    }
+    pub fn training_graph(&self) -> &Graph {
+        &self.training_graph
+    }
+    pub fn test_graph(&self) -> &Graph {
+        &self.test_graph
+    }
+    
     pub fn from_files(path_v1: impl AsRef<std::path::Path>,
                       path_v2: impl AsRef<std::path::Path>,
                       path_v3: impl AsRef<std::path::Path>,
-                      only_common_nodes_for_training: bool) -> anyhow::Result<Self>
+                      only_common_nodes_for_training: bool, 
+                      mapping: HashMap<String, String>) -> anyhow::Result<Self>
     {
         let project = path_v1.as_ref().extract_project()?.to_string();
+        let project = match mapping.get(&project) {
+            Some(p) => p.to_string(),
+            None => project
+        };
         let version_1 = path_v1.as_ref().extract_version()?.to_string();
         let version_2 = path_v2.as_ref().extract_version()?.to_string();
         let version_3 = path_v3.as_ref().extract_version()?.to_string();

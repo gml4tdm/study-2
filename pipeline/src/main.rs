@@ -1,5 +1,6 @@
 use std::path::PathBuf;
 use clap::Parser;
+use crate::utils::mapping::RenameMapping;
 
 pub mod graphs;
 pub mod utils;
@@ -60,6 +61,9 @@ struct GenerateTrainTestTriplesCommand {
     
     #[clap(short, long)]
     only_common_nodes_for_training: bool,
+    
+    #[clap(short, long, default_value = "")]
+    mapping: RenameMapping
 }
 
 #[derive(clap::Args)]
@@ -120,7 +124,10 @@ fn main() -> anyhow::Result<()> {
         }
         Command::GenerateTrainTestTriples(generate) => {
             commands::generate_train_test_triples::generate_train_test_triples(
-                generate.input_files, generate.output_directory, generate.only_common_nodes_for_training
+                generate.input_files, 
+                generate.output_directory, 
+                generate.only_common_nodes_for_training,
+                generate.mapping.into_inner()
             )?;
         }
         Command::DownloadSources(download) => {
