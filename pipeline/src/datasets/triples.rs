@@ -15,6 +15,13 @@ use crate::utils::versions::ExtractProjectInformation;
 
 //////////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////
+// Magic Number 
+//////////////////////////////////////////////////////////////////////////////////////////////////
+
+const MAGIC_NUMBER: u32 = 0x00_01_01_01;
+
+//////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////
 // Types
 //////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -26,6 +33,14 @@ pub struct VersionTriple {
     version_3: String,
     training_graph: Graph,
     test_graph: Graph,
+    metadata: VersionTripleMetadata,
+}
+
+#[derive(Debug, Copy, Clone, serde::Serialize, serde::Deserialize)]
+pub struct VersionTripleMetadata {
+    only_common_nodes_for_training: bool,
+    magic_number: u32,
+    gnn_safe: bool,
 }
 
 #[derive(Debug, Clone, serde::Serialize, serde::Deserialize)]
@@ -102,6 +117,11 @@ impl VersionTriple {
             version_3,
             training_graph: Self::build_training_graph(&v1, &v2, only_common_nodes_for_training),
             test_graph: Self::build_test_graph(&v2, &v3),
+            metadata: VersionTripleMetadata {
+                only_common_nodes_for_training,
+                magic_number: MAGIC_NUMBER,
+                gnn_safe: only_common_nodes_for_training
+            }
         };
         Ok(triple)
     }

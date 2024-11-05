@@ -103,3 +103,14 @@ pub enum DependencyType {
     Implements,
     Unspecified
 }
+
+impl std::fmt::Display for DependencyType {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            DependencyType::Uses => write!(f, "uses"),
+            DependencyType::Extends => write!(f, "extends"),
+            DependencyType::Implements => write!(f, "implements"),
+            DependencyType::Unspecified => write!(f, "unspecified")
+        }
+    }
+}

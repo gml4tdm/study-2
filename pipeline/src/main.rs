@@ -9,6 +9,7 @@ mod languages;
 mod replication;
 mod datasets;
 mod source_downloader;
+mod statistics;
 
 #[derive(clap::Parser)]
 struct Cli {
@@ -23,6 +24,7 @@ enum Command {
     CompareTriplePredictions(CompareTriplePredictionsCommand),
     GenerateTrainTestTriples(GenerateTrainTestTriplesCommand),
     DownloadSources(DownloadSourcesCommand),
+    ComputeProjectEvolutionStatistics(ComputeProjectEvolutionStatisticsCommand),
 }
 
 #[derive(clap::Args)]
@@ -69,6 +71,18 @@ struct DownloadSourcesCommand {
     output_directory: PathBuf,
 }
 
+#[derive(clap::Args)]
+struct ComputeProjectEvolutionStatisticsCommand {
+    #[clap(short, long, num_args = 1..)]
+    files: Vec<PathBuf>,
+    
+    #[clap(short, long)]
+    output: PathBuf,
+    
+    #[clap(short, long)]
+    package_graph: bool,
+}
+
 
 fn setup_logging() -> anyhow::Result<()> {
     let spec = flexi_logger::LogSpecification::parse("warn,pipeline=debug")?;
@@ -112,7 +126,11 @@ fn main() -> anyhow::Result<()> {
         Command::DownloadSources(download) => {
             commands::download_sources::download_sources(download.input_file, download.output_directory)?;
         }
-        
+        Command::ComputeProjectEvolutionStatistics(compute) => {
+            commands::compute_project_evolution_statistics::compute_project_evolution_statistics(
+                compute.files, compute.output, compute.package_graph
+            )?;
+        }
     }
     
     Ok(())
