@@ -2,7 +2,7 @@
 ################################################################################
 # Imports
 ################################################################################
-
+import json
 import os
 import pathlib
 import re
@@ -136,7 +136,7 @@ def scan_source_directory_recursive(path: pathlib.Path, root: pathlib.Path, file
 
 
 def scan_source_file(path: pathlib.Path):
-    pattern = re.compile(r'^package\s+(?P<package>[a-zA-Z0-9_.]+);')
+    pattern = re.compile(r'^\s*package\s+(?P<package>[a-zA-Z0-9_.]+);')
     with open(path, encoding='utf-8', errors='ignore') as file:
         for line in file:
             if (m := pattern.match(line)) is not None:
@@ -160,16 +160,18 @@ class Model(torch.nn.Module):
 
     def __init__(self, embedding_in: int):
         super().__init__()
-        self.conv1 = torch_geometric.nn.GCNConv(embedding_in, 16)
-        self.conv2 = torch_geometric.nn.GCNConv(16, 8)
-        self.linear = torch.nn.Linear(8, 1)
+        self.conv1 = torch_geometric.nn.GCNConv(embedding_in, 64)
+        self.conv2 = torch_geometric.nn.GCNConv(64, 32)
+        self.linear1 = torch.nn.Linear(32, 16)
+        self.linear2 = torch.nn.Linear(16, 1)
 
     def forward(self, x):
         z = x
         x = self.conv1(x.x, z.edge_index)
         x = self.conv2(x, z.edge_index)
         x = torch.flatten(x, 1)
-        x = self.linear(x)
+        x = self.linear1(x)
+        x = self.linear2(x)
         x = torch.sigmoid(x)
         x = torch.flatten(x, 1)
 
@@ -189,9 +191,11 @@ class Config(tap.Tap):
     input_files: list[pathlib.Path]
     source_directory: pathlib.Path
     embedding_directory: pathlib.Path
+    output_file: pathlib.Path
 
 
 def main(config: Config):
+    results = []
     for filename in config.input_files:
         triple = shared.VersionTriple.load_and_check(filename)
         print(f'Loaded version triple from project {triple.project}: '
@@ -217,15 +221,12 @@ def main(config: Config):
         optimizer = torch.optim.Adam(model.parameters(), lr=0.001)
         loss_fn = torch.nn.BCELoss()
         for epoch in range(1000):
-            print(epoch)
             out = model(train)
-            print(out)
-            print(train.y)
             loss = loss_fn(out, train.y)
-            print(loss)
             loss.backward()
             optimizer.step()
             optimizer.zero_grad()
+            print(f'Epoch {epoch+1}: {loss}')
 
         # Evaluation
         del train
@@ -235,22 +236,14 @@ def main(config: Config):
             config.embedding_directory / triple.project / triple.version_2 / SOURCE_DIRECTORY[key_2],
         )
         with torch.no_grad():
-            out = model(test).tolist()
-            exp = test.y.tolist()
-            tp = fp = tn = fn = 0
-            for pred, true in zip(out, exp):
-                if pred > 0.5 and true > 0.5:
-                    tp += 1
-                elif pred > 0.5 and true <= 0.5:
-                    fp += 1
-                elif pred <= 0.5 and true > 0.5:
-                    fn += 1
-                else:
-                    tn += 1
-            print(f'True Positive: {tp}')
-            print(f'False Positive: {fp}')
-            print(f'True Negative: {tn}')
-            print(f'False Negative: {fn}')
+            out = model(test)
+            out = (out >= 0.5).tolist()
+            result = shared.evaluate(triple, out)
+            results.append(result)
+
+    config.output_file.parent.mkdir(parents=True, exist_ok=True)
+    with open(config.output_file, 'w') as file:
+        json.dump(results, file, indent=2)
 
 
 if __name__ == "__main__":
