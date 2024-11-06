@@ -24,8 +24,8 @@ static JAVA_PACKAGE_PATTERN: OnceLock<regex::Regex> = OnceLock::new();
 fn get_java_type_pattern_1() -> &'static regex::Regex {
     JAVA_TYPE_PATTERN_1.get_or_init(||
         regex::Regex::new(
-            r"(?x)^((public|protected|private)\s+)?
-            (?<kind>interface|class|enum|@\s*interface|abstract\s+class|final\s+class|abstract\s+interface)\s*"
+            r"(?x)^((public|protected|private)\s+)?(static\s+)?
+            (?<kind>interface|class|enum|@\s*interface|abstract\s+class|final\s+class|abstract\s+interface)(\s+|\{)"
         ).unwrap()   
     )
 }
@@ -33,7 +33,7 @@ fn get_java_type_pattern_1() -> &'static regex::Regex {
 fn get_java_type_pattern_2() -> &'static regex::Regex {
     JAVA_TYPE_PATTERN_2.get_or_init(||
         regex::Regex::new(
-            r"^(?<kind>final|abstract)\s+((public|procected|private)\s+)?(?<kind2>class|interface)\s*"
+            r"^(?<kind>final|abstract)\s+((public|procected|private)\s+)?(?<kind2>class|interface)(\s+|\{)"
         ).unwrap()
     )
 }
@@ -46,6 +46,127 @@ fn get_java_package_pattern() -> &'static regex::Regex {
     )
 }
 
+///////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////
+// Inner Class Resolver 
+///////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+struct InnerClassHelper {
+    expected: HashMap<String, HashMap<String, Class>>
+}
+
+struct Class {
+    name: String,
+    inner_classes: HashMap<String, Class>,
+    found: bool 
+}
+
+impl InnerClassHelper {
+    fn new(classes: HashSet<String>) -> Self {
+        let mut expected = HashMap::new();
+        for cls in classes {
+            let (package, name) = cls.rsplit_once('.').unwrap();
+            let parts = name.split('$').collect::<Vec<_>>();
+            let container = expected.entry(package.to_string())
+                .or_insert_with(HashMap::new);
+            let mut current = match container.entry(parts[0].to_string()) {
+                Entry::Occupied(e) => e.into_mut(),
+                Entry::Vacant(e) => e.insert(Class {
+                    name: parts[0].to_string(),
+                    inner_classes: HashMap::new(),
+                    found: false
+                })
+            };
+            for part in parts.iter().skip(1) {
+                current = match current.inner_classes.entry(part.to_string()) {
+                    Entry::Occupied(e) => e.into_mut(),
+                    Entry::Vacant(e) => e.insert(Class {
+                        name: part.to_string(),
+                        inner_classes: HashMap::new(),
+                        found: false
+                    })
+                };
+            }
+        }
+        Self { expected}
+    }
+    
+    fn resolve_classes_from_file(&mut self, 
+                                 prefix: &String,
+                                 names: &[&String]) -> anyhow::Result<Option<Vec<String>>>
+    {
+        let mut result = Vec::new();
+        // let package = self.expected.get_mut(prefix)
+        //     .ok_or_else(|| anyhow::anyhow!("No package {} was expected", prefix))?;
+        let package = match self.expected.get_mut(prefix) {
+            Some(x) => x,
+            None => return Ok(None)
+        };
+        
+        // Subtle implementation detail we will rely on; 
+        // classes are listed in the order they appear in the file,
+        // which means that if we found a root class match,
+        // the next classes are either inner class or a next root class.
+        // This simplifies the search algorithm, since for every class,
+        // it is either somewhere in the inner class structure of the previous 
+        // root (check 1), or it must be a root class (check 2).
+        // In particular, the first class must be a root class,
+        
+        // let mut current_root = package.get_mut(names[0])
+        //     .ok_or_else(|| anyhow::anyhow!("No class {} found in package {}", names[0], prefix))?;
+        let mut current_root = match package.get_mut(names[0]) {
+            Some(x) => x,
+            None => return Ok(None)
+        };
+        if current_root.found {
+            return Err(anyhow::anyhow!("Class {} found twice in package {}", names[0], prefix));
+        }
+        current_root.found = true;
+        result.push(current_root.name.clone());
+        
+        for name in names.into_iter().skip(1).copied() {
+            match current_root.check_inner_class(name)? {
+                Some(name) => {
+                    result.push(name);
+                }
+                None => {
+                    current_root = package.get_mut(name)
+                        .ok_or_else(|| anyhow::anyhow!("No class {} found in package {}", name, prefix))?;
+                    result.push(current_root.name.clone());
+                }
+            }
+        }
+        
+        Ok(Some(result))
+    }
+}
+
+impl Class {
+    fn check_inner_class(&mut self, name: &str) -> anyhow::Result<Option<String>> {
+        if name == self.name {
+            if self.found {
+                Err(anyhow::anyhow!("Class {} found twice in package {}", name, self.name))
+            } else {
+                Ok(Some(self.name.clone()))
+            }
+        } else if self.inner_classes.contains_key(name) {
+            let name = self.inner_classes.get_mut(name)
+                .unwrap()
+                .check_inner_class(name)?
+                .unwrap();
+            Ok(Some(format!("{}${name}", self.name)))
+        } else {
+            for value in self.inner_classes.values_mut() {
+                if let Some(name) = value.check_inner_class(name)? {
+                    return Ok(Some(format!("{}${name}", self.name)));
+                }
+            }
+            Ok(None)
+        }
+    }
+}
+
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////////
@@ -53,7 +174,7 @@ fn get_java_package_pattern() -> &'static regex::Regex {
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
 impl ObjectToSourceMapper for JavaClassToFileMapper {
-    fn map(&mut self, _root: impl AsRef<Path>, object: &str) -> anyhow::Result<ObjectLocation> {
+    fn map(&self, _root: &Path, object: &str) -> anyhow::Result<ObjectLocation> {
         self.cache.get(object)
             .ok_or_else(|| anyhow::anyhow!("Failed to resolve {}", object))
             .cloned()
@@ -62,39 +183,71 @@ impl ObjectToSourceMapper for JavaClassToFileMapper {
 
 impl JavaClassToFileMapper {
     pub fn new(root: impl AsRef<Path>,
-               included_classes: Option<HashSet<String>>) -> anyhow::Result<Self> {
+               included_classes: HashSet<String>) -> anyhow::Result<Self> {
         Ok(Self { cache: Self::resolve_all(root, included_classes)? })
     }
     
     fn resolve_all(root: impl AsRef<Path>, 
-                   included: Option<HashSet<String>>) -> anyhow::Result<HashMap<String, ObjectLocation>> {
+                   included: HashSet<String>) -> anyhow::Result<HashMap<String, ObjectLocation>> {
+        log::info!("Resolving all classes in {}", root.as_ref().display());
+        let mut helper = InnerClassHelper::new(included);
         let mut result = HashMap::new();
-        let included_set = included.unwrap_or_default();
-        Self::resolve_recursively(root, &included_set, &mut result)?;
+        let deep_root = root.as_ref().to_path_buf();
+        Self::resolve_recursively(root, &mut  helper, &mut result, deep_root.as_path())?;
         Ok(result)
     }
     
     fn resolve_recursively(root: impl AsRef<Path>,
-                           _included: &HashSet<String>, 
-                           mapping: &mut HashMap<String, ObjectLocation>) -> anyhow::Result<()> {
+                           helper: &mut InnerClassHelper,
+                           mapping: &mut HashMap<String, ObjectLocation>, 
+                           deep_root: &Path) -> anyhow::Result<()> {
+        log::info!("Checking directory {}...", root.as_ref().display());
         for entry in std::fs::read_dir(&root)? {
             let entry = entry?;
             let path = entry.path();
             if path.is_dir() {
-                Self::resolve_recursively(path, _included, mapping)?;
+                Self::resolve_recursively(path, helper, mapping, deep_root)?;
             } else if path.is_file() && Language::Java.is_source_file(&path) {
-                match Self::resolve_file(&path, Self::relative_path(&path, &root))? {
-                    Some((prefix, classes)) => {
+                match Self::resolve_file(&path, Self::relative_path(&path, deep_root))? {
+                    Some((prefix, raw_classes)) => {
+                        let names = raw_classes.iter()
+                            .map(|cls| &cls.name)
+                            .collect::<Vec<_>>();
+                        let new_names = helper.resolve_classes_from_file(&prefix, &names)
+                            .map_err(
+                                |e| 
+                                    e.context(format!("While resolving {}", path.display()))
+                            )?;
+                        
+                        if new_names.is_none() {
+                            for x in names {
+                                log::warn!("Unexpected package or class in {prefix}.{x}, ignoring");
+                            }
+                            continue;
+                        }
+                        
+                        let mut classes = Vec::new();
+                        let stream = raw_classes.into_iter()
+                            .zip(new_names.unwrap().into_iter());
+                        for (mut original, new) in stream {
+                            if original.name != new {
+                                log::debug!("Mapped name {} to {}", original.name, new);
+                                original.name = new;
+                            }
+                            classes.push(original);
+                        }
+                        
+                        
                         for cls in classes {
+                            log::debug!("Resolved item: {:?}", cls);
                             let key = format!("{}.{}", prefix, cls.name);
                             match mapping.entry(key) {
-                                Entry::Occupied(_e) => {
+                                Entry::Occupied(e) => {
                                     log::error!(
-                                        "Duplicate class found: {}.{} ({:?})", prefix, cls.name, cls
+                                        "Duplicate class found: {}.{} (previous = {:?}, new = {:?})", 
+                                        prefix, cls.name, e.get(), cls
                                     );
-                                    panic!(
-                                        "Duplicate class found: {}.{} ({:?})", prefix, cls.name, cls
-                                    );
+                                    panic!("Duplicate class found: {}.{}", prefix, cls.name);
                                 }
                                 Entry::Vacant(e) => {
                                     e.insert(cls);
@@ -144,6 +297,11 @@ impl JavaClassToFileMapper {
             for pat in [get_java_type_pattern_1(), get_java_type_pattern_2()] {
                 if let Some(cap) = pat.captures(&line) {
                     let (name, kind) = Self::get_class_name_and_kind(&line, cap)?;
+                    if name.is_empty() {
+                        log::warn!("Found empty class name in line \"{}\", ignoring", line);
+                        continue;
+                    }
+                    log::trace!("Found {} ({}) in line {}", name, kind, line);
                     classes.push((name, kind, None));
                     break;
                 }

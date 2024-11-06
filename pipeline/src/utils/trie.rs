@@ -1,4 +1,5 @@
 use std::collections::HashMap;
+use std::fmt::Debug;
 use std::hash::Hash;
 
 pub struct Trie<T>(pub(super) HashMap<T, TrieNode<T>>);
@@ -11,6 +12,23 @@ pub(super) struct TrieNode<T> {
 impl<T> Trie<T> {
     pub fn new() -> Self {
         Self(HashMap::new())
+    }
+}
+
+impl<T: Debug> Debug for Trie<T> {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        f.debug_struct("Trie")
+            .field("0", &self.0)
+            .finish()
+    }
+}
+
+impl<T: Debug> Debug for TrieNode<T> {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        f.debug_struct("TrieNode")
+            .field("is_end", &self.is_end)
+            .field("children", &self.children)
+            .finish()
     }
 }
 

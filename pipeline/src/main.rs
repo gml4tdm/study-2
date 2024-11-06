@@ -1,5 +1,6 @@
 use std::path::PathBuf;
 use clap::Parser;
+use crate::languages::Language;
 use crate::utils::mapping::RenameMapping;
 
 pub mod graphs;
@@ -26,6 +27,7 @@ enum Command {
     GenerateTrainTestTriples(GenerateTrainTestTriplesCommand),
     DownloadSources(DownloadSourcesCommand),
     ComputeProjectEvolutionStatistics(ComputeProjectEvolutionStatisticsCommand),
+    AddSourceInformationToTriples(AddSourceInformationToTriplesCommand),
 }
 
 #[derive(clap::Args)]
@@ -63,7 +65,10 @@ struct GenerateTrainTestTriplesCommand {
     only_common_nodes_for_training: bool,
     
     #[clap(short, long, default_value = "")]
-    mapping: RenameMapping
+    mapping: RenameMapping,
+    
+    #[clap(short, long)]
+    language: Language
 }
 
 #[derive(clap::Args)]
@@ -87,9 +92,21 @@ struct ComputeProjectEvolutionStatisticsCommand {
     package_graph: bool,
 }
 
+#[derive(clap::Args)]
+struct AddSourceInformationToTriplesCommand {
+    #[clap(short, long, num_args = 1..)]
+    inputs: Vec<PathBuf>,
+    
+    #[clap(short, long)]
+    output: Option<PathBuf>,
+    
+    #[clap(short, long)]
+    source_directory: PathBuf,
+}
+
 
 fn setup_logging() -> anyhow::Result<()> {
-    let spec = flexi_logger::LogSpecification::parse("warn,pipeline=debug")?;
+    let spec = flexi_logger::LogSpecification::parse("warn,pipeline=trace")?;
     flexi_logger::Logger::with(spec)
         .log_to_file(
             flexi_logger::FileSpec::default()
@@ -127,7 +144,8 @@ fn main() -> anyhow::Result<()> {
                 generate.input_files, 
                 generate.output_directory, 
                 generate.only_common_nodes_for_training,
-                generate.mapping.into_inner()
+                generate.mapping.into_inner(),
+                generate.language
             )?;
         }
         Command::DownloadSources(download) => {
@@ -136,6 +154,11 @@ fn main() -> anyhow::Result<()> {
         Command::ComputeProjectEvolutionStatistics(compute) => {
             commands::compute_project_evolution_statistics::compute_project_evolution_statistics(
                 compute.files, compute.output, compute.package_graph
+            )?;
+        }
+        Command::AddSourceInformationToTriples(add) => {
+            commands::add_source_information_to_triples::add_source_information_to_triples(
+                add.inputs, add.source_directory, add.output
             )?;
         }
     }

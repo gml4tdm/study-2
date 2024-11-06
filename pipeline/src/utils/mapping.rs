@@ -16,6 +16,9 @@ impl FromStr for RenameMapping {
     fn from_str(s: &str) -> Result<Self, Self::Err> {
         let mut mapping = HashMap::new();
         for item in s.split(';') {
+            if item.is_empty() {
+                continue;
+            }
             let parts = item.split('=').collect::<Vec<_>>();
             if parts.len() != 2 {
                 return Err(anyhow::anyhow!("Invalid mapping item: {}", item));

@@ -56,6 +56,7 @@ class Graph(pydantic.BaseModel):
     hierarchies: list[NodeHierarchy]
     edge_labels: EdgeLabels
     directed: bool
+    classes: list[Class]
 
     def as_undirected_problem(self) -> typing.Self:
         if not self.directed:
@@ -74,12 +75,20 @@ class Graph(pydantic.BaseModel):
             hierarchies=self.hierarchies,
             edge_labels=self.edge_labels.as_undirected_problem(),
             directed=False,
+            classes=self.classes,
         )
+
+
+class Class(pydantic.BaseModel):
+    package: str
+    name: str
+    versions: list[int]
 
 
 class Node(pydantic.BaseModel):
     name: str
-    feature_files: list[str]
+    versions: list[int]
+    files: dict[str, str]
 
 
 class Edge(pydantic.BaseModel):
@@ -99,6 +108,7 @@ class NodeHierarchy(pydantic.BaseModel):
     name: str
     index: int | None
     children: list[NodeHierarchy]
+    versions: list[int]
 
 
 class EdgeLabels(pydantic.BaseModel):

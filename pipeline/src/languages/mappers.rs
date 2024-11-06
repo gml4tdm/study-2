@@ -1,8 +1,8 @@
-use std::path::{Path, PathBuf};
+use std::path::Path;
 
-mod java;
+pub mod java;
 
-#[derive(Debug, Clone, serde::Serialize)]
+#[derive(Debug, Clone, serde::Serialize, serde::Deserialize)]
 pub struct ObjectLocation {
     pub name: String,
     pub kind: String,
@@ -12,5 +12,5 @@ pub struct ObjectLocation {
 }
 
 pub trait ObjectToSourceMapper {
-    fn map(&mut self, root: impl AsRef<Path>, object: &str) -> anyhow::Result<ObjectLocation>;
+    fn map(&self, root: &Path, object: &str) -> anyhow::Result<ObjectLocation>;
 }

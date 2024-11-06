@@ -8,9 +8,11 @@ use std::collections::hash_map::Entry;
 
 use itertools::Itertools;
 
-use crate::graphs::{DependencyGraph, DependencySpec, ModuleGraph};
+use crate::graphs::{ClassGraph, DependencyGraph, DependencySpec, ModuleGraph};
 use crate::graphs::hierarchy::Hierarchy;
 use crate::graphs::loaders::load_graph_from_file;
+use crate::languages::Language;
+use crate::languages::mappers::ObjectLocation;
 use crate::utils::versions::ExtractProjectInformation;
 
 //////////////////////////////////////////////////////////////////////////////////////////////////
@@ -19,6 +21,11 @@ use crate::utils::versions::ExtractProjectInformation;
 //////////////////////////////////////////////////////////////////////////////////////////////////
 
 const MAGIC_NUMBER: u32 = 0x00_01_01_01;
+
+const V1: u8 = 1;
+const V2: u8 = 2;
+#[allow(unused)]
+const V3: u8 = 3;
 
 //////////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////
@@ -38,9 +45,10 @@ pub struct VersionTriple {
 
 #[derive(Debug, Copy, Clone, serde::Serialize, serde::Deserialize)]
 pub struct VersionTripleMetadata {
-    only_common_nodes_for_training: bool,
-    magic_number: u32,
-    gnn_safe: bool,
+    pub only_common_nodes_for_training: bool,
+    pub magic_number: u32,
+    pub gnn_safe: bool,
+    pub language: Language
 }
 
 #[derive(Debug, Clone, serde::Serialize, serde::Deserialize)]
@@ -55,13 +63,23 @@ pub struct Graph {
                                                     // Generally a subset of edges,
                                                     // but not necessarily. 
     directed: bool,                                 // Whether the graph is directed.
+    classes: Vec<Class>
 }
+
+#[derive(Debug, Clone, serde::Serialize, serde::Deserialize)]
+pub struct Class {
+    package: String,
+    name: String,
+    versions: Vec<u8>
+}
+
 
 
 #[derive(Debug, Clone, serde::Serialize, serde::Deserialize)]
 pub struct Node {
     name: String,
-    feature_files: Vec<String>
+    versions: Vec<u8>,
+    files: HashMap<String, ObjectLocation>
 }
 
 #[derive(Debug, Clone, serde::Serialize, serde::Deserialize)]
@@ -75,7 +93,8 @@ pub struct Edge {
 pub struct NodeHierarchy {
     name: String,
     index: Option<usize>,
-    children: Vec<NodeHierarchy>
+    children: Vec<NodeHierarchy>,
+    versions: Vec<u8>
 }
 
 #[derive(Debug, Clone, serde::Serialize, serde::Deserialize)]
@@ -85,14 +104,28 @@ pub struct EdgeLabels {
     labels: Vec<bool>
 }
 
+enum NodeOwnership<'a> {
+    ExactVersion(u8),
+    SplitVersions{
+        v1: u8,
+        v2: u8,
+        v1_nodes: &'a HashSet<String>,
+        v2_nodes: &'a HashSet<String>
+    }
+}
+
 //////////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////
 // Getters/Setters
 //////////////////////////////////////////////////////////////////////////////////////////////////
 
+#[allow(unused)]
 impl Graph {
     pub fn nodes(&self) -> &Vec<Node> {
         &self.nodes
+    }
+    pub fn nodes_mut(&mut self) -> &mut Vec<Node> {
+        &mut self.nodes
     }
     pub fn edges(&self) -> &Vec<Edge> {
         &self.edges
@@ -106,20 +139,41 @@ impl Graph {
     pub fn is_directed(&self) -> bool {
         self.directed
     }
+    pub fn classes(&self) -> &Vec<Class> {
+        &self.classes
+    }
 }
 
+#[allow(unused)]
+impl Class {
+    pub fn package(&self) -> &str {
+        &self.package
+    }
+    pub fn name(&self) -> &str {
+        &self.name
+    }
+    pub fn versions(&self) -> &Vec<u8> {
+        &self.versions
+    }
+}
+
+#[allow(unused)]
 impl Node {
     pub fn name(&self) -> &str {
         &self.name
     }
-    pub fn files(&self) -> &Vec<String> {
-        &self.feature_files
+    pub fn versions(&self) -> &Vec<u8> {
+        &self.versions
     }
-    pub fn files_mut(&mut self) -> &mut Vec<String> {
-        &mut self.feature_files
+    pub fn files(&self) -> &HashMap<String, ObjectLocation> {
+        &self.files
+    }
+    pub fn files_mut(&mut self) -> &mut HashMap<String, ObjectLocation> {
+        &mut self.files
     }
 }
 
+#[allow(unused)]
 impl Edge {
     pub fn from(&self) -> usize {
         self.from
@@ -132,6 +186,7 @@ impl Edge {
     }
 }
 
+#[allow(unused)]
 impl NodeHierarchy {
     pub fn name(&self) -> &str {
         &self.name
@@ -142,8 +197,12 @@ impl NodeHierarchy {
     pub fn children(&self) -> &Vec<NodeHierarchy> {
         &self.children
     }
+    pub fn versions(&self) -> &Vec<u8> {
+        &self.versions
+    }
 }
 
+#[allow(unused)]
 impl EdgeLabels {
     pub fn labels(&self) -> &Vec<bool> {
         &self.labels
@@ -181,12 +240,19 @@ impl VersionTriple {
     pub fn test_graph(&self) -> &Graph {
         &self.test_graph
     }
+    pub fn training_graph_mut(&mut self) -> &mut Graph {
+        &mut self.training_graph
+    }
+    pub fn test_graph_mut(&mut self) -> &mut Graph {
+        &mut self.test_graph
+    }
     
     pub fn from_files(path_v1: impl AsRef<std::path::Path>,
                       path_v2: impl AsRef<std::path::Path>,
                       path_v3: impl AsRef<std::path::Path>,
                       only_common_nodes_for_training: bool, 
-                      mapping: HashMap<String, String>) -> anyhow::Result<Self>
+                      mapping: &HashMap<String, String>, 
+                      language: Language) -> anyhow::Result<Self>
     {
         let project = path_v1.as_ref().extract_project()?.to_string();
         let project = match mapping.get(&project) {
@@ -197,25 +263,26 @@ impl VersionTriple {
         let version_2 = path_v2.as_ref().extract_version()?.to_string();
         let version_3 = path_v3.as_ref().extract_version()?.to_string();
         
-        let v1 = load_graph_from_file(path_v1)?;
-        let v2 = load_graph_from_file(path_v2)?;
-        let v3 = load_graph_from_file(path_v3)?;
+        let v1_cls = load_graph_from_file(path_v1)?;
+        let v2_cls = load_graph_from_file(path_v2)?;
+        let v3_cls = load_graph_from_file(path_v3)?;
         
-        let v1 = v1.to_module_graph();
-        let v2 = v2.to_module_graph();
-        let v3 = v3.to_module_graph();
+        let v1 = v1_cls.to_module_graph();
+        let v2 = v2_cls.to_module_graph();
+        let v3 = v3_cls.to_module_graph();
         
         let triple = Self {
             project,
             version_1,
             version_2,
             version_3,
-            training_graph: Self::build_training_graph(&v1, &v2, only_common_nodes_for_training),
-            test_graph: Self::build_test_graph(&v2, &v3),
+            training_graph: Self::build_training_graph(&v1, &v2, &v1_cls, &v2_cls, only_common_nodes_for_training),
+            test_graph: Self::build_test_graph(&v2, &v3, &v2_cls, &v3_cls),
             metadata: VersionTripleMetadata {
                 only_common_nodes_for_training,
                 magic_number: MAGIC_NUMBER,
-                gnn_safe: only_common_nodes_for_training
+                gnn_safe: only_common_nodes_for_training,
+                language
             }
         };
         Ok(triple)
@@ -223,6 +290,8 @@ impl VersionTriple {
     
     fn build_training_graph(v1: &DependencyGraph<ModuleGraph>,
                             v2: &DependencyGraph<ModuleGraph>,
+                            v1_cls: &DependencyGraph<ClassGraph>,
+                            v2_cls: &DependencyGraph<ClassGraph>,
                             only_common_nodes_for_training: bool) -> Graph
     {
         // Build a graph such that
@@ -238,14 +307,16 @@ impl VersionTriple {
         //          except for added nodes.
         //      - Its labels are created from both v1 and v2.
         if only_common_nodes_for_training {
-            Self::build_training_graph_from_v1(v1, v2)
+            Self::build_training_graph_from_v1(v1, v2, v1_cls, v2_cls)
         } else {
-            Self::build_training_graph_from_v1_and_v2(v1, v2)
+            Self::build_training_graph_from_v1_and_v2(v1, v2, v1_cls, v2_cls)
         }
     }
 
     fn build_training_graph_from_v1(v1: &DependencyGraph<ModuleGraph>, 
-                                    v2: &DependencyGraph<ModuleGraph>) -> Graph {
+                                    v2: &DependencyGraph<ModuleGraph>, 
+                                    v1_cls: &DependencyGraph<ClassGraph>,
+                                    _v2_cls: &DependencyGraph<ClassGraph>) -> Graph {
         log::debug!("Building training graph from v1");
         log::debug!("{:?}", v1.vertices());
         let nodes = Self::nodes_to_index_map(v1.vertices());
@@ -253,13 +324,17 @@ impl VersionTriple {
 
         let v2_nodes = v2.vertices() & v1.vertices();
         let test_edges = Self::compute_test_edges(v2_nodes, &nodes, v2.edges());
-        let hierarchies = Self::compute_hierarchy(v1, &nodes);
-        let nodes = Self::node_map_to_vec(nodes);
-        Graph { nodes, edges, hierarchies, edge_labels: test_edges, directed: true }
+        let hierarchies = Self::compute_hierarchy(v1, &nodes, V1);
+        let nodes = Self::node_map_to_vec(nodes, NodeOwnership::ExactVersion(V1));
+        let classes = Self::make_class_map(v1_cls, V1);
+        let classes = Self::class_map_to_vec(classes);
+        Graph { nodes, edges, hierarchies, edge_labels: test_edges, directed: true, classes }
     }
 
     fn build_training_graph_from_v1_and_v2(v1: &DependencyGraph<ModuleGraph>,
-                                           v2: &DependencyGraph<ModuleGraph>) -> Graph {
+                                           v2: &DependencyGraph<ModuleGraph>, 
+                                           v1_cls: &DependencyGraph<ClassGraph>,
+                                           v2_cls: &DependencyGraph<ClassGraph>) -> Graph {
         log::debug!("Building training graph from v1 and v2");
         // Nodes 
         let joint_nodes = v1.vertices() | v2.vertices();
@@ -287,17 +362,31 @@ impl VersionTriple {
         test_edges.edges.extend(more_edges.edges);
         test_edges.labels.extend(more_edges.labels);
         // Hierarchy
-        let hierarchy_1 = Self::compute_hierarchy(v1, &nodes);
-        let hierarchy_2 = Self::compute_hierarchy(v2, &nodes);
+        let hierarchy_1 = Self::compute_hierarchy(v1, &nodes, V1);
+        let hierarchy_2 = Self::compute_hierarchy(v2, &nodes, V2);
         let hierarchies = Self::merge_hierarchies(hierarchy_1, hierarchy_2);
         
         // Convert nodes 
-        let nodes = Self::node_map_to_vec(nodes);
-        Graph { nodes, edges, hierarchies, edge_labels: test_edges, directed: true }
+        let nodes = Self::node_map_to_vec(
+            nodes,
+            NodeOwnership::SplitVersions {
+                v1: V1, v2: V2, v1_nodes: &v1.vertices(), v2_nodes: &v2.vertices()
+            }
+        );
+        // Classes 
+        let classes = Self::merge_class_maps(
+            Self::make_class_map(v1_cls, V1), 
+            Self::make_class_map(v2_cls, V2)
+        );
+        let classes = Self::class_map_to_vec(classes);
+        
+        Graph { nodes, edges, hierarchies, edge_labels: test_edges, directed: true, classes }
     }
     
     fn build_test_graph(v2: &DependencyGraph<ModuleGraph>, 
-                        v3: &DependencyGraph<ModuleGraph>) -> Graph {
+                        v3: &DependencyGraph<ModuleGraph>, 
+                        v2_cls: &DependencyGraph<ClassGraph>,
+                        _v3_cls: &DependencyGraph<ClassGraph>) -> Graph {
         log::debug!("Building test graph");
         // Generate a graph such that
         //  - Its nodes are those from v2
@@ -311,9 +400,11 @@ impl VersionTriple {
         let edge_labels = Self::compute_test_edges(
             joint_nodes, &nodes, v3.edges()
         );
-        let hierarchies = Self::compute_hierarchy(v2, &nodes);
-        let nodes = Self::node_map_to_vec(nodes);
-        Graph { nodes, edges, hierarchies, edge_labels, directed: true }
+        let hierarchies = Self::compute_hierarchy(v2, &nodes, V2);
+        let nodes = Self::node_map_to_vec(nodes, NodeOwnership::ExactVersion(V2));
+        let classes = Self::make_class_map(v2_cls, V2);
+        let classes = Self::class_map_to_vec(classes);
+        Graph { nodes, edges, hierarchies, edge_labels, directed: true, classes }
     }
 
     fn nodes_to_index_map<'a>(nodes: impl IntoIterator<Item=&'a String>) -> HashMap<&'a String, usize> {
@@ -368,37 +459,52 @@ impl VersionTriple {
     }
     
     fn compute_hierarchy(g: &DependencyGraph<ModuleGraph>, 
-                         node_map: &HashMap<&String, usize>) -> Vec<NodeHierarchy>
+                         node_map: &HashMap<&String, usize>, 
+                         version: u8) -> Vec<NodeHierarchy>
     {
         let mut result = Vec::new();
         let raw_hierarchies: Vec<Hierarchy> = g.into();
         for hierarchy in raw_hierarchies {
-            result.push(Self::compute_hierarchy_recursive(hierarchy, node_map));
+            result.push(Self::compute_hierarchy_recursive(hierarchy, node_map, version));
         }
         result
     }
     
     fn compute_hierarchy_recursive(hierarchy: Hierarchy, 
-                                   node_map: &HashMap<&String, usize>) -> NodeHierarchy
+                                   node_map: &HashMap<&String, usize>,
+                                   version: u8) -> NodeHierarchy
     {
         let mut children = Vec::new();
         for child in hierarchy.children {
-            children.push(Self::compute_hierarchy_recursive(child, node_map));
+            children.push(Self::compute_hierarchy_recursive(child, node_map, version));
         }
         NodeHierarchy {
             name: hierarchy.name.clone(),
             index: node_map.get(&hierarchy.name).copied(),
-            children
+            children,
+            versions: vec![version]
         }
     }
     
-    fn node_map_to_vec(node_map: HashMap<&String, usize>) -> Vec<Node> 
+    fn node_map_to_vec(node_map: HashMap<&String, usize>, 
+                       node_ownership: NodeOwnership) -> Vec<Node> 
     {
         node_map.into_iter()
             .map(|(name, index)| {
                 let vertex = Node {
                     name: name.clone(),
-                    feature_files: Vec::new()
+                    files: HashMap::new(),
+                    versions: match node_ownership {
+                        NodeOwnership::ExactVersion(v) => vec![v],
+                        NodeOwnership::SplitVersions { v1, v2, v1_nodes, v2_nodes } => {
+                            match (v1_nodes.contains(name), v2_nodes.contains(name)) {
+                                (true, true) => vec![v1, v2],
+                                (true, false) => vec![v1],
+                                (false, true) => vec![v2],
+                                (false, false) => unreachable!("Node not contained in v1 nor v2")
+                            }
+                        }
+                    }
                 };
                 (index, vertex)
             })
@@ -424,6 +530,7 @@ impl VersionTriple {
         let mut found = false;
         for i in 0..hierarchies.len() {
             if hierarchies[i].name == hierarchy.name {
+                hierarchies[i].versions.extend(hierarchy.versions.iter().copied());
                 found = true;
                 // We found a node match; now recursively merge children 
                 for child in hierarchy.children.iter() {
@@ -435,5 +542,40 @@ impl VersionTriple {
             }
         }
         found
+    }
+    
+    fn make_class_map(g: &DependencyGraph<ClassGraph>, version: u8) -> HashMap<String, Class> {
+        let mut result = HashMap::new();
+        for node in g.vertices() {
+            let (package, name) = node.rsplit_once('.').unwrap();
+            let class = Class {
+                package: package.to_string(),
+                name: name.to_string(),
+                versions: vec![version]
+            };
+            result.insert(node.clone(), class);
+        }
+        result 
+    }
+    
+    fn merge_class_maps(mut main: HashMap<String, Class>, 
+                        new: HashMap<String, Class>) -> HashMap<String, Class>
+    {
+        for (key, value) in new {
+            match main.entry(key) {
+                Entry::Occupied(mut e) => {
+                    e.get_mut().versions.extend(value.versions.iter().copied());
+                }
+                Entry::Vacant(e) => {
+                    e.insert(value);
+                }
+            }
+        }
+        main 
+    }
+    
+    fn class_map_to_vec(class_map: HashMap<String, Class>) -> Vec<Class> {
+        class_map.into_values()
+            .collect::<Vec<_>>()
     }
 }
