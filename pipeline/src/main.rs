@@ -28,6 +28,7 @@ enum Command {
     DownloadSources(DownloadSourcesCommand),
     ComputeProjectEvolutionStatistics(ComputeProjectEvolutionStatisticsCommand),
     AddSourceInformationToTriples(AddSourceInformationToTriplesCommand),
+    GraphsToDot(GraphsToDotCommand),
 }
 
 #[derive(clap::Args)]
@@ -104,6 +105,18 @@ struct AddSourceInformationToTriplesCommand {
     source_directory: PathBuf,
 }
 
+#[derive(clap::Args)]
+struct GraphsToDotCommand {
+    #[clap(short, long, num_args = 1..)]
+    input_files: Vec<PathBuf>,
+    
+    #[clap(short, long)]
+    output_directory: PathBuf,
+    
+    #[clap(short, long)]
+    package_diagrams: bool,
+}
+
 
 fn setup_logging() -> anyhow::Result<()> {
     let spec = flexi_logger::LogSpecification::parse("warn,pipeline=trace")?;
@@ -159,6 +172,13 @@ fn main() -> anyhow::Result<()> {
         Command::AddSourceInformationToTriples(add) => {
             commands::add_source_information_to_triples::add_source_information_to_triples(
                 add.inputs, add.source_directory, add.output
+            )?;
+        }
+        Command::GraphsToDot(graphs_to_dot) => {
+            commands::graphs_to_dot::graphs_to_dot(
+                graphs_to_dot.input_files, 
+                graphs_to_dot.output_directory, 
+                graphs_to_dot.package_diagrams
             )?;
         }
     }

@@ -17,7 +17,7 @@ use crate::utils::versions::ExtractProjectInformation;
 
 //////////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////
-// Magic Number 
+// Magic Number
 //////////////////////////////////////////////////////////////////////////////////////////////////
 
 const MAGIC_NUMBER: u32 = 0x00_01_01_01;
@@ -54,14 +54,14 @@ pub struct VersionTripleMetadata {
 #[derive(Debug, Clone, serde::Serialize, serde::Deserialize)]
 pub struct Graph {
     nodes: Vec<Node>,                               // List of all nodes in the graph.
-                                                    // Every node knows which features 
+                                                    // Every node knows which features
                                                     // files (from classes) are associated with it.
     edges: Vec<Edge>,                               // (from, to, type) -- indexes into nodes
     hierarchies: Vec<NodeHierarchy>,
     edge_labels: EdgeLabels,                        // Mapping of edge indexes to labels.
                                                     // Indexes into nodes.
                                                     // Generally a subset of edges,
-                                                    // but not necessarily. 
+                                                    // but not necessarily.
     directed: bool,                                 // Whether the graph is directed.
     classes: Vec<Class>
 }
@@ -99,7 +99,7 @@ pub struct NodeHierarchy {
 
 #[derive(Debug, Clone, serde::Serialize, serde::Deserialize)]
 pub struct EdgeLabels {
-    // separated into a struct because of JSON limitations 
+    // separated into a struct because of JSON limitations
     edges: Vec<(usize, usize)>,
     labels: Vec<bool>
 }
@@ -208,7 +208,7 @@ impl EdgeLabels {
         &self.labels
     }
     pub fn edges(&self) -> &Vec<(usize, usize)> {
-        &self.edges 
+        &self.edges
     }
 }
 
@@ -221,7 +221,7 @@ impl EdgeLabels {
 impl VersionTriple {
     pub fn project(&self) -> &str {
         &self.project
-    }   
+    }
     pub fn version_1(&self) -> &str {
         &self.version_1
     }
@@ -246,12 +246,12 @@ impl VersionTriple {
     pub fn test_graph_mut(&mut self) -> &mut Graph {
         &mut self.test_graph
     }
-    
+
     pub fn from_files(path_v1: impl AsRef<std::path::Path>,
                       path_v2: impl AsRef<std::path::Path>,
                       path_v3: impl AsRef<std::path::Path>,
-                      only_common_nodes_for_training: bool, 
-                      mapping: &HashMap<String, String>, 
+                      only_common_nodes_for_training: bool,
+                      mapping: &HashMap<String, String>,
                       language: Language) -> anyhow::Result<Self>
     {
         let project = path_v1.as_ref().extract_project()?.to_string();
@@ -262,15 +262,15 @@ impl VersionTriple {
         let version_1 = path_v1.as_ref().extract_version()?.to_string();
         let version_2 = path_v2.as_ref().extract_version()?.to_string();
         let version_3 = path_v3.as_ref().extract_version()?.to_string();
-        
+
         let v1_cls = load_graph_from_file(path_v1)?;
         let v2_cls = load_graph_from_file(path_v2)?;
         let v3_cls = load_graph_from_file(path_v3)?;
-        
+
         let v1 = v1_cls.to_module_graph();
         let v2 = v2_cls.to_module_graph();
         let v3 = v3_cls.to_module_graph();
-        
+
         let triple = Self {
             project,
             version_1,
@@ -287,7 +287,7 @@ impl VersionTriple {
         };
         Ok(triple)
     }
-    
+
     fn build_training_graph(v1: &DependencyGraph<ModuleGraph>,
                             v2: &DependencyGraph<ModuleGraph>,
                             v1_cls: &DependencyGraph<ClassGraph>,
@@ -313,8 +313,8 @@ impl VersionTriple {
         }
     }
 
-    fn build_training_graph_from_v1(v1: &DependencyGraph<ModuleGraph>, 
-                                    v2: &DependencyGraph<ModuleGraph>, 
+    fn build_training_graph_from_v1(v1: &DependencyGraph<ModuleGraph>,
+                                    v2: &DependencyGraph<ModuleGraph>,
                                     v1_cls: &DependencyGraph<ClassGraph>,
                                     _v2_cls: &DependencyGraph<ClassGraph>) -> Graph {
         log::debug!("Building training graph from v1");
@@ -332,14 +332,14 @@ impl VersionTriple {
     }
 
     fn build_training_graph_from_v1_and_v2(v1: &DependencyGraph<ModuleGraph>,
-                                           v2: &DependencyGraph<ModuleGraph>, 
+                                           v2: &DependencyGraph<ModuleGraph>,
                                            v1_cls: &DependencyGraph<ClassGraph>,
                                            v2_cls: &DependencyGraph<ClassGraph>) -> Graph {
         log::debug!("Building training graph from v1 and v2");
-        // Nodes 
+        // Nodes
         let joint_nodes = v1.vertices() | v2.vertices();
         let nodes = Self::nodes_to_index_map(&joint_nodes);
-        // Edges 
+        // Edges
         let mut joint_edges = v1.edges().clone();
         for (key, spec) in v2.edges().clone() {
             match joint_edges.entry(key) {
@@ -352,7 +352,7 @@ impl VersionTriple {
             }
         }
         let edges = Self::edge_to_index_list(&joint_edges, &nodes);
-        // Edge labels 
+        // Edge labels
         let mut test_edges = Self::compute_test_edges(
             v1.vertices().clone(), &nodes, v1.edges()
         );
@@ -365,26 +365,26 @@ impl VersionTriple {
         let hierarchy_1 = Self::compute_hierarchy(v1, &nodes, V1);
         let hierarchy_2 = Self::compute_hierarchy(v2, &nodes, V2);
         let hierarchies = Self::merge_hierarchies(hierarchy_1, hierarchy_2);
-        
-        // Convert nodes 
+
+        // Convert nodes
         let nodes = Self::node_map_to_vec(
             nodes,
             NodeOwnership::SplitVersions {
                 v1: V1, v2: V2, v1_nodes: &v1.vertices(), v2_nodes: &v2.vertices()
             }
         );
-        // Classes 
+        // Classes
         let classes = Self::merge_class_maps(
-            Self::make_class_map(v1_cls, V1), 
+            Self::make_class_map(v1_cls, V1),
             Self::make_class_map(v2_cls, V2)
         );
         let classes = Self::class_map_to_vec(classes);
-        
+
         Graph { nodes, edges, hierarchies, edge_labels: test_edges, directed: true, classes }
     }
-    
-    fn build_test_graph(v2: &DependencyGraph<ModuleGraph>, 
-                        v3: &DependencyGraph<ModuleGraph>, 
+
+    fn build_test_graph(v2: &DependencyGraph<ModuleGraph>,
+                        v3: &DependencyGraph<ModuleGraph>,
                         v2_cls: &DependencyGraph<ClassGraph>,
                         _v3_cls: &DependencyGraph<ClassGraph>) -> Graph {
         log::debug!("Building test graph");
@@ -396,9 +396,9 @@ impl VersionTriple {
 
         let nodes = Self::nodes_to_index_map(v2.vertices());
         let edges = Self::edge_to_index_list(v2.edges(), &nodes);
-        let joint_nodes = v2.vertices() & v3.vertices();
+        //let joint_nodes = v2.vertices() & v3.vertices();
         let edge_labels = Self::compute_test_edges(
-            joint_nodes, &nodes, v3.edges()
+            v2.vertices().clone(), &nodes, v3.edges()
         );
         let hierarchies = Self::compute_hierarchy(v2, &nodes, V2);
         let nodes = Self::node_map_to_vec(nodes, NodeOwnership::ExactVersion(V2));
@@ -430,8 +430,8 @@ impl VersionTriple {
             )
             .collect::<Vec<_>>()
     }
-    
-    fn compute_test_edges(vertices: HashSet<String>, 
+
+    fn compute_test_edges(vertices: HashSet<String>,
                           node_map: &HashMap<&String, usize>,
                           connected: &HashMap<(String, String), DependencySpec>) -> EdgeLabels
     {
@@ -457,9 +457,9 @@ impl VersionTriple {
             labels
         }
     }
-    
-    fn compute_hierarchy(g: &DependencyGraph<ModuleGraph>, 
-                         node_map: &HashMap<&String, usize>, 
+
+    fn compute_hierarchy(g: &DependencyGraph<ModuleGraph>,
+                         node_map: &HashMap<&String, usize>,
                          version: u8) -> Vec<NodeHierarchy>
     {
         let mut result = Vec::new();
@@ -469,8 +469,8 @@ impl VersionTriple {
         }
         result
     }
-    
-    fn compute_hierarchy_recursive(hierarchy: Hierarchy, 
+
+    fn compute_hierarchy_recursive(hierarchy: Hierarchy,
                                    node_map: &HashMap<&String, usize>,
                                    version: u8) -> NodeHierarchy
     {
@@ -485,9 +485,9 @@ impl VersionTriple {
             versions: vec![version]
         }
     }
-    
-    fn node_map_to_vec(node_map: HashMap<&String, usize>, 
-                       node_ownership: NodeOwnership) -> Vec<Node> 
+
+    fn node_map_to_vec(node_map: HashMap<&String, usize>,
+                       node_ownership: NodeOwnership) -> Vec<Node>
     {
         node_map.into_iter()
             .map(|(name, index)| {
@@ -512,8 +512,8 @@ impl VersionTriple {
             .map(|(_, vertex)| vertex)
             .collect::<Vec<_>>()
     }
-    
-    fn merge_hierarchies(mut main: Vec<NodeHierarchy>, 
+
+    fn merge_hierarchies(mut main: Vec<NodeHierarchy>,
                          new: Vec<NodeHierarchy>) -> Vec<NodeHierarchy>
     {
         for hierarchy in new {
@@ -521,9 +521,9 @@ impl VersionTriple {
                 main.push(hierarchy);
             }
         }
-        main  
+        main
     }
-    
+
     fn merge_hierarchy_recursive(hierarchies: &mut Vec<NodeHierarchy>,
                                  hierarchy: &NodeHierarchy) -> bool
     {
@@ -532,7 +532,7 @@ impl VersionTriple {
             if hierarchies[i].name == hierarchy.name {
                 hierarchies[i].versions.extend(hierarchy.versions.iter().copied());
                 found = true;
-                // We found a node match; now recursively merge children 
+                // We found a node match; now recursively merge children
                 for child in hierarchy.children.iter() {
                     if !Self::merge_hierarchy_recursive(&mut hierarchies[i].children, &child) {
                         hierarchies[i].children.push(child.clone());
@@ -543,7 +543,7 @@ impl VersionTriple {
         }
         found
     }
-    
+
     fn make_class_map(g: &DependencyGraph<ClassGraph>, version: u8) -> HashMap<String, Class> {
         let mut result = HashMap::new();
         for node in g.vertices() {
@@ -555,10 +555,10 @@ impl VersionTriple {
             };
             result.insert(node.clone(), class);
         }
-        result 
+        result
     }
-    
-    fn merge_class_maps(mut main: HashMap<String, Class>, 
+
+    fn merge_class_maps(mut main: HashMap<String, Class>,
                         new: HashMap<String, Class>) -> HashMap<String, Class>
     {
         for (key, value) in new {
@@ -571,9 +571,9 @@ impl VersionTriple {
                 }
             }
         }
-        main 
+        main
     }
-    
+
     fn class_map_to_vec(class_map: HashMap<String, Class>) -> Vec<Class> {
         class_map.into_values()
             .collect::<Vec<_>>()

@@ -45,6 +45,8 @@ pub(crate) fn compute_project_evolution_statistics(files: Vec<PathBuf>,
     } else {
         get_project_evolution_statistics(&project, &versions, &graphs)
     };
+    let _ = output_path.parent().map(std::fs::create_dir_all)
+        .transpose()?;
     serde_json::to_writer_pretty(std::fs::File::create(output_path)?, &stats)?;
     
     Ok(())

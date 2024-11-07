@@ -64,7 +64,7 @@ impl BinaryClassificationMetrics {
     }
 
     pub fn balanced_accuracy(&self) -> f64 {
-        (self.true_positive_rate() + self.true_negative_rate()) / 2.0
+        (self.sensitivity() + self.specificity()) / 2.0
     }
 
     pub fn prevalence(&self) -> f64 {

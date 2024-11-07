@@ -272,7 +272,7 @@ where
         added_by_type,
         added_by_type_no_duplicates,
         added_by_type_no_self,
-        added_by_type_no_self_no_duplicates) = edge_edit_helper(old, new);
+        added_by_type_no_self_no_duplicates) = edge_edit_helper(new, old);
     let (deleted,
         deleted_no_duplicates,
         deleted_no_self,
@@ -280,7 +280,7 @@ where
         deleted_by_type,
         deleted_by_type_no_duplicates,
         deleted_by_type_no_self,
-        deleted_by_type_no_self_no_duplicates) = edge_edit_helper(new, old);
+        deleted_by_type_no_self_no_duplicates) = edge_edit_helper(old, new);
     EdgeEditStatistics {
         added,
         added_no_duplicates,
@@ -319,25 +319,29 @@ where
     let empty_spec = DependencySpec::default();
     for (key, spec) in lhs.edges() {
         let other = rhs.edges().get(key).unwrap_or(&empty_spec);
-        let mut any_added = false;
         for (kind, &count) in spec.edges() {
             let other_count = *other.edges().get(kind).unwrap_or(&0);
             if count <= other_count {
                 continue;
             }
-            any_added = true;
             added += (count - other_count) as u64;
             if key.0 != key.1 {
                 added_no_self += (count - other_count) as u64;
             }
             *added_by_type.entry(kind.to_string()).or_insert(0) += (count - other_count) as u64;
-            *added_by_type_no_duplicates.entry(kind.to_string()).or_insert(0) += 1;
+            if count > 0 && other_count == 0 {
+                *added_by_type_no_duplicates.entry(kind.to_string()).or_insert(0) += 1;
+            }
             if key.0 != key.1 {
                 *added_by_type_no_self.entry(kind.to_string()).or_insert(0) += (count - other_count) as u64;
-                *added_by_type_no_self_no_duplicates.entry(kind.to_string()).or_insert(0) += 1;
+                if count > 0 && other_count == 0 {
+                    *added_by_type_no_self_no_duplicates.entry(kind.to_string()).or_insert(0) += 1;
+                }
             }
         }
-        if any_added {
+        let connected_in_lhs = spec.edges().iter().any(|(_, count)| *count > 0);
+        let connected_in_rhs = other.edges().iter().any(|(_, count)| *count > 0);
+        if connected_in_lhs && !connected_in_rhs {
             added_no_duplicates += 1;
             if key.0 != key.1 {
                 added_no_self_no_duplicates += 1;

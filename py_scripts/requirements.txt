@@ -5,3 +5,4 @@ pydantic-xml
 scikit-learn
 torchmetrics
 torch-geometric
+umap-learn

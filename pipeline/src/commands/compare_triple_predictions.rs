@@ -94,11 +94,13 @@ pub fn compare_triple_predictions(files: Vec<PathBuf>) -> anyhow::Result<()> {
             inner_inner_header.extend(filenames.iter().map(|x| Cell::new(x)));
             inner_inner_table.set_titles(Row::new(inner_inner_header));
             let key = (project.clone(), v1.clone(), v2.clone(), v3.clone());
-            let functions: [(&str, Box<dyn Fn(&BinaryClassificationMetrics) -> f64>); 8] = [
+            let functions: [(&str, Box<dyn Fn(&BinaryClassificationMetrics) -> f64>); 10] = [
                 ("accuracy", Box::new(BinaryClassificationMetrics::accuracy)),
                 ("precision", Box::new(BinaryClassificationMetrics::precision)),
                 ("recall", Box::new(BinaryClassificationMetrics::recall)),
                 ("f1_score", Box::new(BinaryClassificationMetrics::f1_score)),
+                ("balanced_accuracy", Box::new(BinaryClassificationMetrics::balanced_accuracy)),
+                ("cohen_kappa", Box::new(BinaryClassificationMetrics::cohen_kappa)),
                 ("true_positives", Box::new(|x| x.confusion_matrix.true_positives as f64)),
                 ("false_positives", Box::new(|x| x.confusion_matrix.false_positives as f64)),
                 ("true_negatives", Box::new(|x| x.confusion_matrix.true_negatives as f64)),
