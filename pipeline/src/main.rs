@@ -52,6 +52,9 @@ struct ConvertASPredictorOutputCommand {
 struct CompareTriplePredictionsCommand {
     #[clap(short, long, num_args = 1..)]
     files: Vec<PathBuf>,
+    
+    #[clap(long)]
+    short: bool
 }
 
 #[derive(clap::Args)]
@@ -150,7 +153,11 @@ fn main() -> anyhow::Result<()> {
                                                                                convert.output)?;
         }
         Command::CompareTriplePredictions(compare) => {
-            commands::compare_triple_predictions::compare_triple_predictions(compare.files)?;
+            if compare.short {
+                commands::compare_triple_predictions::compare_triple_predictions_short(compare.files)?;
+            } else {
+                commands::compare_triple_predictions::compare_triple_predictions(compare.files)?;
+            }
         }
         Command::GenerateTrainTestTriples(generate) => {
             commands::generate_train_test_triples::generate_train_test_triples(

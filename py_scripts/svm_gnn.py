@@ -2,14 +2,17 @@
 ################################################################################
 # Imports
 ################################################################################
-
 import json
+import os
 import pathlib
+import re
+from xml.dom.domreg import well_known_implementations
 
 import torch
 import torch_geometric
 
 import tap
+from sklearn.svm import SVC
 
 import shared
 
@@ -61,9 +64,7 @@ SOURCE_DIRECTORY = {
 def get_pytorch_dataset(graph: shared.Graph,
                         source_directory: pathlib.Path,
                         embedding_directory: pathlib.Path):
-    feat = shared.build_node_features(graph,
-                                      source_directory,
-                                      embedding_directory)
+    feat = shared.build_node_features(graph, source_directory, embedding_directory)
     return torch_geometric.data.Data(
         x=feat,
         edge_index=torch.tensor([
@@ -73,117 +74,6 @@ def get_pytorch_dataset(graph: shared.Graph,
         pred_edges=torch.tensor(graph.edge_labels.edges),
         y=torch.tensor(graph.edge_labels.labels, dtype=torch.float)
     )
-
-
-################################################################################
-################################################################################
-# Model
-################################################################################
-
-
-class Model1(torch.nn.Module):
-
-    def __init__(self, embedding_in: int):
-        super().__init__()
-        conv = [128, 64, 32]
-        linear = [16, 8, 1]
-        conv.insert(0, embedding_in)
-        linear.insert(0, conv[-1])
-        self.conv = torch.nn.ModuleList([
-            torch_geometric.nn.GCNConv(conv[i], conv[i+1])
-            for i in range(len(conv) - 1)
-        ])
-        self.linear = torch.nn.ModuleList([
-            torch.nn.Linear(linear[i], linear[i+1])
-            for i in range(len(linear) - 1)
-        ])
-
-
-    def forward(self, x):
-        x, z = x.x, x
-        for i in range(len(self.conv)):
-            x = self.conv[i](x, z.edge_index)
-            x = torch.relu(x)
-        x = torch.flatten(x, 1)
-        for i in range(len(self.linear)):
-            x = self.linear[i](x)
-            if i != len(self.linear) - 1:
-                x = torch.relu(x)
-        x = torch.sigmoid(x)
-        x = torch.flatten(x, 1)
-
-        # Link prediction
-        matrix = x[z.pred_edges]
-        pred = torch.mul(matrix[:, 0], matrix[:, 1])
-        return pred.transpose(0, 1).flatten(0)
-
-
-class Model2(torch.nn.Module):
-
-    def __init__(self, embedding_in: int):
-        super().__init__()
-        conv = [128, 64, 32]
-        linear = [16, 16]
-        linear2 = [16, 8, 1]
-        conv.insert(0, embedding_in)
-        linear.insert(0, conv[-1])
-        linear2.insert(0, linear[-1] * 2)
-        self.conv = torch.nn.ModuleList([
-            torch_geometric.nn.GCNConv(conv[i], conv[i + 1])
-            for i in range(len(conv) - 1)
-        ])
-        self.linear = torch.nn.ModuleList([
-            torch.nn.Linear(linear[i], linear[i + 1])
-            for i in range(len(linear) - 1)
-        ])
-        self.linear2 = torch.nn.ModuleList([
-            torch.nn.Linear(linear2[i], linear2[i + 1])
-            for i in range(len(linear2) - 1)
-        ])
-
-    def forward(self, x):
-        x, z = x.x, x
-        for i in range(len(self.conv)):
-            x = self.conv[i](x, z.edge_index)
-            x = torch.relu(x)
-        x = torch.flatten(x, 1)
-        for i in range(len(self.linear)):
-            x = self.linear[i](x)
-            x = torch.relu(x)
-
-        x = torch.flatten(x, 1)
-
-        # Link prediction
-        matrix = x[z.pred_edges]
-        #pred = torch.mul(matrix[:, 0], matrix[:, 1])
-        x = torch.concat([matrix[:, 0], matrix[:, 1]], dim=1)
-
-        for i in range(len(self.linear2)):
-            x = self.linear2[i](x)
-            if i != len(self.linear2) - 1:
-                x = torch.relu(x)
-
-        pred = torch.sigmoid(x)
-        return pred.transpose(0, 1).flatten(0)
-
-
-class WeightedBCE:
-
-    def __init__(self, class_weights: torch.Tensor, /):
-        self._bce = torch.nn.BCELoss(reduction='none')
-        self._class_weights = class_weights
-
-    def __call__(self, input_: torch.Tensor, target: torch.Tensor):
-        bce = self._bce(input_, target)
-        weights = self._class_weights[(target >= 0.5).int()]
-        return torch.mul(weights, bce).mean()
-
-
-
-################################################################################
-################################################################################
-# Program Entrypoint
-################################################################################
 
 
 class Config(tap.Tap):
@@ -211,21 +101,12 @@ def main(config: Config):
             config.source_directory / triple.project / triple.version_1 / SOURCE_DIRECTORY[key_1],
             config.embedding_directory / triple.project / triple.version_1 / SOURCE_DIRECTORY[key_1],
         )
-
-        # Training
-        device = 'cuda' if torch.cuda.is_available() else 'cpu'
-        model = Model2(256)
-        model.to(device)
-        train.to(device)
-        optimizer = torch.optim.Adam(model.parameters(), lr=0.001)
-        loss_fn = WeightedBCE(torch.tensor([0.05, 0.95]))
-        for epoch in range(2500):
-            out = model(train)
-            loss = loss_fn(out, train.y)
-            loss.backward()
-            optimizer.step()
-            optimizer.zero_grad()
-            print(f'Epoch {epoch+1}: {loss}')
+        #t = train.x[train.pred_edges]
+        training_data = torch.concat((train.x[train.pred_edges[:, 0]], train.x[train.pred_edges[:, 1]]), dim=1)
+        model = SVC(kernel='rbf', cache_size=1999)
+        print(training_data.shape)
+        print(train.y.shape)
+        model.fit(training_data.cpu().detach().numpy(), train.y.cpu().detach().numpy())
 
         # Evaluation
         del train
@@ -234,11 +115,10 @@ def main(config: Config):
             config.source_directory / triple.project / triple.version_2 / SOURCE_DIRECTORY[key_2],
             config.embedding_directory / triple.project / triple.version_2 / SOURCE_DIRECTORY[key_2],
         )
-        with torch.no_grad():
-            out = model(test)
-            out = (out >= 0.5).tolist()
-            result = shared.evaluate(triple, out)
-            results.append(result)
+        test_data =  torch.concat((test.x[test.pred_edges[:, 0]], test.x[test.pred_edges[:, 1]]), dim=1)
+        out = model.predict(test_data)
+        result = shared.evaluate(triple, out)
+        results.append(result)
 
     config.output_file.parent.mkdir(parents=True, exist_ok=True)
     with open(config.output_file, 'w') as file:

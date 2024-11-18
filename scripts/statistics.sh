@@ -2,6 +2,10 @@ SKIP_RUST=false
 SKIP_STATS=false
 SKIP_GRAPHS=false
 
+SKIP_EVOLUTION=false
+SKIP_TRIPLES=false
+SKIP_GLOBAL=false
+
 for arg in "$@"; do
   case $arg in
     --skip-rust)
@@ -13,12 +17,24 @@ for arg in "$@"; do
     --skip-graphs)
       SKIP_GRAPHS=true
       ;;
+    --skip-evolution)
+      SKIP_EVOLUTION=true
+      ;;
+    --skip-triples)
+      SKIP_TRIPLES=true
+      ;;
+    --skip-global)
+      SKIP_GLOBAL=true
+      ;;
   esac
 done
 
 echo "SKIP_RUST=$SKIP_RUST"
 echo "SKIP_STATS=$SKIP_STATS"
 echo "SKIP_GRAPHS=$SKIP_GRAPHS"
+echo "SKIP_EVOLUTION=$SKIP_EVOLUTION"
+echo "SKIP_TRIPLES=$SKIP_TRIPLES"
+echo "SKIP_GLOBAL=$SKIP_GLOBAL"
 
 cd ..
 cd pipeline
@@ -86,14 +102,27 @@ echo "Generating figures"
 
 cd ..
 cd py_scripts
-python project_evolution_statistics.py \
-  -i ../data/statistics/*.json \
-  -o ../data/figures
 
-for filename in ../data/triples/*; do
-  python triple_statistics.py -i $filename/*.json -o ../data/figures
-done
+if [ "$SKIP_EVOLUTION" = false ]; then
+  python project_evolution_statistics.py \
+    -i ../data/statistics/*.json \
+    -o ../data/figures
+else
+  echo "Skipping evolution statistics"
+fi
 
-python global_triple_statistics.py -i ../data/triples/**/*.json -o ../data/figures/
+if [ "$SKIP_TRIPLES" = false ]; then
+  for filename in ../data/triples/*; do
+    python triple_statistics.py -i $filename/*.json -o ../data/figures
+  done
+else
+  echo "Skipping triple statistics"
+fi
+
+if [ "$SKIP_GLOBAL" = false ]; then
+  python global_triple_statistics.py -i ../data/triples/**/*.json -o ../data/figures/
+else
+  echo "Skipping global triple statistics"
+fi
 
 echo "Done"

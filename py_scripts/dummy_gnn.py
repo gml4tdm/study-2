@@ -15,57 +15,44 @@ import shared
 
 ################################################################################
 ################################################################################
-# Constants
-################################################################################
-
-SOURCE_DIRECTORY = {
-    # Apache Ant
-    ('apache-ant', '1.1'): 'src/main',
-    ('apache-ant', '1.2'): 'src/main',
-    ('apache-ant', '1.3'): 'src/main',
-    ('apache-ant', '1.4'): 'src/main',
-    ('apache-ant', '1.5'): 'src/main',
-    ('apache-ant', '1.5.2'): 'src/main',
-    ('apache-ant', '1.6.0'): 'src/main',
-    ('apache-ant', '1.7.0'): 'src/main',
-    ('apache-ant', '1.8.0'): 'src/main',
-    ('apache-ant', '1.9.0'): 'src/main',
-    ('apache-ant', '1.10.0'): 'src/main',
-    # Apache Camel
-    ('apache-camel', '2.0.0'): 'camel-core/src/main/java',
-    ('apache-camel', '2.1.0'): 'camel-core/src/main/java',
-    ('apache-camel', '2.2.0'): 'camel-core/src/main/java',
-    ('apache-camel', '2.3.0'): 'camel-core/src/main/java',
-    ('apache-camel', '2.4.0'): 'camel-core/src/main/java',
-    ('apache-camel', '2.5.0'): 'camel-core/src/main/java',
-    ('apache-camel', '2.6.0'): 'camel-core/src/main/java',
-    ('apache-camel', '2.7.0'): 'camel-core/src/main/java',
-    ('apache-camel', '2.8.0'): 'camel-core/src/main/java',
-    ('apache-camel', '2.9.0'): 'camel-core/src/main/java',
-    ('apache-camel', '2.10.0'): 'camel-core/src/main/java',
-    ('apache-camel', '2.11.0'): 'camel-core/src/main/java',
-    ('apache-camel', '2.12.0'): 'camel-core/src/main/java',
-    ('apache-camel', '2.13.0'): 'camel-core/src/main/java',
-    ('apache-camel', '2.14.0'): 'camel-core/src/main/java',
-    ('apache-camel', '2.15.0'): 'camel-core/src/main/java',
-    ('apache-camel', '2.16.0'): 'camel-core/src/main/java',
-    ('apache-camel', '2.17.0'): 'camel-core/src/main/java',
-}
-
-################################################################################
-################################################################################
 # Data Preparation
 ################################################################################
 
 
-def get_pytorch_dataset(graph: shared.Graph,
-                        source_directory: pathlib.Path,
-                        embedding_directory: pathlib.Path):
-    feat = shared.build_node_features(graph,
-                                      source_directory,
-                                      embedding_directory)
-    return torch_geometric.data.Data(
-        x=feat,
+def get_pytorch_dataset(graph: shared.Graph, *, dim=None, mapping=None):
+    if dim is None:
+        mapping = {}
+        features = []
+        for vertex in graph.nodes:
+            i = len(features)
+            mapping[vertex.name] = i
+            features.append(i)
+
+        dim = len(features)
+
+        feat = torch.nn.functional.one_hot(
+            torch.tensor(features, dtype=torch.int64)
+        )
+    else:
+        features = []
+        mask = []
+        for vertex in graph.nodes:
+            if vertex.name in mapping:
+                features.append(mapping[vertex.name])
+                mask.append(False)
+            else:
+                features.append(0)
+                mask.append(True)
+
+        feat = torch.nn.functional.one_hot(
+            torch.tensor(features, dtype=torch.int64),
+            num_classes=dim
+        )
+
+        feat[mask] = torch.zeros(dim, dtype=torch.long)
+
+    data = torch_geometric.data.Data(
+        x=feat.float(),
         edge_index=torch.tensor([
             [edge.from_ for edge in graph.edges],
             [edge.to for edge in graph.edges]
@@ -74,48 +61,13 @@ def get_pytorch_dataset(graph: shared.Graph,
         y=torch.tensor(graph.edge_labels.labels, dtype=torch.float)
     )
 
+    return data, dim, mapping
+
 
 ################################################################################
 ################################################################################
 # Model
 ################################################################################
-
-
-class Model1(torch.nn.Module):
-
-    def __init__(self, embedding_in: int):
-        super().__init__()
-        conv = [128, 64, 32]
-        linear = [16, 8, 1]
-        conv.insert(0, embedding_in)
-        linear.insert(0, conv[-1])
-        self.conv = torch.nn.ModuleList([
-            torch_geometric.nn.GCNConv(conv[i], conv[i+1])
-            for i in range(len(conv) - 1)
-        ])
-        self.linear = torch.nn.ModuleList([
-            torch.nn.Linear(linear[i], linear[i+1])
-            for i in range(len(linear) - 1)
-        ])
-
-
-    def forward(self, x):
-        x, z = x.x, x
-        for i in range(len(self.conv)):
-            x = self.conv[i](x, z.edge_index)
-            x = torch.relu(x)
-        x = torch.flatten(x, 1)
-        for i in range(len(self.linear)):
-            x = self.linear[i](x)
-            if i != len(self.linear) - 1:
-                x = torch.relu(x)
-        x = torch.sigmoid(x)
-        x = torch.flatten(x, 1)
-
-        # Link prediction
-        matrix = x[z.pred_edges]
-        pred = torch.mul(matrix[:, 0], matrix[:, 1])
-        return pred.transpose(0, 1).flatten(0)
 
 
 class Model2(torch.nn.Module):
@@ -188,8 +140,6 @@ class WeightedBCE:
 
 class Config(tap.Tap):
     input_files: list[pathlib.Path]
-    source_directory: pathlib.Path
-    embedding_directory: pathlib.Path
     output_file: pathlib.Path
 
 
@@ -201,20 +151,11 @@ def main(config: Config):
               f'{triple.version_1}, {triple.version_2}, {triple.version_3}')
         if not triple.metadata.gnn_safe:
             raise ValueError('Data not prepared for GNN')
-        key_1 = (triple.project, triple.version_1)
-        key_2 = (triple.project, triple.version_2)
-        key_3 = (triple.project, triple.version_3)
-        if any(key not in SOURCE_DIRECTORY for key in [key_1, key_2, key_3]):
-            raise ValueError(f'No source directory found for {triple.project}')
-        train = get_pytorch_dataset(
-            triple.training_graph,
-            config.source_directory / triple.project / triple.version_1 / SOURCE_DIRECTORY[key_1],
-            config.embedding_directory / triple.project / triple.version_1 / SOURCE_DIRECTORY[key_1],
-        )
+        train, dim, mapping = get_pytorch_dataset(triple.training_graph)
 
         # Training
         device = 'cuda' if torch.cuda.is_available() else 'cpu'
-        model = Model2(256)
+        model = Model2(dim)
         model.to(device)
         train.to(device)
         optimizer = torch.optim.Adam(model.parameters(), lr=0.001)
@@ -229,11 +170,7 @@ def main(config: Config):
 
         # Evaluation
         del train
-        test = get_pytorch_dataset(
-            triple.test_graph,
-            config.source_directory / triple.project / triple.version_2 / SOURCE_DIRECTORY[key_2],
-            config.embedding_directory / triple.project / triple.version_2 / SOURCE_DIRECTORY[key_2],
-        )
+        test, _, _ = get_pytorch_dataset(triple.test_graph, dim=dim, mapping=mapping)
         with torch.no_grad():
             out = model(test)
             out = (out >= 0.5).tolist()

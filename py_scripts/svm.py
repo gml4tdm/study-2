@@ -1,3 +1,13 @@
+"""
+Replication of the SVM for dependency prediction as
+described by in [1].
+
+[1] Tommasel, A., & Diaz-Pace, J. A. (2022).
+    Identifying emerging smells in software designs based on predicting package dependencies.
+    Engineering Applications of Artificial Intelligence, 115, 105209.
+     https://doi.org/10.1016/j.engappai.2022.105209
+"""
+
 import csv
 import json
 import math
@@ -61,7 +71,7 @@ def _maybe_map(x):
 
 
 def graph_to_data(graph: shared.Graph, feature_map, *, test=True):
-    indices = [1, 0] if not test else [2]
+    indices = [0, 1] if not test else [2]
     keep_edges = []
     keep_labels = []
     stream = zip(graph.edge_labels.edges, graph.edge_labels.labels)
@@ -82,11 +92,13 @@ class Config(tap.Tap):
     input_files: list[pathlib.Path]
     feature_file: pathlib.Path
     output_file: pathlib.Path
+    balanced: bool = False
 
     def configure(self) -> None:
         self.add_argument('-i', '--input_files')
         self.add_argument('-f', '--feature_file')
         self.add_argument('-o', '--output_file')
+        self.add_argument('-b', '--balanced', action='store_true')
 
 
 def main(config: Config):
@@ -97,7 +109,13 @@ def main(config: Config):
         print(f'Loaded version triple from project {triple.project}: '
               f'{triple.version_1}, {triple.version_2}, {triple.version_3}')
 
-        model = SVC(kernel='rbf', cache_size=1000, random_state=42)
+        model_parameters = dict(kernel='rbf',
+                                cache_size=1999,
+                                random_state=42,
+                                gamma=0.01)
+        if config.balanced:
+            model_parameters['class_weight'] = 'balanced'
+        model = SVC(**model_parameters)
         features, labels = graph_to_data(triple.training_graph, feature_map, test=False)
         model.fit(features, labels)
         features, labels = graph_to_data(triple.test_graph, feature_map, test=True)
