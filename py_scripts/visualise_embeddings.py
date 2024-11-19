@@ -1,3 +1,4 @@
+import json
 import os
 import pathlib
 
@@ -104,12 +105,38 @@ def get_package_embeddings(source_root: pathlib.Path,
     return label_mapping, embeddings, labels
 
 
+def get_as_predictor_embeddings(filename: pathlib.Path):
+    with open(filename) as file:
+        data = json.load(file)
+    order = None
+    embeddings = []
+    labels = []
+    label_mapping = {'not-connected': False, 'connected': True}
+    for edge in data:
+        labels.append(edge['present_in_graph'])
+        if order is None:
+            order = list(edge['features'])
+        embeddings.append(
+            numpy.array([_get(edge['features'], f, edge) for f in order])
+        )
+    return label_mapping, embeddings, labels
+
+
+def _get(mapping, key, edge):
+    try:
+        return mapping[key]
+    except KeyError:
+        print(f'WARNING: key {key} not found for edge {edge["from"]} -> {edge["to"]}')
+        return 0
+
+
 class Config(tap.Tap):
     source_root: pathlib.Path
     embedding_root: pathlib.Path
     output_path: pathlib.Path
     metric: str = 'euclidean'
     level: str = 'class'
+    as_predictor: bool = False
 
     def configure(self):
         self.add_argument('-s', '--source_root')
@@ -117,10 +144,17 @@ class Config(tap.Tap):
         self.add_argument('-o', '--output_path')
         self.add_argument('-m', '--metric')
         self.add_argument('-l', '--level')
+        self.add_argument('-a', '--as_predictor', action='store_true')
 
 
 def main(config: Config):
-    if config.level == 'class':
+    if config.as_predictor:
+        print('WARNING: --level is ignored when running in ASPredictor compatible mode.')
+        print('WARNING: --embedding_root is ignored when running in ASPredictor compatible mode.')
+        label_mapping, embeddings, labels = get_as_predictor_embeddings(
+            config.source_root
+        )
+    elif config.level == 'class':
         label_mapping, embeddings, labels = get_class_embeddings(
             config.source_root, config.embedding_root
         )

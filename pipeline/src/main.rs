@@ -29,6 +29,7 @@ enum Command {
     ComputeProjectEvolutionStatistics(ComputeProjectEvolutionStatisticsCommand),
     AddSourceInformationToTriples(AddSourceInformationToTriplesCommand),
     GraphsToDot(GraphsToDotCommand),
+    AsPredictorFeaturesToJson(AsPredictorFeaturesToJsonCommand),
 }
 
 #[derive(clap::Args)]
@@ -120,6 +121,18 @@ struct GraphsToDotCommand {
     package_diagrams: bool,
 }
 
+#[derive(clap::Args)]
+struct AsPredictorFeaturesToJsonCommand {
+    #[clap(short, long)]
+    graph_file: PathBuf,
+    
+    #[clap(short, long)]
+    similarity_file: PathBuf,
+    
+    #[clap(short, long)]
+    output_file: PathBuf,
+}
+
 
 fn setup_logging() -> anyhow::Result<()> {
     let spec = flexi_logger::LogSpecification::parse("warn,pipeline=trace")?;
@@ -186,6 +199,13 @@ fn main() -> anyhow::Result<()> {
                 graphs_to_dot.input_files, 
                 graphs_to_dot.output_directory, 
                 graphs_to_dot.package_diagrams
+            )?;
+        }
+        Command::AsPredictorFeaturesToJson(as_predictor_output_to_json) => {
+            commands::as_predictor_features_to_json::as_predictor_features_to_json(
+                as_predictor_output_to_json.graph_file,
+                as_predictor_output_to_json.similarity_file,
+                as_predictor_output_to_json.output_file
             )?;
         }
     }

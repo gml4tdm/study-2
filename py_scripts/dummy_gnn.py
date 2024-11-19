@@ -70,6 +70,27 @@ def get_pytorch_dataset(graph: shared.Graph, *, dim=None, mapping=None):
 ################################################################################
 
 
+class QuickFnn(torch.nn.Module):
+
+    def __init__(self, dim):
+        super().__init__()
+        layers = [2*dim, 128, 128, 64, 64, 32, 32, 16, 16, 8, 8, 1]
+        self.linear = torch.nn.ModuleList([
+            torch.nn.Linear(layers[i], layers[i + 1])
+            for i in range(len(layers) - 1)
+        ])
+
+    def forward(self, x):
+        matrix = x.x[x.pred_edges]
+        x = torch.concat([matrix[:, 0], matrix[:, 1]], dim=1)
+        for i in range(len(self.linear)):
+            x = self.linear[i](x)
+            if i != len(self.linear) - 1:
+                x = torch.relu(x)
+        #print(x)
+        return torch.sigmoid(x).transpose(0, 1).flatten(0)
+
+
 class Model2(torch.nn.Module):
 
     def __init__(self, embedding_in: int):
@@ -155,7 +176,7 @@ def main(config: Config):
 
         # Training
         device = 'cuda' if torch.cuda.is_available() else 'cpu'
-        model = Model2(dim)
+        model = QuickFnn(dim)
         model.to(device)
         train.to(device)
         optimizer = torch.optim.Adam(model.parameters(), lr=0.001)
