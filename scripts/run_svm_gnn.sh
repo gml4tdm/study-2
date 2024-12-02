@@ -1,5 +1,5 @@
 cd ..
-cd py_scripts
+cd data-processing
 shopt -s globstar
 python svm_gnn.py \
   --input_files ../data/triples-gnn/apache-ant/**/*.json \

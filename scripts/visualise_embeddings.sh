@@ -1,4 +1,4 @@
-cd ../py_scripts
+cd ../data-processing
 
 declare -a arr=(
   "apache-ant/1.1/src/main"

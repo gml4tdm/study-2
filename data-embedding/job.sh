@@ -1,11 +1,11 @@
 #!/bin/bash
-#SBATCH --job-name=codet5-embedding
+#SBATCH --job-name=codet5-data-embedding
 #SBATCH --nodes=1
 #SBATCH --ntasks-per-node=1
 #SBATCH --cpus-per-task=1
 #SBATCH --mem=32G
 #SBATCH --time=6:00:00
-#SBATCH --output=logs/codet5-embedding.out
+#SBATCH --output=logs/codet5-data-embedding.out
 #SBATCH --gpus-per-node=1
 #SBATCH --signal=B:12@300
 

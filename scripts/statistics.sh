@@ -101,7 +101,7 @@ fi
 echo "Generating figures"
 
 cd ..
-cd py_scripts
+cd data-processing
 
 if [ "$SKIP_EVOLUTION" = false ]; then
   python project_evolution_statistics.py \
