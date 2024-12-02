@@ -1,7 +1,0 @@
-Lab 2
-    - Great expectations (From CSV is okay)
-
-Lab 3
-    - Deploy ML Flow
-    - Training a model (transformer) [different configurations] (e.g. with and without cleaning)
-    - Text Cleaning (some simple Jira formatting stuff)
