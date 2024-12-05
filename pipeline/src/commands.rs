@@ -7,3 +7,4 @@ pub(crate) mod compute_project_evolution_statistics;
 pub(crate) mod add_source_information_to_triples;
 pub(crate) mod graphs_to_dot;
 pub(crate) mod as_predictor_features_to_json;
+pub(crate) mod process_history;

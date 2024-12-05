@@ -6,3 +6,4 @@ scikit-learn
 torchmetrics
 torch-geometric
 umap-learn
+pydriller

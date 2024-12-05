@@ -12,6 +12,7 @@ mod replication;
 mod datasets;
 mod source_downloader;
 mod statistics;
+mod processing;
 
 #[derive(clap::Parser)]
 struct Cli {
@@ -30,6 +31,7 @@ enum Command {
     AddSourceInformationToTriples(AddSourceInformationToTriplesCommand),
     GraphsToDot(GraphsToDotCommand),
     AsPredictorFeaturesToJson(AsPredictorFeaturesToJsonCommand),
+    ProcessHistory(ProcessHistoryCommand),
 }
 
 #[derive(clap::Args)]
@@ -133,6 +135,15 @@ struct AsPredictorFeaturesToJsonCommand {
     output_file: PathBuf,
 }
 
+#[derive(clap::Args)]
+struct ProcessHistoryCommand {
+    #[clap(short, long)]
+    input_file: PathBuf,
+    
+    #[clap(short, long)]
+    output_file: PathBuf,
+}
+
 
 fn setup_logging() -> anyhow::Result<()> {
     let spec = flexi_logger::LogSpecification::parse("warn,pipeline=trace")?;
@@ -206,6 +217,12 @@ fn main() -> anyhow::Result<()> {
                 as_predictor_output_to_json.graph_file,
                 as_predictor_output_to_json.similarity_file,
                 as_predictor_output_to_json.output_file
+            )?;
+        }
+        Command::ProcessHistory(process_history) => {
+            commands::process_history::process_history(
+                process_history.input_file,
+                process_history.output_file
             )?;
         }
     }
