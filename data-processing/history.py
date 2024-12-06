@@ -9,6 +9,19 @@ import tap
 
 class Config(tap.Tap):
     repo: str = os.path.expanduser('~/Desktop/ant')
+    commit_tags: list[str] | None = [
+        'rel/1.1',
+        'rel/1.2',
+        'rel/1.3',
+        'rel/1.4',
+        'rel/1.5',
+        'rel/1.5.2',
+        'rel/1.6.0',
+        'rel/1.7.0',
+        'rel/1.8.0',
+        'rel/1.9.0',
+        'rel/1.10.0',
+    ]
 
 
 def run_git_cmd(cmd: list[str], p: str):
@@ -45,10 +58,17 @@ def get_tag_mapping(p: str):
 
 
 def main(config: Config):
-    repo = pydriller.Repository(config.repo)
-    result = []
     tags = get_tag_mapping(config.repo)
-    print(tags)
+    rev_tags = {}
+    for k, vs in tags.items():
+        for v in vs:
+            rev_tags[v] = k
+    if config.commit_tags is not None:
+        commits = [rev_tags[t] for t in config.commit_tags]
+        repo = pydriller.Repository(config.repo, only_commits=commits)
+    else:
+        repo = pydriller.Repository(config.repo)
+    result = []
     with alive_progress.alive_bar(count_commits(config.repo)) as bar:
         for seq, commit in enumerate(repo.traverse_commits()):
             # We want the following information:
