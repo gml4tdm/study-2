@@ -75,17 +75,26 @@ impl DataForVersion {
             let (package, _) = vertex.rsplit_once('.')
                 .expect("Could not get package");
             let info = node_changes.entry(package.to_string()).or_default();
-            info.removed_classes += 1;
+            info.removed_classes = 1;
+            //info.modified_classes = 1;
+            info.was_removed = true;
         }
         // Added classes 
         for vertex in v2.vertices().difference(v1.vertices()) {
             let (package, _) = vertex.rsplit_once('.')
                 .expect("Could not get package");
             let info = node_changes.entry(package.to_string()).or_default();
-            info.added_classes += 1;
+            info.added_classes = 1;
+            //info.modified_classes = 1;
+            info.was_new = true;
         }
-        // TODO: modified ingoing/outgoing per node 
         
+        // Added incoming/outgoing: through the identification of new edges 
+        // Modified class: Class with new dependencies (through identification of new edges)
+        // Modified incoming/outgoing: requires git history
+        
+        
+        // Edges should be done, except for "modified" (which requires Git history) 
         let v1_edges = v1.edges();
         for (edge, spec2) in v2.edges() {
             let info = link_changes.entry(edge.clone()).or_default();
@@ -104,6 +113,19 @@ impl DataForVersion {
                 }
                 info.additions = delta as u64;
                 
+                let cls_info_out = node_changes.entry(edge.0.clone())
+                    .or_default();
+                if !cls_info_out.was_new {
+                    cls_info_out.modified_classes = 1;
+                }
+                cls_info_out.added_outgoing = delta as u64;
+                
+                let cls_info_in = node_changes.entry(edge.1.clone())
+                    .or_default();
+                if !cls_info_in.was_new {
+                    cls_info_in.modified_classes = 1;
+                }
+                cls_info_in.added_incoming = delta as u64;
             }
         }
 
@@ -125,6 +147,19 @@ impl DataForVersion {
                 }
                 info.deletions = delta as u64;
 
+                let cls_info_out = node_changes.entry(edge.0.clone())
+                    .or_default();
+                if !cls_info_out.was_removed {
+                    cls_info_out.modified_classes = 1;
+                }
+                cls_info_out.removed_outgoing = delta as u64;
+                
+                let cls_info_in = node_changes.entry(edge.1.clone())
+                    .or_default();
+                if !cls_info_in.was_removed {
+                    cls_info_in.modified_classes = 1;
+                }
+                cls_info_in.removed_incoming = delta as u64;
             }
         }
         

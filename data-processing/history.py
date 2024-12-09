@@ -9,19 +9,20 @@ import tap
 
 class Config(tap.Tap):
     repo: str = os.path.expanduser('~/Desktop/ant')
-    commit_tags: list[str] | None = [
-        'rel/1.1',
-        'rel/1.2',
-        'rel/1.3',
-        'rel/1.4',
-        'rel/1.5',
-        'rel/1.5.2',
-        'rel/1.6.0',
-        'rel/1.7.0',
-        'rel/1.8.0',
-        'rel/1.9.0',
-        'rel/1.10.0',
-    ]
+    commit_tags = None
+    # commit_tags: list[str] | None = [
+    #     'rel/1.1',
+    #     'rel/1.2',
+    #     'rel/1.3',
+    #     'rel/1.4',
+    #     'rel/1.5',
+    #     'rel/1.5.2',
+    #     'rel/1.6.0',
+    #     'rel/1.7.0',
+    #     'rel/1.8.0',
+    #     'rel/1.9.0',
+    #     'rel/1.10.0',
+    # ]
 
 
 def run_git_cmd(cmd: list[str], p: str):
@@ -47,12 +48,12 @@ def get_tag_mapping(p: str):
     # git rev-list -n 1 $TAG
     mapping = {}
     for line in out.splitlines():
-        tag = line.split(' ', maxsplit=1)[1]
+        tag = line.split(' ', maxsplit=1)[1].strip()
         commit_hash = run_git_cmd(
             ['git', 'rev-list', '-n', '1', tag],
             p
         )
-        mapping.setdefault(commit_hash, []).append(tag)
+        mapping.setdefault(commit_hash.strip(), []).append(tag)
 
     return mapping
 
@@ -64,7 +65,8 @@ def main(config: Config):
         for v in vs:
             rev_tags[v] = k
     if config.commit_tags is not None:
-        commits = [rev_tags[t] for t in config.commit_tags]
+        commits = [rev_tags[f'refs/tags/{t}'] for t in config.commit_tags]
+        print(commits)
         repo = pydriller.Repository(config.repo, only_commits=commits)
     else:
         repo = pydriller.Repository(config.repo)
@@ -98,7 +100,7 @@ def main(config: Config):
             bar()
 
     with open('history.json', 'w') as fp:
-        json.dump(result, fp)
+        json.dump(result, fp, indent=2)
 
     if tags:
         print(f'There were left-over tags: {tags}')
