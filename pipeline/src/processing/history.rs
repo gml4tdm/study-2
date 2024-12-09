@@ -9,6 +9,7 @@ pub struct Commit<T: Clone>
     seq: usize,
     author_date_ts: f64,
     committer_date_ts: f64,
+    tags: Vec<String>,
     files: Vec<T>
 }
 
@@ -67,6 +68,7 @@ impl Commit<FileChangeInfo> {
             seq: self.seq,
             author_date_ts: self.author_date_ts,
             committer_date_ts: self.committer_date_ts,
+            tags: self.tags.clone(),
             files: self.files.iter().map(|f| f.clone().into()).collect()
         }
     }
@@ -110,6 +112,7 @@ impl Commit<ClassChangeInfo> {
             seq: self.seq,
             author_date_ts: self.author_date_ts,
             committer_date_ts: self.committer_date_ts,
+            tags: self.tags,
             files: code_files
         })
     }
