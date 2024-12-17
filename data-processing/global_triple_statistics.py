@@ -2,6 +2,8 @@ import itertools
 import pathlib
 
 import matplotlib.pyplot as pyplot
+import pandas
+import seaborn
 import tap
 
 import shared
@@ -135,6 +137,115 @@ def make_plots(dataset_sizes,
     return fig
 
 
+def _build_df(mapping: list[tuple[str, str]]):
+    values = []
+    titles = []
+    for key, value in mapping:
+        values.extend(value)
+        titles.extend([key] * len(value))
+    return pandas.DataFrame({'title': titles, 'value': values})
+
+
+def make_plots_small(dataset_sizes,
+               label_similarity,
+               label_modifications,
+               label_additions,
+               label_deletions,
+               label_modifications_positive,
+               label_modifications_negative,
+               ratios):
+    fig = pyplot.figure(figsize=(16, 6))
+    grid = pyplot.GridSpec(1, 3, figure=fig)
+    ax1 = fig.add_subplot(grid[0, 0])
+    ax2 = fig.add_subplot(grid[0, 1:])
+    # axes = [ax1, ax2, ax3, ax4,] #ax5, ax6, ax7]
+    titles = [
+        "Label Deletions",
+        #"Dataset Size",
+        #"Label Similarity",
+        "Label Modifications",
+        #"Label Additions",
+
+        "Label Modifications (Positive)",
+        "Label Modifications (Negative)",
+    ]
+    # for ax, numbers, title in zip(axes, sets, titles):
+    #     ax.violinplot(
+    #         numbers,
+    #         showmeans=True,
+    #         showextrema=True,
+    #         showmedians=True,
+    #     )
+    #     ax.set_title(title)
+
+    # df1 = pandas.DataFrame(
+    #     {
+    #         'Label Deletions': label_deletions
+    #     }
+    # )
+    #
+    # df2 = pandas.DataFrame(
+    #     {
+    #         'Label Modifications': label_modifications,
+    #         'Label Modifications (Positive)': label_modifications_positive,
+    #         'Label Modifications (Negative)': label_modifications_negative
+    #     }
+    # )
+
+    df1 = _build_df([('Label Deletions', label_deletions)])
+    df2 = _build_df([
+        ('Label Modifications', label_modifications),
+        ('Label Modifications (Positive)', label_modifications_positive),
+        ('Label Modifications (Negative)', label_modifications_negative)
+    ])
+
+    import ptitprince
+
+    # for df, ax in zip([df1, df2], [ax1, ax2]):
+    #     rain_cloud = ptitprince.RainCloud(
+    #
+    #     )
+
+    # cloud1 = ptitprince.RainCloud(
+    #     x='title',
+    #     y='value',
+    #     data=df1,
+    #     ax=ax1,
+    #     move=0.2
+    # )
+    #
+    # cloud2 = ptitprince.RainCloud(
+    #     x='title',
+    #     y='value',
+    #     data=df2,
+    #     ax=ax2,
+    #     move=0.2
+    # )
+
+    for ax, df in zip([ax1, ax2], [df1, df2]):
+        # Dirty hack to disable the boxplots
+        original = seaborn.boxplot
+        seaborn.boxplot = lambda *args, **kwargs: None
+
+        vio_original = ptitprince.half_violinplot
+        ptitprince.half_violinplot = lambda *args, **kwargs: vio_original(*args, **kwargs, inner='quart')
+
+        cloud = ptitprince.RainCloud(
+            x='title',
+            y='value',
+            data=df,
+            ax=ax,
+            width_viol=0.5,
+            width_box=0.1,
+        )
+        seaborn.boxplot = original
+        ptitprince.half_violinplot = vio_original
+
+
+    fig.tight_layout()
+    return fig
+
+
 
 def main(config: Config):
     print('Loading files...')
@@ -218,6 +329,21 @@ def main(config: Config):
         }
     )
     fig.savefig(config.output_directory / f'global_triple_statistics.png')
+
+    fig = make_plots_small(
+        list(itertools.chain(*dataset_sizes_by_project.values())),
+        list(itertools.chain(*label_similarity_by_project.values())),
+        list(itertools.chain(*label_modifications_by_project.values())),
+        list(itertools.chain(*label_additions_by_project.values())),
+        list(itertools.chain(*label_deletions_by_project.values())),
+        list(itertools.chain(*label_modifications_positive_by_project.values())),
+        list(itertools.chain(*label_modifications_negative_by_project.values())),
+        {
+            'train': list(itertools.chain(*(x['train'] for x in label_ratios_by_project.values()))),
+            'test': list(itertools.chain(*(x['test'] for x in label_ratios_by_project.values())))
+        }
+    )
+    fig.savefig(config.output_directory / f'global_triple_statistics_small.png')
 
 
 if __name__ == "__main__":

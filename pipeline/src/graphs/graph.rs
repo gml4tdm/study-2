@@ -9,6 +9,7 @@ mod seal {
 }
 
 pub use seal::DependencyGraphKind;
+#[derive(Debug)]
 pub struct ClassGraph;
 pub struct ModuleGraph;
 

@@ -32,6 +32,9 @@ enum Command {
     GraphsToDot(GraphsToDotCommand),
     AsPredictorFeaturesToJson(AsPredictorFeaturesToJsonCommand),
     ProcessHistory(ProcessHistoryCommand),
+    GenerateTimeSeriesFeatures(GenerateTimeSeriesFeaturesCommand),
+    GenerateCoChangeFeatures(GenerateCoChangeFeaturesCommand),
+    SummariseTriplePerformance(SummariseTriplePerformanceCommand),
 }
 
 #[derive(clap::Args)]
@@ -144,6 +147,32 @@ struct ProcessHistoryCommand {
     output_file: PathBuf,
 }
 
+#[derive(clap::Args)]
+struct GenerateTimeSeriesFeaturesCommand {
+    #[clap(short, long, num_args = 1..)]
+    input_files: Vec<PathBuf>,
+    
+    #[clap(short, long)]
+    output_file: PathBuf,
+}
+
+#[derive(clap::Args)]
+struct GenerateCoChangeFeaturesCommand {
+    #[clap(short, long)]
+    input_file: PathBuf,
+
+    #[clap(short, long)]
+    output_file: PathBuf
+}
+
+#[derive(clap::Args)]
+struct SummariseTriplePerformanceCommand {
+    #[clap(short, long, num_args = 1..)]
+    input_files: Vec<PathBuf>,
+
+    #[clap(short, long)]
+    output_directory: PathBuf
+}
 
 fn setup_logging() -> anyhow::Result<()> {
     let spec = flexi_logger::LogSpecification::parse("warn,pipeline=trace")?;
@@ -223,6 +252,22 @@ fn main() -> anyhow::Result<()> {
             commands::process_history::process_history(
                 process_history.input_file,
                 process_history.output_file
+            )?;
+        }
+        Command::GenerateTimeSeriesFeatures(generate_time_series_features) => {
+            commands::generate_time_series_features::generate_time_series_features(
+                generate_time_series_features.input_files,
+                generate_time_series_features.output_file
+            )?;
+        },
+        Command::GenerateCoChangeFeatures(cmd) => {
+            commands::generate_co_change_features::generate_co_change_features(
+                cmd.input_file, cmd.output_file
+            )?;
+        }
+        Command::SummariseTriplePerformance(cmd) => {
+            commands::summarise_triple_performance::summarise_triple_performance(
+                cmd.input_files, cmd.output_directory
             )?;
         }
     }

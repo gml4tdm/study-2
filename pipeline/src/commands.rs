@@ -8,3 +8,6 @@ pub(crate) mod add_source_information_to_triples;
 pub(crate) mod graphs_to_dot;
 pub(crate) mod as_predictor_features_to_json;
 pub(crate) mod process_history;
+pub(crate) mod generate_time_series_features;
+pub(crate) mod generate_co_change_features;
+pub(crate) mod summarise_triple_performance;
