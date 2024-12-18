@@ -11,3 +11,4 @@ pub(crate) mod process_history;
 pub(crate) mod generate_time_series_features;
 pub(crate) mod generate_co_change_features;
 pub(crate) mod summarise_triple_performance;
+pub(crate) mod finalise_co_change_features;

@@ -35,6 +35,7 @@ enum Command {
     GenerateTimeSeriesFeatures(GenerateTimeSeriesFeaturesCommand),
     GenerateCoChangeFeatures(GenerateCoChangeFeaturesCommand),
     SummariseTriplePerformance(SummariseTriplePerformanceCommand),
+    FinaliseCoChangeFeatures(FinaliseCoChangeFeaturesCommand),
 }
 
 #[derive(clap::Args)]
@@ -174,6 +175,18 @@ struct SummariseTriplePerformanceCommand {
     output_directory: PathBuf
 }
 
+#[derive(clap::Args)]
+struct FinaliseCoChangeFeaturesCommand {
+    #[clap(short, long)]
+    change_file: PathBuf,
+    
+    #[clap(short, long, num_args = 1..)]
+    graph_files: Vec<PathBuf>,
+    
+    #[clap(short, long)]
+    output_file: PathBuf
+}
+
 fn setup_logging() -> anyhow::Result<()> {
     let spec = flexi_logger::LogSpecification::parse("warn,pipeline=trace")?;
     flexi_logger::Logger::with(spec)
@@ -268,6 +281,11 @@ fn main() -> anyhow::Result<()> {
         Command::SummariseTriplePerformance(cmd) => {
             commands::summarise_triple_performance::summarise_triple_performance(
                 cmd.input_files, cmd.output_directory
+            )?;
+        }
+        Command::FinaliseCoChangeFeatures(cmd) => {
+            commands::finalise_co_change_features::finalise_co_change_features(
+                cmd.change_file, cmd.graph_files, cmd.output_file
             )?;
         }
     }

@@ -16,6 +16,7 @@ pub struct CoChangeVersion {
 
 #[derive(Debug, Clone, serde::Serialize, serde::Deserialize)]
 pub struct CoChangeData {
+    pub(super) name_mapping: HashMap<String, String>,
     pub(super) changes: HashMap<String, Vec<ChangeInfo>>,
     pub(super) pairs: HashMap<String, (String, String)>,
     pub(super) co_changes: HashMap<String, Vec<ChangeInfo>>
@@ -35,9 +36,11 @@ pub fn extract_co_change_history(history: History<ClassChangeInfo>) -> CoChangeD
     for (major, minors) in history.0.into_iter() {
         let mut mapping = HashMap::new();
         for (minor, mut data) in minors.into_iter() {
+            log::info!("Processing minor {} {}", major, minor);
             let mut changes: HashMap<String, Vec<ChangeInfo>> = HashMap::new();
             let mut pairs = HashMap::new();
             let mut co_changes: HashMap<String, Vec<ChangeInfo>> = HashMap::new();
+            let mut name_mapping = HashMap::new();
             for commit in data.commits {
                 let commit_data = data.commit_change_data.remove(&commit)
                     .unwrap_or_else(|| panic!("Commit {} missing data", commit));
@@ -46,8 +49,28 @@ pub fn extract_co_change_history(history: History<ClassChangeInfo>) -> CoChangeD
                     author_date_ts: commit_data.author_date_ts,
                     committer_date_ts: commit_data.committer_date_ts,
                 };
-                let all_classes = commit_data.files.into_iter()
-                    .flat_map(|f| f.classes_changed)
+                let all_class_names = commit_data.files.into_iter()
+                    .filter(|f| f.package_old.is_some() || f.package_new.is_some())
+                    .flat_map(
+                        |f| {
+                            let package = match (f.package_old.as_ref(), f.package_new.as_ref()) {
+                                (Some(_), Some(new)) => new.to_string(),
+                                (Some(old), None) => old.to_string(),
+                                (None, Some(new)) => new.to_string(),
+                                (None, None) => panic!("File {} has no package", f.name)
+                            };
+                            f.classes_changed.into_iter()
+                                .map(move |c| format!("{}.{}", package, c))
+                        }
+                    )
+                    .collect::<Vec<_>>();
+                for name in all_class_names.iter() {
+                    if !name_mapping.contains_key(name) {
+                        name_mapping.insert(name.clone(), format!("{}", name_mapping.len()));
+                    }
+                }
+                let all_classes = all_class_names.into_iter()
+                    .map(|n| name_mapping.get(&n).unwrap().clone())
                     .collect::<Vec<_>>();
                 for classes in all_classes.iter().combinations(2) {
                     assert_eq!(classes.len(), 2);
@@ -74,7 +97,8 @@ pub fn extract_co_change_history(history: History<ClassChangeInfo>) -> CoChangeD
                 changes: CoChangeData {
                     changes,
                     pairs,
-                    co_changes
+                    co_changes,
+                    name_mapping
                 }
             });
         }

@@ -5,9 +5,11 @@ use crate::processing::history::{ClassChangeInfo, History};
 pub fn generate_co_change_features(input_file: PathBuf,
                                    output_file: PathBuf) -> anyhow::Result<()>
 {
+    log::info!("Processing history file {}", input_file.display());
     let file = std::fs::File::open(input_file)?;
     let reader = std::io::BufReader::new(file);
     let history: History<ClassChangeInfo> = serde_json::from_reader(reader)?;
+    log::info!("Loaded file");
     let features = extract_co_change_history(history);
     let file = std::fs::File::create(output_file)?;
     let writer = std::io::BufWriter::new(file);
