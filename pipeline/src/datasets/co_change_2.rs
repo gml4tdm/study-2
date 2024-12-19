@@ -1,4 +1,5 @@
 use std::collections::{HashMap, HashSet};
+use std::str::FromStr;
 use itertools::Itertools;
 use crate::datasets::co_change::CoChangeDataset;
 use crate::graphs::{ClassGraph, DependencyGraph};
@@ -47,6 +48,13 @@ pub fn generate_co_change_features_2(CoChangeDataset(data): CoChangeDataset,
         
         let mut mapping = HashMap::new();
         
+        // For correct lifetime ordering, we need to sort the minors by version.
+        // Note that these are "simply" integers encoded as strings.
+        let mut ordered_minors = minors.into_iter().collect::<Vec<_>>();
+        ordered_minors.sort_by_key(
+            |(v, _)| u64::from_str(v).unwrap_or_else(|_| panic!("Could not parse version {}", v))
+        );
+        
         // For the (co-) change sets and other features, we make use of the 
         // fact that the seq field is unique per CoChangeVersion.
         // For every CoChangeVersion, seq resets.
@@ -57,7 +65,7 @@ pub fn generate_co_change_features_2(CoChangeDataset(data): CoChangeDataset,
         let mut co_modification_times: HashMap<(String, String), f64> = HashMap::new();
         let mut global_sequence = 0;
         
-        for (minor, version) in minors.into_iter() {
+        for (minor, version) in ordered_minors.into_iter() {
             log::info!("Generating Co-Change features for {}.{}", major, minor);
             
             let mut version_modifications: HashMap<String, HashSet<usize>> = HashMap::new();

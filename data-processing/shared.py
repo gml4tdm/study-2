@@ -157,7 +157,10 @@ class DependencyType(str, enum.Enum):
 ################################################################################
 
 
-def evaluate(triple: VersionTriple, predictions: list[bool]):
+
+def evaluate(triple: VersionTriple,
+             predictions: list[bool], *,
+             limited_to: set[str] | None = None):
     true_positives = 0
     false_positives = 0
     false_negatives = 0
@@ -168,6 +171,8 @@ def evaluate(triple: VersionTriple, predictions: list[bool]):
     edges = triple.test_graph.edge_labels.edges
 
     for edge, (truth, pred) in zip(edges, zip(labels, predictions)):
+        if limited_to is not None and edge not in limited_to:
+            continue
         if truth and pred:
             true_positives += 1
         elif truth and not pred:
