@@ -313,6 +313,21 @@ impl DataForVersion {
             );
         }
         
+        // Add empty entries for unconnected nodes 
+        for from in node_changes.keys() {
+            for to in node_changes.keys() {
+                let key = (from.clone(), to.clone());
+                link_changes.entry(key).or_insert_with(|| {
+                    EdgeChangeInfo {
+                        additions: 0,
+                        deletions: 0,
+                        was_new: false,
+                        was_removed: false
+                    }
+                });
+            }
+        }
+        
         let mut links = HashMap::new();
         let mut link_changes_mapped = HashMap::new();
         for ((from, to), info) in link_changes {

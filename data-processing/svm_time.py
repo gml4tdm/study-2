@@ -16,35 +16,36 @@ import numpy
 import tap
 from sklearn.svm import SVC
 import pydantic
+import pydantic.dataclasses
 
 import shared
 
 
 _FEATURE_ORDER = [
-    ('topological-features', 'common_neighbours'),
-    ('topological-features', 'salton'),
-    ('topological-features', 'sorensen'),
-    ('topological-features', 'adamic_adar'),
-    ('topological-features', 'katz'),
-    ('topological-features', 'sim_rank'),
-    ('topological-features', 'russel_rao'),
-    ('topological-features', 'resource_allocation'),
-    ('semantic-features', 'comments#Cosine'),
-    ('semantic-features', 'imports#Cosine'),
-    ('semantic-features', 'methods#Cosine'),
-    ('semantic-features', 'variables#Cosine'),
-    ('semantic-features', 'fields#Cosine'),
-    ('semantic-features', 'calls#Cosine'),
-    ('semantic-features', 'imports-fields-methods-variables-comments#Cosine'),
-    ('semantic-features', 'imports-fields-methods-variables#Cosine'),
-    ('semantic-features', 'fields-variables-methods#Cosine'),
-    ('semantic-features', 'fields-methods#Cosine'),
-    ('semantic-features', 'fields-variables#Cosine'),
-    ('semantic-features', 'imports-fields-methods-variables-comments-calls#Cosine'),
-    ('semantic-features', 'imports-fields-methods-variables-calls#Cosine'),
-    ('semantic-features', 'fields-variables-methods-calls#Cosine'),
-    ('semantic-features', 'fields-methods-calls#Cosine'),
-    ('semantic-features', 'methods-calls#Cosine')
+    ('topological_features', 'common_neighbours'),
+    ('topological_features', 'salton'),
+    ('topological_features', 'sorensen'),
+    ('topological_features', 'adamic_adar'),
+    ('topological_features', 'katz'),
+    ('topological_features', 'sim_rank'),
+    ('topological_features', 'russel_rao'),
+    ('topological_features', 'resource_allocation'),
+    ('semantic_features', 'comments#Cosine'),
+    ('semantic_features', 'imports#Cosine'),
+    ('semantic_features', 'methods#Cosine'),
+    ('semantic_features', 'variables#Cosine'),
+    ('semantic_features', 'fields#Cosine'),
+    ('semantic_features', 'calls#Cosine'),
+    ('semantic_features', 'imports-fields-methods-variables-comments#Cosine'),
+    ('semantic_features', 'imports-fields-methods-variables#Cosine'),
+    ('semantic_features', 'fields-variables-methods#Cosine'),
+    ('semantic_features', 'fields-methods#Cosine'),
+    ('semantic_features', 'fields-variables#Cosine'),
+    ('semantic_features', 'imports-fields-methods-variables-comments-calls#Cosine'),
+    ('semantic_features', 'imports-fields-methods-variables-calls#Cosine'),
+    ('semantic_features', 'fields-variables-methods-calls#Cosine'),
+    ('semantic_features', 'fields-methods-calls#Cosine'),
+    ('semantic_features', 'methods-calls#Cosine')
 ]
 
 
@@ -81,25 +82,31 @@ class GraphChangeData(pydantic.BaseModel):
         return {v: k for k, v in self.links.items()}
 
     def get_link_changes(self, fr: str, to: str):
-        return self.link_changes[self._inverse_link_map[(fr, to)]]
+        try:
+            return self.link_changes[self._inverse_link_map[(fr, to)]]
+        except KeyError as e:
+            print(self._inverse_link_map)
+            print((fr, to))
+            raise e
 
-
-class LinkChangeInfo(pydantic.BaseModel):
+@pydantic.dataclasses.dataclass(frozen=True, slots=True)
+class LinkChangeInfo:
     additions: int
     deletions: int
     was_new: bool
     was_removed: bool
 
 
-class NodeChangeInfo(pydantic.BaseModel):
+@pydantic.dataclasses.dataclass(frozen=True, slots=True)
+class NodeChangeInfo:
     added_incoming: int
     added_outgoing: int
     removed_incoming: int
     removed_outgoing: int
     was_new: bool
     was_removed: bool
-    added_classes: bool
-    removed_classes: bool
+    added_classes: int
+    removed_classes: int
 
 
 ################################################################################
@@ -123,13 +130,15 @@ class CoChangeData(pydantic.BaseModel):
         return self.paired_features[self._inverse_link_map[(fr, to)]]
 
 
-class PairedCoChangeData(pydantic.BaseModel):
+@pydantic.dataclasses.dataclass(frozen=True, slots=True)
+class PairedCoChangeData:
     lifetime_change_likelihood: float
     version_change_likelihood: float
 
 
+@pydantic.dataclasses.dataclass(frozen=True, slots=True)
 class UnitCoChangeData:
-    time_since_last_change: float
+    time_since_last_change: float | None        # Very rarely null, no clue why
     lifetime_co_change_prospect: float
     version_co_change_prospect: float
 
@@ -154,10 +163,10 @@ class MetricsDataSet(pydantic.BaseModel):
     link_features: list[LinkFeatureData] = pydantic.Field(
         alias='link-features'
     )
-    links_without_semantic_features: list[GraphEdge] = pydantic.Field(
-        alias='links-without-semantic-features'
+    links_without_semantic_features: list[GraphEdge] | None = pydantic.Field(
+        alias='links-without-semantics'
     )
-    link_without_topology: list[GraphEdge] = pydantic.Field(
+    link_without_topology: list[tuple[str, str]] | None = pydantic.Field(
         alias='links-without-topology'
     )
 
@@ -185,10 +194,12 @@ class GraphEdge(pydantic.BaseModel):
 class LinkFeatureData(pydantic.BaseModel):
     from_: str = pydantic.Field(alias='from')
     to: str
-    topological_features: list[float] = pydantic.Field(
+    topological_features: dict[str, float] = pydantic.Field(
         alias='topological-features'
     )
-    semantic_features: list[float] = pydantic.Field(alias='semantic-features')
+    semantic_features: dict[str, float] = pydantic.Field(
+        alias='semantic-features'
+    )
 
 
 ################################################################################
@@ -235,7 +246,7 @@ def _build_dataset_base_from_metrics(graph: shared.Graph,
             'label': label,
             'features': {
                 'metrics': [
-                    getattr(features, ns)[key]
+                    _maybe_map(getattr(features, ns)[key])
                     for ns, key in _FEATURE_ORDER
                 ]
             }
@@ -249,14 +260,14 @@ def _add_co_change_features_to_dataset(dataset, co_change_data: CoChangeData):
         unit_to = co_change_data.unit_features[to]
         paired = co_change_data.get_paired_features(fr, to)
         dataset[(fr, to)]['features']['co_change'] = [
-            unit_fr.time_since_last_change,
-            unit_fr.version_co_change_prospect,
-            unit_fr.lifetime_co_change_prospect,
-            unit_to.time_since_last_change,
-            unit_to.version_co_change_prospect,
-            unit_to.lifetime_co_change_prospect,
-            paired.version_change_likelihood,
-            paired.lifetime_change_likelihood,
+            _maybe_map_none(unit_fr.time_since_last_change),
+            _maybe_map(unit_fr.version_co_change_prospect),
+            _maybe_map(unit_fr.lifetime_co_change_prospect),
+            _maybe_map_none(unit_to.time_since_last_change),
+            _maybe_map(unit_to.version_co_change_prospect),
+            _maybe_map(unit_to.lifetime_co_change_prospect),
+            _maybe_map(paired.version_change_likelihood),
+            _maybe_map(paired.lifetime_change_likelihood),
         ]
 
 
@@ -265,7 +276,7 @@ def _add_graph_change_features_to_dataset(dataset, graph_changes: GraphChangeDat
         node_fr = graph_changes.node_changes[fr]
         node_to = graph_changes.node_changes[to]
         link = graph_changes.get_link_changes(fr, to)
-        dataset[(fr, to)]['features']['graph_change'] = [
+        dataset[(fr, to)]['features']['graph_changes'] = [
             node_fr.added_classes,
             node_fr.removed_classes,
             node_fr.added_incoming,
@@ -295,6 +306,12 @@ def _maybe_map(x):
     return x
 
 
+def _maybe_map_none(x):
+    if x is None:
+        return 0.0
+    return _maybe_map(x)
+
+
 ################################################################################
 ################################################################################
 # Main Function
@@ -307,6 +324,7 @@ class Config(tap.Tap):
     co_change_files: list[pathlib.Path]
     metric_files: list[pathlib.Path]
     output_file: pathlib.Path
+    limit_to: list[str] = None
 
     def configure(self) -> None:
         self.add_argument('-t', '--triple_files')
@@ -314,16 +332,17 @@ class Config(tap.Tap):
         self.add_argument('-c', '--co_change_files')
         self.add_argument('-m', '--metric_files')
         self.add_argument('-o', '--output_file')
+        self.add_argument('-l', '--limit_to', nargs='+')
 
 
 def dissect_triple_filename(filename: pathlib.Path) -> tuple[str, str, str, str]:
-    res = tuple(filename.stem.split('-'))
-    assert len(res) == 4
+    res = tuple(filename.stem.rsplit('-', maxsplit=3))
+    assert len(res) == 4, (filename.stem, res)
     return res      # type: ignore
 
 
 def dissect_metrics_filename(filename: pathlib.Path) -> tuple[str, str]:
-    res = tuple(filename.stem.split('-'))
+    res = tuple(filename.stem.rsplit('-', maxsplit=1))
     assert len(res) == 2
     return res      # type: ignore
 
@@ -339,6 +358,30 @@ def dissect_graph_change_filename(filename: pathlib.Path) -> str:
 def get_major_and_minor(v: str) -> tuple[str, str]:
     parts = v.split('.')
     return parts[0], parts[1]
+
+
+def data_for_version(graph: shared.Graph,
+                     co_change_data: CoChangeDataSet,
+                     graph_change_data: GraphChangeDataset,
+                     files,
+                     version: str):
+    major, minor = get_major_and_minor(version)
+    if minor not in co_change_data.root[major]:
+        print('WARNING: Skipping triple. Maybe it is the first in the sequence and thus has no historical data?')
+        return None
+
+    co_changes = co_change_data.root[major][minor]
+    graph_changes = graph_change_data.get_changes_for_graph(version)
+    metrics = MetricsDataSet.load(
+        files['metrics'][version]
+    )
+
+    return get_dataset(
+        graph,
+        metrics,
+        co_changes,
+        graph_changes
+    )
 
 
 def main(config: Config):
@@ -365,6 +408,10 @@ def main(config: Config):
 
     results = []
     for project, files in files_by_project.items():
+        if config.limit_to is not None and project not in config.limit_to:
+            print(f'Skipping project {project}')
+            continue
+
         print(f'Project: {project}')
         co_change_data = load_co_change_data(
             files['co_changes']
@@ -380,40 +427,40 @@ def main(config: Config):
             print(f'    Version 2: {version_2}')
             print(f'    Version 3: {version_3}')
             triple_data = shared.VersionTriple.load_and_check(filename)
-            v1_major, v1_minor = get_major_and_minor(version_1)
-            v2_major, v2_minor = get_major_and_minor(version_2)
-            co_changes_v1 = co_change_data.root[v1_major][v1_minor]
-            co_changes_v2 = co_change_data.root[v2_major][v2_minor]
-            graph_changes_v1 = graph_change_data.get_changes_for_graph(version_1)
-            graph_changes_v2 = graph_change_data.get_changes_for_graph(version_2)
-            metrics_v1 = MetricsDataSet.load(
-                files['metrics'][version_1]
+            res = data_for_version(
+                triple_data.training_graph, co_change_data, graph_change_data, files, version_1
             )
-            metrics_v2 = MetricsDataSet.load(
-                files['metrics'][version_2]
-            )
-            features_train, labels_train, _ = get_dataset(
-                triple_data.training_graph,
-                metrics_v1,
-                co_changes_v1,
-                graph_changes_v1
-            )
-            features_test, labels_test, test_edges = get_dataset(
-                triple_data.test_graph,
-                metrics_v2,
-                co_changes_v2,
-                graph_changes_v2
-            )
+            if res is None:
+                continue
+            features_train, labels_train, _ = res
             model_parameters = dict(kernel='rbf',
                                     cache_size=1999,
                                     random_state=42,
                                     gamma=0.01)
             model = SVC(**model_parameters)
             model.fit(features_train, labels_train)
+
+            # Make sure memory is re-claimed
+            del features_train
+            del labels_train
+
+            res = data_for_version(
+                triple_data.training_graph, co_change_data, graph_change_data, files, version_1
+            )
+            if res is None:
+                raise ValueError('Test set undefined!')
+            features_test, labels_test, test_edges = res
             predictions = model.predict(features_test).tolist()
+
+            del features_test
+            del labels_test
+
             result = shared.evaluate(triple_data,
                                      predictions,
                                      limited_to=test_edges)
+
+            del test_edges
+
             results.append(result)
 
     config.output_file.parent.mkdir(parents=True, exist_ok=True)
