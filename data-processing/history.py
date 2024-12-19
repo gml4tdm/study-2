@@ -221,7 +221,9 @@ def main(config: Config):
 
     commits = get_commits_for_versions(config.repo, config.version_pattern)
 
+    to_delete_major = []
     for major, minors in commits.items():
+        to_delete_minor = []
         for minor, data in minors.items():
             data['commit_change_data'] = mine_change_information_for_version(config.repo,
                                                                              major,
@@ -231,6 +233,16 @@ def main(config: Config):
                                                                              config.min_version,
                                                                              config.max_version,
                                                                              data['commits'])
+            if not data['commit_change_data']:
+                to_delete_minor.append(minor)
+        for minor in to_delete_minor:
+            print(f'Deleting {minor} from {major}')
+            del minors[minor]
+        if not minors:
+            to_delete_major.append(major)
+    for major in to_delete_major:
+        print(f'Deleting {major}')
+        del commits[major]
 
 
     with open(config.output_path, 'w') as fp:
