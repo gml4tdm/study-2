@@ -121,7 +121,7 @@ pub fn generate_co_change_features_2(CoChangeDataset(data): CoChangeDataset,
                 for change in changes {
                     co_modification_times.entry(key.clone())
                         .and_modify(|e| { *e = e.max(change.committer_date_ts) })
-                        .or_insert(0.0);
+                        .or_insert(change.committer_date_ts);
                     co_modifications.entry(key.clone())
                         .or_default()
                         .insert(global_sequence + change.seq);
@@ -205,12 +205,15 @@ pub fn generate_co_change_features_2(CoChangeDataset(data): CoChangeDataset,
             let n = lifetime_classes.len() as f64;
             let n_v = version_classes.len() as f64;
             
+            let seconds_per_day = 24.0 * 60.0 * 60.0 as f64;
+            
             for cls in packages.iter() {
+                let last_modified =  modification_times.iter()
+                    .filter(|(k, _)| is_child(cls, k))
+                    .map(|(_, v)| *v)
+                    .fold(f64::NEG_INFINITY, f64::max);
                 let info = UnitCoChangeInfo {
-                    time_since_last_change: release_time - modification_times.iter()
-                        .filter(|(k, _)| is_child(cls, k))
-                        .map(|(_, v)| *v)
-                        .fold(f64::NEG_INFINITY, f64::max),
+                    time_since_last_change: (release_time - last_modified).abs() / seconds_per_day,
                     lifetime_co_change_prospect: changes_by_cls.get(cls)
                         .map(|changes| {
                             changes.iter()
