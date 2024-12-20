@@ -61,7 +61,7 @@ def main(conf: Config):
         print(" & ".join(parts) + '\\\\')
 
     # Generate Figure
-    fig = pyplot.figure(figsize=(6, 6))
+    fig = pyplot.figure(figsize=(16, 6))
     grid = pyplot.GridSpec(1, 1, figure=fig)
     ax1 = fig.add_subplot(grid[0, 0])
     #ax2 = fig.add_subplot(grid[1, 0])

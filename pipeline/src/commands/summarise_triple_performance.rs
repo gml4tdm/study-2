@@ -22,7 +22,11 @@ struct TriplePerformanceScore {
     true_positives: u64,
     true_negatives: u64,
     false_positives: u64,
-    false_negatives: u64
+    false_negatives: u64,
+    normalised_true_positives: f64,
+    normalised_false_positives: f64,
+    normalised_false_negatives: f64,
+    normalised_true_negatives: f64,
 }
 
 
@@ -51,7 +55,11 @@ pub fn summarise_triple_performance(input_files: Vec<PathBuf>,
                     true_positives: v.confusion_matrix.true_positives,
                     true_negatives: v.confusion_matrix.true_negatives,
                     false_positives: v.confusion_matrix.false_positives,
-                    false_negatives: v.confusion_matrix.false_negatives
+                    false_negatives: v.confusion_matrix.false_negatives,
+                    normalised_true_positives: v.confusion_matrix.true_positives as f64 / v.confusion_matrix.total() as f64,
+                    normalised_false_positives: v.confusion_matrix.false_positives as f64 / v.confusion_matrix.total() as f64,
+                    normalised_false_negatives: v.confusion_matrix.false_negatives as f64 / v.confusion_matrix.total() as f64,
+                    normalised_true_negatives: v.confusion_matrix.true_negatives as f64 / v.confusion_matrix.total() as f64,
                 }
             })
             .collect::<Vec<_>>();

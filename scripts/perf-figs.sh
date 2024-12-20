@@ -22,4 +22,12 @@ python perf-to-paper.py \
     ../data/results-temp/aspredictor \
     ../data/results-temp/initial_time_svm_results \
   --name_mapping "dummy=Dummy,replication=SVM (ours),aspredictor=SVM (Tommasel),initial_time_svm_results=SVM (Replication + Historical)" \
-  --metrics accuracy "f1"
+  --metrics \
+    accuracy \
+    "f1" \
+    precision \
+    recall \
+    normalised_true_positives \
+    normalised_false_positives \
+    normalised_false_negatives \
+    normalised_true_positives \
