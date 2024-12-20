@@ -10,7 +10,7 @@ cd ../pipeline
     ../data/results/svm/replication.json \
     ../data/results/dummy/dummy.json \
     ../data/results/tommasel/aspredictor.json \
-    ../data/svm/svm-time-results.json \
+    ../data/results/svm/initial_time_svm_results.json \
   -o ../data/results-temp
 
 echo "Building Figures"
@@ -20,6 +20,6 @@ python perf-to-paper.py \
     ../data/results-temp/dummy \
     ../data/results-temp/replication \
     ../data/results-temp/aspredictor \
-    ../data/results-temp/svm-time-results \
-  --name_mapping "dummy=Dummy,replication=SVM (ours),aspredictor=SVM (Tommasel),svm-time-results=SVM (Tommasel + Historical)" \
+    ../data/results-temp/initial_time_svm_results \
+  --name_mapping "dummy=Dummy,replication=SVM (ours),aspredictor=SVM (Tommasel),initial_time_svm_results=SVM (Replication + Historical)" \
   --metrics accuracy "f1"

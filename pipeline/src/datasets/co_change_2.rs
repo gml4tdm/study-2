@@ -61,6 +61,7 @@ pub fn generate_co_change_features_2(CoChangeDataset(data): CoChangeDataset,
         
         let mut modifications: HashMap<String, HashSet<usize>> = HashMap::new();
         let mut co_modifications: HashMap<(String, String), HashSet<usize>> = HashMap::new();
+        let mut lifetime_classes: HashSet<String> = HashSet::new();
         let mut modification_times: HashMap<String, f64> = HashMap::new();
         let mut co_modification_times: HashMap<(String, String), f64> = HashMap::new();
         let mut global_sequence = 0;
@@ -70,6 +71,7 @@ pub fn generate_co_change_features_2(CoChangeDataset(data): CoChangeDataset,
             
             let mut version_modifications: HashMap<String, HashSet<usize>> = HashMap::new();
             let mut version_co_modifications: HashMap<(String, String), HashSet<usize>> = HashMap::new();
+            let mut version_classes: HashSet<String> = HashSet::new();
             let mut offset = 0;
             
             let mut release_time = 0.0f64;
@@ -79,6 +81,8 @@ pub fn generate_co_change_features_2(CoChangeDataset(data): CoChangeDataset,
                 .collect::<HashMap<_, _>>();
 
             for (raw_component, changes) in version.changes.changes {
+                lifetime_classes.insert(raw_component.clone());
+                version_classes.insert(raw_component.clone());
                 let component = name_mapping
                     .get(&raw_component)
                     .unwrap_or_else(|| panic!("Component {raw_component} not found in name mapping"));
@@ -102,6 +106,8 @@ pub fn generate_co_change_features_2(CoChangeDataset(data): CoChangeDataset,
                 //     .unwrap_or_else(|| panic!("Key {} missing from pairs", key));
                 let raw_key = version.changes.pairs.get(&key)
                     .expect("Key not found in pairs");
+                lifetime_classes.insert(raw_key.0.clone());
+                version_classes.insert(raw_key.1.clone());
                 let key = (
                         name_mapping
                             .get(&raw_key.0)
@@ -196,7 +202,8 @@ pub fn generate_co_change_features_2(CoChangeDataset(data): CoChangeDataset,
 
             let mut unit_features = HashMap::new();
 
-            let n = packages.len() as f64;
+            let n = lifetime_classes.len() as f64;
+            let n_v = version_classes.len() as f64;
             
             for cls in packages.iter() {
                 let info = UnitCoChangeInfo {
@@ -218,7 +225,7 @@ pub fn generate_co_change_features_2(CoChangeDataset(data): CoChangeDataset,
                                 .map(|c| c.version_change_likelihood)
                                 .sum::<f64>()
                         })
-                        .map(|x| x / (n - 1.0))
+                        .map(|x| x / (n_v - 1.0))
                         .unwrap_or(0.0),
                 };
                 unit_features.insert(cls.clone(), info);
